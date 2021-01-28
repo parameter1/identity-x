@@ -58,7 +58,7 @@ if (!existsSync(servicePath)) error(`Could not read ${servicePath}!`);
 // eslint-disable-next-line import/no-dynamic-require, global-require
 const pkg = require(`../${servicePath}/package.json`);
 const name = pkg.name.replace('@identity-x/', 'identity-x-').replace('-service', '');
-const image = `basecms/${name}-service`;
+const image = `parameter1/${name}-service`;
 
 if (version !== `v${pkg.version}`) {
   log(`Service ${name} is at version ${pkg.version}. Skipping deployment.`);
@@ -75,7 +75,6 @@ const build = async () => {
   log(`Building  ${image}:${version}...\n`);
   const Dockerfile = join(process.cwd(), 'services', service, 'Dockerfile');
   await spawnSync('cp', [Dockerfile, process.cwd()]);
-  await docker(['login', '-u', DOCKER_USERNAME, '-p', DOCKER_PASSWORD]);
   await docker(['build', '-t', imageTag, '--build-arg', `SERVICE=${service}`, process.cwd()]);
   await docker(['tag', imageTag, `${image}:${version}`]);
   await docker(['push', `${image}:${version}`]);
@@ -84,11 +83,34 @@ const build = async () => {
 
 const deploy = async ({ key, value, image: img }) => {
   log(`Deploying ${image}:${version} on Kubernertes`);
-  const { status } = await spawnSync('npx', ['@endeavorb2b/rancher2cli', 'dl', key, value, img, 'fortnight']);
+  const { status } = await spawnSync('npx', ['@endeavorb2b/rancher2cli', 'dl', key, value, img]);
   if (status !== 0) error('Image deploy failed!');
 };
 
 const main = async () => { // eslint-disable-line consistent-return
+  const keys = [
+    // 'AWS_ACCESS_KEY_ID',
+    // 'AWS_SECRET_ACCESS_KEY',
+    'DOCKER_USERNAME',
+    'DOCKER_PASSWORD',
+    'RANCHER_CLUSTERID',
+    'RANCHER_TOKEN',
+    'RANCHER_URL',
+    'TRAVIS_REPO_SLUG',
+    'TRAVIS_TAG',
+    'ENVIRONMENT',
+    'SLACK_WEBHOOK_URL',
+  ];
+  if (!keys.every((k) => process.env[k])) {
+    return error(
+      'Deployment aborted: mandatory environment variables are missing.',
+      keys.filter((key) => !process.env[key]),
+    );
+  }
+
+  // Force initial docker login to bypass rate limiting on image pulls
+  await docker(['login', '-u', DOCKER_USERNAME, '-p', DOCKER_PASSWORD]);
+
   if (await shouldBuild(image)) {
     log('Image was not found, building.');
     await build();
@@ -96,11 +118,6 @@ const main = async () => { // eslint-disable-line consistent-return
   } else {
     log('Image found, skipping build.');
   }
-
-  const { RANCHER_CLUSTERID, RANCHER_TOKEN, RANCHER_URL } = process.env;
-  if (!RANCHER_CLUSTERID) return error('Deployment aborted: Environment variable RANCHER_CLUSTERID is missing!');
-  if (!RANCHER_TOKEN) return error('Deployment aborted: Environment variable RANCHER_TOKEN is missing!');
-  if (!RANCHER_URL) return error('Deployment aborted: Environment variable RANCHER_URL is missing!');
 
   await deploy({
     key: 'basecms-service',
