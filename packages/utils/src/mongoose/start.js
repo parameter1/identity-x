@@ -9,14 +9,14 @@ const start = (promise, name, url) => {
   });
 };
 
-const indexModel = Model => new Promise((resolve, reject) => {
+const indexModel = (Model) => new Promise((resolve, reject) => {
   Model.on('index', (err) => {
     if (err) { reject(err); } else { resolve(); }
   });
 });
 
-const indexModels = models => Promise
-  .all(Object.keys(models).map(name => indexModel(models[name])));
+const indexModels = (models) => Promise
+  .all(Object.keys(models).map((name) => indexModel(models[name])));
 
 module.exports = ({
   connection,
@@ -24,6 +24,6 @@ module.exports = ({
 } = {}) => () => {
   const p = [];
   if (models) p.push(indexModels(models).then(() => log('> Model indexes created.')));
-  if (connection) p.push(start(connection, 'MongoDB', m => m.client.s.url));
+  if (connection) p.push(start(connection, 'MongoDB', (m) => m.client.s.url));
   return Promise.all(p);
 };
