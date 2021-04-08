@@ -1,4 +1,4 @@
-const { SchemaDirectiveVisitor } = require('graphql-tools');
+const { SchemaDirectiveVisitor } = require('apollo-server-express');
 
 class ProjectionDirective extends SchemaDirectiveVisitor {
   /**

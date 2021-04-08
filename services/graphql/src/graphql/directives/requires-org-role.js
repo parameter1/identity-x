@@ -1,4 +1,4 @@
-const { SchemaDirectiveVisitor } = require('graphql-tools');
+const { SchemaDirectiveVisitor } = require('apollo-server-express');
 const { ApolloError } = require('apollo-server-express');
 
 class RequiresOrgRoleDirective extends SchemaDirectiveVisitor {

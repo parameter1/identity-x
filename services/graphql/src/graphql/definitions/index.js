@@ -1,4 +1,4 @@
-const gql = require('graphql-tag');
+const { gql } = require('apollo-server-express');
 const accessLevel = require('./access-level');
 const appUser = require('./app-user');
 const application = require('./application');
