@@ -32,7 +32,7 @@ module.exports = async (Model, {
     [$sort.field]: 1,
   } : undefined;
   if ($projection && isArray(excludeProjection)) {
-    excludeProjection.forEach(key => delete $projection[key]);
+    excludeProjection.forEach((key) => delete $projection[key]);
   }
 
   const params = {

@@ -23,7 +23,7 @@ module.exports = {
     };
     return {
       ...additionalData,
-      edges: results.map(node => ({ node, cursor: () => cursor.encode(node._id) })),
+      edges: results.map((node) => ({ node, cursor: () => cursor.encode(node._id) })),
       pageInfo,
       totalCount,
     };

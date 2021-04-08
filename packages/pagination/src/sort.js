@@ -1,6 +1,6 @@
 const merge = require('lodash.merge');
 
-const { assign, keys } = Object;
+const { keys } = Object;
 
 class Sort {
   /**
@@ -60,7 +60,7 @@ class Sort {
    */
   get valueReversed() {
     const { value } = this;
-    return keys(value).reduce((obj, key) => assign(obj, { [key]: value[key] === 1 ? -1 : 1 }), {});
+    return keys(value).reduce((obj, key) => ({ ...obj, [key]: value[key] === 1 ? -1 : 1 }), {});
   }
 
   /**
