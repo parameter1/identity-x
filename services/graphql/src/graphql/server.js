@@ -1,5 +1,4 @@
 const { ApolloServer } = require('apollo-server-express');
-const ApolloNewrelicExtension = require('apollo-newrelic-extension');
 const schema = require('./schema');
 const context = require('./context');
 
@@ -14,7 +13,6 @@ module.exports = ({ app, path }) => {
     tracing: isProduction,
     cacheControl: isProduction,
     engine: isProduction ? { apiKey: ENGINE_API_KEY } : false,
-    extensions: isProduction ? [() => new ApolloNewrelicExtension()] : [],
     // Enable in dev
     introspection: true,
     debug: !isProduction,
