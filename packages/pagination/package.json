@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "base64-url": "^2.2.2",
+    "base64-url": "^2.3.3",
     "lodash.merge": "^4.6.2",
     "mongodb-extended-json": "^1.11.0"
   },

@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "escape-string-regexp": "^2.0.0"
+    "escape-string-regexp": "^4.0.0"
   },
   "peerDependencies": {
     "@base-cms/micro": "^1.37.0"

@@ -17,8 +17,8 @@
     "@base-cms/micro": "^1.37.0",
     "@base-cms/object-path": "^1.37.0",
     "@identity-x/service-clients": "^1.0.0",
-    "aws-sdk": "^2.610.0",
-    "json2csv": "^4.5.4",
+    "aws-sdk": "^2.883.0",
+    "json2csv": "^5.0.6",
     "micro": "^9.3.4",
     "newrelic": "^7.3.0",
     "validator": "^13.5.2"

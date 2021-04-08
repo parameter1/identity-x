@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const uuid = require('uuid/v4');
+const { v4: uuid } = require('uuid');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { TOKEN_SECRET } = require('../env');
 const Token = require('../mongodb/models/token');

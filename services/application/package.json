@@ -21,7 +21,7 @@
     "@identity-x/pagination": "^1.0.0",
     "@identity-x/service-clients": "^1.0.0",
     "@identity-x/utils": "^1.0.0",
-    "burner-email-providers": "^1.0.13",
+    "burner-email-providers": "^1.0.41",
     "micro": "^9.3.4",
     "mongoose": "^5.12.3",
     "newrelic": "^7.3.0",
