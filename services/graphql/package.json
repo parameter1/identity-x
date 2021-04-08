@@ -35,6 +35,6 @@
     "eslint-plugin-import": "^2.22.1",
     "gulp": "^4.0.2",
     "gulp-cached": "^1.1.1",
-    "gulp-eslint": "^5.0.0"
+    "gulp-eslint": "^6.0.0"
   }
 }
