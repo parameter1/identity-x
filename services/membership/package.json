@@ -22,7 +22,7 @@
     "micro": "^9.3.4",
     "mongoose": "^5.12.3",
     "newrelic": "^7.3.0",
-    "validator": "^11.0.0"
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "eslint": "^7.23.0",

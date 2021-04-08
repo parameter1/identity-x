@@ -21,7 +21,7 @@
     "json2csv": "^4.5.4",
     "micro": "^9.3.4",
     "newrelic": "^7.3.0",
-    "validator": "^11.0.0"
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
