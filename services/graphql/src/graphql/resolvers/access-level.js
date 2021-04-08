@@ -4,7 +4,7 @@ const typeProjection = require('../utils/type-projection');
 
 module.exports = {
   AccessLevel: {
-    id: level => level._id,
+    id: (level) => level._id,
   },
 
   Query: {

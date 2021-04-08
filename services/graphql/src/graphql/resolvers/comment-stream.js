@@ -7,7 +7,7 @@ module.exports = {
    *
    */
   CommentStream: {
-    id: stream => stream._id,
+    id: (stream) => stream._id,
     /**
      *
      */

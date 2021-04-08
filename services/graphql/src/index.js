@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
   res.json({ ping: 'pong' });
 });
 
-const wait = ms => new Promise(resolve => setTimeout(resolve, parseInt(ms, 10)));
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, parseInt(ms, 10)));
 const log = (message) => {
   const { log: emit } = console;
   emit(`> ${message}`);
@@ -72,7 +72,7 @@ process.on('unhandledRejection', (e) => {
 });
 
 log(`> Booting ${pkg.name} v${pkg.version}...`);
-run().catch(e => setImmediate(() => {
+run().catch((e) => setImmediate(() => {
   newrelic.noticeError(e);
   throw e;
 }));

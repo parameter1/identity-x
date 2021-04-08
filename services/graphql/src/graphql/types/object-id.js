@@ -2,7 +2,6 @@ const { GraphQLScalarType } = require('graphql');
 const { ObjectID } = require('mongodb');
 const { Kind } = require('graphql/language');
 
-
 module.exports = new GraphQLScalarType({
   name: 'ObjectID',
   description: 'MongoDB ObjectID type.',

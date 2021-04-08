@@ -110,7 +110,6 @@ class UserContext {
   }
 }
 
-
 module.exports = async (authorization) => {
   const context = new UserContext(authorization);
   await context.load();

@@ -4,7 +4,7 @@ const { getAsObject } = require('@base-cms/object-path');
 
 module.exports = {
   User: {
-    id: user => user._id,
+    id: (user) => user._id,
   },
 
   Query: {
