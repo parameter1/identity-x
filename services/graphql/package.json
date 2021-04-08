@@ -15,7 +15,7 @@
     "@base-cms/env": "^1.37.0",
     "@base-cms/object-path": "^1.37.0",
     "@base-cms/utils": "^1.37.0",
-    "@godaddy/terminus": "^4.2.0",
+    "@godaddy/terminus": "^4.7.1",
     "@identity-x/service-clients": "^1.0.0",
     "apollo-server-express": "^2.22.2",
     "express": "^4.17.0",
