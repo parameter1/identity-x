@@ -22,8 +22,8 @@ const updateSelect = async ({
     options,
   } = payload;
 
-  const optionsWithIds = options.filter(option => option.id);
-  const currentOptionIds = select.options.map(option => `${option._id}`);
+  const optionsWithIds = options.filter((option) => option.id);
+  const currentOptionIds = select.options.map((option) => `${option._id}`);
   optionsWithIds.forEach((option) => {
     if (!currentOptionIds.includes(option.id)) throw createError(404, `No select option found for ${option.id} in question ${id}`);
   });

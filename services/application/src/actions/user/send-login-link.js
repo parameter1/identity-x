@@ -50,7 +50,8 @@ module.exports = async ({
   const appName = context.name || app.name;
 
   const addressFields = ['name', 'streetAddress', 'city', 'regionName', 'postalCode'];
-  const addressValues = addressFields.map(field => company[field]).filter(v => v).map(stripLines);
+  const addressValues = addressFields
+    .map((field) => company[field]).filter((v) => v).map(stripLines);
   const supportEmail = context.email || app.email || company.supportEmail;
   if (supportEmail) addressValues.push(supportEmail);
 

@@ -22,7 +22,7 @@ const schema = new Schema({
       validator(url) {
         return isURL(url, { require_protocol: true, required_host: true });
       },
-      message: props => `The URL "${props.value}" is invalid.`,
+      message: (props) => `The URL "${props.value}" is invalid.`,
     },
   },
   archived: {

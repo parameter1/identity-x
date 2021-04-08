@@ -6,7 +6,7 @@ const { Application, Team, AccessLevel } = require('../mongodb/models');
 
 const { isArray } = Array;
 
-const getAsArray = v => (isArray(v) ? v : []);
+const getAsArray = (v) => (isArray(v) ? v : []);
 
 module.exports = async ({ applicationId, email, ipAddress } = {}) => {
   if (!applicationId) throw createRequiredParamError('applicationId');
@@ -38,7 +38,7 @@ module.exports = async ({ applicationId, email, ipAddress } = {}) => {
 
   if (user) {
     const userTeamIds = getAsArray(user.teamIds);
-    getAsArray(user.accessLevelIds).forEach(id => accessLevelIds.push(id));
+    getAsArray(user.accessLevelIds).forEach((id) => accessLevelIds.push(id));
     const { domain } = user;
     if (userTeamIds.length) teamQuery.$or.push({ _id: { $in: userTeamIds } });
     if (domain) teamQuery.$or.push({ domains: domain });
@@ -46,7 +46,7 @@ module.exports = async ({ applicationId, email, ipAddress } = {}) => {
 
   const mergedTeams = await Team.find(teamQuery, { 'cidrs.min': 0, 'cidrs.max': 0 });
   mergedTeams.forEach((team) => {
-    getAsArray(team.accessLevelIds).forEach(id => accessLevelIds.push(id));
+    getAsArray(team.accessLevelIds).forEach((id) => accessLevelIds.push(id));
   });
 
   const accessLevelQuery = { applicationId, _id: { $in: accessLevelIds } };
