@@ -29,7 +29,7 @@ service.jsonServer({
   onError: newrelic.noticeError.bind(newrelic),
   port: INTERNAL_PORT,
   exposedPort: EXTERNAL_PORT,
-}).catch(e => setImmediate(() => {
+}).catch((e) => setImmediate(() => {
   newrelic.noticeError(e);
   throw e;
 }));
