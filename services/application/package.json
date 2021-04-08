@@ -13,10 +13,10 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@base-cms/env": "^1.0.0",
-    "@base-cms/micro": "^1.21.5",
-    "@base-cms/object-path": "^1.9.0",
-    "@base-cms/utils": "^1.9.0",
+    "@base-cms/env": "^1.37.0",
+    "@base-cms/micro": "^1.37.0",
+    "@base-cms/object-path": "^1.37.0",
+    "@base-cms/utils": "^1.37.0",
     "@identity-x/mongoose-plugins": "^1.0.0",
     "@identity-x/pagination": "^1.0.0",
     "@identity-x/service-clients": "^1.0.0",

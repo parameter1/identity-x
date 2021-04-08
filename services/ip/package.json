@@ -13,8 +13,8 @@
     "test": "yarn lint && node test"
   },
   "dependencies": {
-    "@base-cms/env": "^1.0.0",
-    "@base-cms/micro": "^1.21.5",
+    "@base-cms/env": "^1.37.0",
+    "@base-cms/micro": "^1.37.0",
     "ip6addr": "^0.2.2",
     "micro": "^9.3.4",
     "newrelic": "^7.3.0"
