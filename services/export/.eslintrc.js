@@ -1,9 +1,9 @@
 module.exports = {
   extends: 'airbnb-base',
   plugins: [
-    'import'
+    'import',
   ],
   rules: {
-    'no-underscore-dangle': [ 'error', { allow: ['_id'] } ],
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
 };

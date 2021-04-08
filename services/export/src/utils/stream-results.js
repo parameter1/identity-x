@@ -37,7 +37,7 @@ const executor = async (args) => {
 
     const consentAnswers = getAsArray(node, 'regionalConsentAnswers');
     const answers = regionalConsentPolicies.reduce((o, policy) => {
-      const answer = consentAnswers.find(v => v._id === policy._id);
+      const answer = consentAnswers.find((v) => v._id === policy._id);
       const given = answer ? answer.given : false;
       return { ...o, [`Consent: ${policy.name}`]: given };
     }, {});
@@ -46,12 +46,12 @@ const executor = async (args) => {
       let rowLabel = `Custom: ${customSelect.name}`;
       if (!customSelect.active) rowLabel = `${rowLabel} [inactive]`;
       const userAnswers = getAsArray(node, 'customSelectFieldAnswers');
-      const fieldAnswer = userAnswers.find(answer => `${answer._id}` === `${customSelect._id}`);
+      const fieldAnswer = userAnswers.find((answer) => `${answer._id}` === `${customSelect._id}`);
       const answeredOptions = fieldAnswer && isArray(fieldAnswer.values)
         ? fieldAnswer.values
-          .map(value => customSelect.options.find(option => `${option._id}` === `${value}`))
-          .filter(option => option)
-          .map(option => option.label)
+          .map((value) => customSelect.options.find((option) => `${option._id}` === `${value}`))
+          .filter((option) => option)
+          .map((option) => option.label)
         : [];
       return { ...o, [rowLabel]: customSelect.multiple ? answeredOptions.join('|') : (answeredOptions[0] || '') };
     }, {});

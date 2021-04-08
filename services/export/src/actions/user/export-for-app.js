@@ -54,7 +54,7 @@ module.exports = async ({
       pagination: { limit: 0, sort: { field: 'name', order: 1 } },
     }),
   ]);
-  const customSelectFields = customFieldConnection.edges.map(edge => edge.node);
+  const customSelectFields = customFieldConnection.edges.map((edge) => edge.node);
 
   try {
     const contents = await new Promise((resolve, reject) => {
@@ -62,7 +62,7 @@ module.exports = async ({
       const parser = new AsyncParser();
       parser.processor
         // eslint-disable-next-line no-return-assign
-        .on('data', chunk => csv += chunk.toString())
+        .on('data', (chunk) => csv += chunk.toString())
         .on('error', reject)
         .on('end', () => resolve(csv));
       streamResults({
