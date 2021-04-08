@@ -20,7 +20,7 @@
     "@identity-x/service-clients": "^1.0.0",
     "@identity-x/utils": "^1.0.0",
     "micro": "^9.3.4",
-    "mongoose": "^5.5.11",
+    "mongoose": "^5.12.3",
     "newrelic": "^7.3.0",
     "validator": "^11.0.0"
   },
