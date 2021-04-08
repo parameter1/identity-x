@@ -9,7 +9,7 @@
   "private": true,
   "dependencies": {
     "base64-url": "^2.2.2",
-    "deepmerge": "^3.2.1",
+    "lodash.merge": "^4.6.2",
     "mongodb-extended-json": "^1.10.1"
   },
   "devDependencies": {

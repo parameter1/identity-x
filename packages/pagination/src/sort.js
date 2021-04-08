@@ -1,4 +1,4 @@
-const deepMerge = require('deepmerge');
+const merge = require('lodash.merge');
 
 const { assign, keys } = Object;
 
@@ -38,7 +38,7 @@ class Sort {
    * @return {object}
    */
   get options() {
-    return deepMerge({}, this.opts);
+    return merge({}, this.opts);
   }
 
   /**
@@ -123,7 +123,7 @@ class Sort {
    */
   set collation(options) {
     const defaults = { locale: 'en_US' };
-    this.opts.collation = assign({}, defaults, options);
+    this.opts.collation = { ...defaults, ...options };
   }
 
   /**
