@@ -13,5 +13,5 @@ module.exports = {
   regionalConsentPolicy,
   updateCompanyInfo,
   updateField,
-  updateForId: params => updateForId(Organization, params),
+  updateForId: (params) => updateForId(Organization, params),
 };

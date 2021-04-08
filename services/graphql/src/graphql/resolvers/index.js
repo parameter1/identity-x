@@ -1,5 +1,5 @@
 const GraphQLJSON = require('graphql-type-json');
-const deepAssign = require('deep-assign');
+const merge = require('lodash.merge');
 
 const accessLevel = require('./access-level');
 const appUser = require('./app-user');
@@ -13,7 +13,7 @@ const team = require('./team');
 const user = require('./user');
 const { DateType, ObjectIDType } = require('../types');
 
-module.exports = deepAssign(
+module.exports = merge(
   accessLevel,
   appUser,
   application,

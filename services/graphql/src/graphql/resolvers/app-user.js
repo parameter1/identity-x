@@ -12,7 +12,7 @@ module.exports = {
   },
 
   AppUser: {
-    id: user => user._id,
+    id: (user) => user._id,
     accessLevels: ({ accessLevelIds }) => {
       if (!isArray(accessLevelIds) || !accessLevelIds.length) return [];
       const query = { _id: { $in: accessLevelIds } };
@@ -31,12 +31,12 @@ module.exports = {
       if (!countryCode || !regionCode) return null;
       return localeService.request('region.asObject', { countryCode, regionCode });
     },
-    name: ({ givenName, familyName }) => [givenName, familyName].filter(v => v).join(' '),
+    name: ({ givenName, familyName }) => [givenName, familyName].filter((v) => v).join(' '),
 
     regionalConsentAnswers: ({ regionalConsentAnswers }, _, { app }) => {
       const { regionalConsentPolicies } = app.org;
-      const policyIds = regionalConsentPolicies.map(policy => policy._id);
-      return regionalConsentAnswers.filter(answer => policyIds.includes(answer._id));
+      const policyIds = regionalConsentPolicies.map((policy) => policy._id);
+      return regionalConsentAnswers.filter((answer) => policyIds.includes(answer._id));
     },
 
     customSelectFieldAnswers: ({ customSelectFieldAnswers }, { input }, { app }) => {
@@ -58,10 +58,10 @@ module.exports = {
   },
 
   AppUserRegionalConsentAnswer: {
-    id: answer => answer._id,
+    id: (answer) => answer._id,
     policy: (answer, _, { app }) => {
       const { regionalConsentPolicies } = app.org;
-      return regionalConsentPolicies.find(policy => policy._id === answer._id);
+      return regionalConsentPolicies.find((policy) => policy._id === answer._id);
     },
   },
 

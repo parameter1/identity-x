@@ -12,6 +12,6 @@ module.exports = async ({ applicationId, contextId, payload }) => {
   if (!app) throw createError(404, `No application was found for '${applicationId}'`);
   const context = app.contexts.id(contextId);
   if (!context) throw createError(404, `No application context was found for '${contextId}'`);
-  Object.keys(payload).forEach(key => context.set(key, payload[key]));
+  Object.keys(payload).forEach((key) => context.set(key, payload[key]));
   return app.save();
 };

@@ -8,7 +8,7 @@ module.exports = {
    *
    */
   Comment: {
-    id: comment => comment._id,
+    id: (comment) => comment._id,
     /**
      *
      */
@@ -97,7 +97,7 @@ module.exports = {
           Banned: { banned: true },
           Flagged: { flagged: true },
         };
-        const statusOr = statuses.map(status => statusMap[status]);
+        const statusOr = statuses.map((status) => statusMap[status]);
         $and.push({ $or: statusOr });
       }
 

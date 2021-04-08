@@ -32,19 +32,19 @@ module.exports = async ({
 
   const mapped = fields.map((field) => {
     const { multiple } = field;
-    const fieldAnswer = customFieldAnswers.find(answer => `${answer._id}` === `${field._id}`);
+    const fieldAnswer = customFieldAnswers.find((answer) => `${answer._id}` === `${field._id}`);
     const answeredOptions = fieldAnswer && isArray(fieldAnswer.values)
       ? fieldAnswer.values
-        .map(value => field.options.find(option => `${option._id}` === `${value}`))
-        .filter(option => option)
+        .map((value) => field.options.find((option) => `${option._id}` === `${value}`))
+        .filter((option) => option)
       : [];
 
     return {
       id: field._id,
       field,
       hasAnswered: Boolean(answeredOptions.length),
-      answers: multiple ? answeredOptions : [answeredOptions[0]].filter(v => v),
+      answers: multiple ? answeredOptions : [answeredOptions[0]].filter((v) => v),
     };
   });
-  return onlyAnswered ? mapped.filter(field => field.hasAnswered) : mapped;
+  return onlyAnswered ? mapped.filter((field) => field.hasAnswered) : mapped;
 };

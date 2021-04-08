@@ -60,7 +60,7 @@ const schema = new Schema({
       validator(domain) {
         return !isBurnerDomain(domain);
       },
-      message: props => `The email domain "${props.value}" is not allowed. Please enter a valid email address.`,
+      message: (props) => `The email domain "${props.value}" is not allowed. Please enter a valid email address.`,
     },
   },
   displayName: {

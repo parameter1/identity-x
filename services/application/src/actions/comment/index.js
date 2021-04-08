@@ -16,7 +16,7 @@ module.exports = {
   listForStream,
   find: ({ query, fields }) => find(Comment, { query, fields }),
   findById: ({ id, fields }) => findById(Comment, { id, fields }),
-  listForApp: params => listForApp(Comment, params),
-  matchForApp: params => matchForApp(Comment, params),
-  updateFieldWithApp: params => updateFieldWithApp(Comment, params),
+  listForApp: (params) => listForApp(Comment, params),
+  matchForApp: (params) => matchForApp(Comment, params),
+  updateFieldWithApp: (params) => updateFieldWithApp(Comment, params),
 };

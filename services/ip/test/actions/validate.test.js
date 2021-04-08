@@ -6,9 +6,9 @@ const validate = require('../../src/actions/validate');
   'fe80::/10',
   '10.0.0.0/8',
   '172.217.9.78/32',
-].forEach(address => assert(validate({ address }) === true, `${address} should validate!`));
+].forEach((address) => assert(validate({ address }) === true, `${address} should validate!`));
 
 [
   'fe8g::/10',
   '192.168.0.256',
-].forEach(address => assert(validate({ address }) === false, `${address} should not validate!`));
+].forEach((address) => assert(validate({ address }) === false, `${address} should not validate!`));

@@ -2,13 +2,13 @@ const { applicationService, organizationService } = require('@identity-x/service
 
 module.exports = {
   Application: {
-    id: app => app._id,
-    organization: app => organizationService.request('findById', { id: app.organizationId }),
-    contexts: app => app.contexts,
+    id: (app) => app._id,
+    organization: (app) => organizationService.request('findById', { id: app.organizationId }),
+    contexts: (app) => app.contexts,
   },
 
   ApplicationContext: {
-    id: context => context._id,
+    id: (context) => context._id,
   },
 
   Query: {

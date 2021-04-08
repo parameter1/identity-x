@@ -24,7 +24,7 @@ x-env-defaults: &env
 x-node-defaults: &node
   tty: true
   init: true
-  image: node:10.15
+  image: node:14.16-alpine
   working_dir: /identity-x
   restart: always
   volumes:

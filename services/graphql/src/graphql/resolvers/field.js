@@ -25,7 +25,7 @@ module.exports = {
     /**
      *
      */
-    id: field => field._id,
+    id: (field) => field._id,
 
     /**
      *
@@ -44,7 +44,7 @@ module.exports = {
     /**
      *
      */
-    id: option => option._id,
+    id: (option) => option._id,
   },
 
   /**

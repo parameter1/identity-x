@@ -13,19 +13,19 @@
     "test": "yarn lint && node test"
   },
   "dependencies": {
-    "@base-cms/env": "^1.0.0",
-    "@base-cms/micro": "^1.21.5",
-    "ip6addr": "^0.2.2",
+    "@base-cms/env": "^1.37.0",
+    "@base-cms/micro": "^1.37.0",
+    "ip6addr": "^0.2.3",
     "micro": "^9.3.4",
-    "newrelic": "^6.4.0"
+    "newrelic": "^7.3.0"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "glob": "^7.0.0",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "glob": "^7.1.6",
     "gulp": "^4.0.2",
     "gulp-cached": "^1.1.1",
-    "gulp-eslint": "^5.0.0"
+    "gulp-eslint": "^6.0.0"
   }
 }

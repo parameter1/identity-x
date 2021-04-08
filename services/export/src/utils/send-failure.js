@@ -1,7 +1,7 @@
 const { mailerService } = require('@identity-x/service-clients');
 const { SENDING_DOMAIN, SUPPORT_EMAIL, SUPPORT_ENTITY } = require('../env');
 
-const html = error => `
+const html = (error) => `
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
@@ -25,7 +25,7 @@ const html = error => `
 </html>
 `;
 
-const text = error => `
+const text = (error) => `
 Your export was unsuccessful.
 -------------------------
 

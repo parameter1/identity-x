@@ -9,6 +9,6 @@ module.exports = async ({
   if (!id) throw createRequiredParamError('id');
   const org = await Organization.findById(id);
   if (!org) throw createError(404, `No organization found for ID ${id}.`);
-  Object.keys(payload).forEach(key => org.set(`company.${key}`, payload[key]));
+  Object.keys(payload).forEach((key) => org.set(`company.${key}`, payload[key]));
   return org.save();
 };

@@ -1,1 +1,1 @@
-module.exports = key => `${key.toUpperCase()}_SERVICE_URL`;
+module.exports = (key) => `${key.toUpperCase()}_SERVICE_URL`;

@@ -11,7 +11,6 @@ const getPolicy = async ({ id, policyId, fields }) => {
   return { org, policy };
 };
 
-
 module.exports = {
   add: async ({ id, payload }) => {
     if (!id) throw createRequiredParamError('id');
@@ -42,7 +41,7 @@ module.exports = {
     if (!policyId) throw createRequiredParamError('policyId');
     if (!payload) throw createRequiredParamError('payload');
     const { org, policy } = await getPolicy({ id, policyId });
-    Object.keys(payload).forEach(key => policy.set(key, payload[key]));
+    Object.keys(payload).forEach((key) => policy.set(key, payload[key]));
     return org.save();
   },
 };

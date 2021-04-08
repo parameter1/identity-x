@@ -8,7 +8,7 @@ const cidrSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validator: address => ipService.request('validate', { address }),
+      validator: (address) => ipService.request('validate', { address }),
       message: 'Invalid IP Address or CIDR notation {VALUE}',
     },
   },

@@ -18,8 +18,8 @@ module.exports = {
     if (!supportedTypes.includes(type)) throw createParamError('type', type, supportedTypes);
     return findById(SelectField, { id, fields });
   },
-  listForApp: params => listForApp(Field, params),
-  matchForApp: params => matchForApp(Field, params),
+  listForApp: (params) => listForApp(Field, params),
+  matchForApp: (params) => matchForApp(Field, params),
   updateOne,
   userSelectAnswers,
 };

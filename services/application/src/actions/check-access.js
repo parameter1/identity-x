@@ -4,7 +4,7 @@ const loadContext = require('./load-context');
 
 const { isArray } = Array;
 
-const getAsArray = v => (isArray(v) ? v : []);
+const getAsArray = (v) => (isArray(v) ? v : []);
 
 const isLoggedIn = ({ hasUser, hasTeams }) => (hasUser || hasTeams);
 
@@ -36,14 +36,14 @@ module.exports = async ({
   const requiresAccessLevel = Boolean(requiredAccessLevels.length);
 
   // The access level IDs found in the current context.
-  const foundAccessLevelIds = context.mergedAccessLevels.map(level => `${level.id}`);
+  const foundAccessLevelIds = context.mergedAccessLevels.map((level) => `${level.id}`);
 
   // The required access level IDs (that were found/verified in the database).
-  const verifiedAccessLevelIds = requiredAccessLevels.map(level => `${level.id}`);
+  const verifiedAccessLevelIds = requiredAccessLevels.map((level) => `${level.id}`);
 
   // Whether the context contains at least one required access level.
   const hasRequiredAccessLevel = verifiedAccessLevelIds
-    .some(id => foundAccessLevelIds.includes(id));
+    .some((id) => foundAccessLevelIds.includes(id));
 
   return {
     canAccess: canAccess(isEnabled, {

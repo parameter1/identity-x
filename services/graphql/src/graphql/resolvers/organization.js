@@ -8,24 +8,24 @@ const {
 const { getAsObject } = require('@base-cms/object-path');
 
 const membershipResolvers = {
-  id: membership => membership._id,
-  organization: membership => organizationService.request('findById', { id: membership.organizationId }),
-  user: membership => userService.request('findByEmail', { email: membership.email }),
+  id: (membership) => membership._id,
+  organization: (membership) => organizationService.request('findById', { id: membership.organizationId }),
+  user: (membership) => userService.request('findByEmail', { email: membership.email }),
 };
 
 module.exports = {
   Organization: {
-    id: org => org._id,
+    id: (org) => org._id,
     applications: ({ _id }) => applicationService.request('listForOrg', { id: _id }),
     regionalConsentPolicies: ({ regionalConsentPolicies }, { input }) => {
       const { status } = input;
       if (status === 'all') return regionalConsentPolicies;
-      if (status === 'enabled') return regionalConsentPolicies.filter(policy => policy.enabled);
-      return regionalConsentPolicies.filter(policy => !policy.enabled);
+      if (status === 'enabled') return regionalConsentPolicies.filter((policy) => policy.enabled);
+      return regionalConsentPolicies.filter((policy) => !policy.enabled);
     },
   },
   OrganizationCompany: {
-    id: company => company._id,
+    id: (company) => company._id,
   },
   OrganizationInvitation: {
     invitedBy: ({ invitedByEmail }) => userService.request('findByEmail', { email: invitedByEmail }),
@@ -34,7 +34,7 @@ module.exports = {
   OrganizationMembership: membershipResolvers,
 
   OrganizationRegionalConsentPolicy: {
-    id: policy => policy._id,
+    id: (policy) => policy._id,
     countries: ({ countryCodes }) => localeService.request('country.asObjects', { codes: countryCodes }),
   },
 

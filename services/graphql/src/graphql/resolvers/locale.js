@@ -5,15 +5,15 @@ module.exports = {
    *
    */
   LocaleCountry: {
-    id: country => country.code,
+    id: (country) => country.code,
   },
 
   /**
    *
    */
   LocaleRegion: {
-    id: region => region.code,
-    code: region => region.regionCode,
+    id: (region) => region.code,
+    code: (region) => region.regionCode,
   },
 
   Query: {

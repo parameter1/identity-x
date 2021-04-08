@@ -1,6 +1,6 @@
-const deepMerge = require('deepmerge');
+const merge = require('lodash.merge');
 
-const { assign, keys } = Object;
+const { keys } = Object;
 
 class Sort {
   /**
@@ -38,7 +38,7 @@ class Sort {
    * @return {object}
    */
   get options() {
-    return deepMerge({}, this.opts);
+    return merge({}, this.opts);
   }
 
   /**
@@ -60,7 +60,7 @@ class Sort {
    */
   get valueReversed() {
     const { value } = this;
-    return keys(value).reduce((obj, key) => assign(obj, { [key]: value[key] === 1 ? -1 : 1 }), {});
+    return keys(value).reduce((obj, key) => ({ ...obj, [key]: value[key] === 1 ? -1 : 1 }), {});
   }
 
   /**
@@ -123,7 +123,7 @@ class Sort {
    */
   set collation(options) {
     const defaults = { locale: 'en_US' };
-    this.opts.collation = assign({}, defaults, options);
+    this.opts.collation = { ...defaults, ...options };
   }
 
   /**

@@ -9,12 +9,12 @@ module.exports = () => {
   const errors = [];
   return Promise.all([
 
-  ].map(p => p.catch((err) => {
+  ].map((p) => (p).catch((err) => {
     errors.push(err);
   }))).then((res) => {
     if (errors.length) {
       log(errors);
-      throw new HealthCheckError('Unhealthy', errors.map(e => e.message));
+      throw new HealthCheckError('Unhealthy', errors.map((e) => e.message));
     }
     return res;
   });

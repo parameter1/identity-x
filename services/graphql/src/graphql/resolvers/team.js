@@ -6,7 +6,7 @@ const { isArray } = Array;
 
 module.exports = {
   Team: {
-    id: team => team._id,
+    id: (team) => team._id,
     accessLevels: ({ accessLevelIds }, args, ctx, info) => {
       if (!isArray(accessLevelIds) || !accessLevelIds.length) return [];
 
@@ -16,14 +16,14 @@ module.exports = {
     },
     cidrs: ({ cidrs }) => {
       if (!isArray(cidrs) || !cidrs.length) return [];
-      return cidrs.map(c => c.value).filter(c => c);
+      return cidrs.map((c) => c.value).filter((c) => c);
     },
     /**
      * @deprecated
      */
     ipAddresses: ({ cidrs }) => {
       if (!isArray(cidrs) || !cidrs.length) return [];
-      return cidrs.map(c => c.value).filter(c => c);
+      return cidrs.map((c) => c.value).filter((c) => c);
     },
   },
 
@@ -86,7 +86,7 @@ module.exports = {
         applicationId,
         payload: {
           ...input,
-          cidrs: isArray(cidrs) ? cidrs.map(value => ({ value })) : [],
+          cidrs: isArray(cidrs) ? cidrs.map((value) => ({ value })) : [],
         },
       });
     },
@@ -103,7 +103,7 @@ module.exports = {
         applicationId,
         payload: {
           ...payload,
-          cidrs: isArray(cidrs) ? cidrs.map(value => ({ value })) : [],
+          cidrs: isArray(cidrs) ? cidrs.map((value) => ({ value })) : [],
         },
       });
     },
