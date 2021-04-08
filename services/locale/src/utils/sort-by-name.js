@@ -1,4 +1,4 @@
-const normalize = name => name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const normalize = (name) => name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 module.exports = (a, b) => {
   const nameA = normalize(a.name);
   const nameB = normalize(b.name);

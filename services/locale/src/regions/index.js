@@ -7,7 +7,7 @@ const US = require('./us');
 const set = (data, countryCode) => {
   const country = countryObject({ code: countryCode });
   return Object.keys(data)
-    .map(code => ({ code, ...data[code] }))
+    .map((code) => ({ code, ...data[code] }))
     .sort(sortByName)
     .reduce((o, { code, ...rest }) => ({
       ...o,

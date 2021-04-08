@@ -13,8 +13,8 @@ module.exports = ({
   const data = { ...countries.getNames(lang) };
 
   const top = (isArray(prioritize) && prioritize.length ? prioritize : [])
-    .filter(code => code)
-    .map(code => code.toUpperCase())
+    .filter((code) => code)
+    .map((code) => code.toUpperCase())
     .reduce((o, code) => {
       const value = data[code];
       if (value) {
@@ -25,7 +25,7 @@ module.exports = ({
     }, {});
 
   const sorted = Object.keys(data)
-    .map(code => ({ code, name: data[code] }))
+    .map((code) => ({ code, name: data[code] }))
     .sort(sortByName)
     .reduce((o, { code, name }) => ({ ...o, [code]: name }), {});
 

@@ -7,5 +7,5 @@ module.exports = ({ countryCode, category }) => {
   if (!data) return [];
   const values = Object.values(data);
   if (!category) return values;
-  return values.filter(v => v.category === category);
+  return values.filter((v) => v.category === category);
 };
