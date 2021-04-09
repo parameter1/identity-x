@@ -10,6 +10,7 @@ extend type Query {
 }
 
 extend type Mutation {
+  createActiveUserApiToken: String! @requiresAuth
   registerNewUser(input: RegisterNewUserMutationInput!): UserRegistration!
   inviteUserToOrg(input: InviteUserToOrgMutationInput!): String @requiresOrgRole(roles: [Owner, Administrator])
   acceptOrgInvite(input: AcceptOrgInviteMutationInput!): String @requiresAuth

@@ -129,6 +129,14 @@ module.exports = {
     /**
      *
      */
+    createActiveUserApiToken: (_, __, { user }) => {
+      const email = user.get('email');
+      return userService.request('createApiToken', { email });
+    },
+
+    /**
+     *
+     */
     updateUserProfile: (_, { input }, { user }) => {
       const { givenName, familyName, photoURL } = input;
       const payload = { givenName, familyName, photoURL };
