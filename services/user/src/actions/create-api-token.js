@@ -20,7 +20,7 @@ module.exports = async ({ email } = {}) => {
   }
   const { token } = await tokenService.request('create', {
     payload: { aud: email },
-    sub: 'user-api-token',
+    sub,
   });
   return token;
 };

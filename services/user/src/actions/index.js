@@ -5,6 +5,7 @@ const login = require('./login');
 const logout = require('./logout');
 const sendLoginLink = require('./send-login-link');
 const update = require('./update');
+const verifyApiToken = require('./verify-api-token');
 const verifyAuth = require('./verify-auth');
 
 module.exports = {
@@ -15,5 +16,6 @@ module.exports = {
   logout,
   sendLoginLink,
   update,
+  verifyApiToken,
   verifyAuth,
 };
