@@ -29,6 +29,8 @@ extend type Mutation {
 
   "Sets field data to an unverified app user only. Is used for collecting user info before a login link is sent/used."
   setAppUserUnverifiedData(input: SetAppUserUnverifiedDataMutationInput!): AppUser! @requiresApp # must be public
+  "Adds an external identifier (with namespace) to an app user."
+  addAppUserExternalId(input: SetAppUserExternalIdMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
 }
 
 enum AppUserSortField {
@@ -81,8 +83,27 @@ type AppUser {
   regionalConsentAnswers: [AppUserRegionalConsentAnswer!]! @projection
   "Shows all answers to custom select questions. By default this will include all questions, even if the user has not answered."
   customSelectFieldAnswers(input: AppUserCustomSelectFieldAnswersInput = {}): [AppUserCustomSelectFieldAnswer!]! @projection
+  "Lists all external IDs + namespaces associated with this user."
+  externalIds: [AppUserExternalEntityId!]! @projection
   createdAt: Date @projection
   updatedAt: Date @projection
+}
+
+type AppUserExternalEntityId {
+  id: String!
+  identifier: AppUserExternalIdentifier!
+  namespace: AppUserExternalNamespace!
+}
+
+type AppUserExternalIdentifier {
+  value: String!
+  type: String
+}
+
+type AppUserExternalNamespace {
+  provider: String
+  tenant: String
+  type: String!
 }
 
 type AppUserRegionalConsentAnswer {
@@ -210,6 +231,31 @@ input SetAppUserBannedMutationInput {
   id: String!
   "Whether the user will be banned or not."
   value: Boolean!
+}
+
+input SetAppUserExternalIdMutationInput {
+  "The user ID to set the external ID to."
+  userId: String!
+  "The external identifier input."
+  identifier: AppUserExternalIdentifierInput!
+  "The external namespace input."
+  namespace: AppUserExternalNamespaceInput!
+}
+
+input AppUserExternalIdentifierInput {
+  "The external identifier value."
+  value: String!
+  "The (optiona) external identifier type - for distinguishing between different types of IDs."
+  type: String
+}
+
+input AppUserExternalNamespaceInput {
+  "The (optional) namespace provider."
+  provider: String
+  "The (optional) namespace tenant."
+  tenant: String
+  "The namespace model type."
+  type: String!
 }
 
 input SetAppUserRegionalConsentMutationInput {
