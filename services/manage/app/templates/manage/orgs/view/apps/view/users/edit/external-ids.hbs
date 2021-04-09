@@ -1,0 +1,34 @@
+<BsModal::Body>
+  <div class="row">
+    <div class="col table-responsive">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Tenant</th>
+            <th>Entity Type</th>
+            <th>ID</th>
+            <th>ID Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.model.externalIds as |ent|}}
+            <tr>
+              <td>{{ ent.namespace.provider }}</td>
+              <td>{{ ent.namespace.tenant }}</td>
+              <td>{{ ent.namespace.type }}</td>
+              <td>{{ ent.identifier.value }}</td>
+              <td>{{ ent.identifier.type }}</td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="5" class="text-muted">
+                No external IDs have been assigned to this user
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</BsModal::Body>
