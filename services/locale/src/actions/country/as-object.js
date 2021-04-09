@@ -10,6 +10,7 @@ module.exports = ({ code, lang = 'en', withFlag = true }) => {
   if (!alpha2) return null;
   const obj = {
     code: alpha2,
+    alpha3: countries.getAlpha3Code(name, lang),
     name: countries.getName(code, lang),
   };
   if (withFlag) obj.flag = getEmoji(alpha2);

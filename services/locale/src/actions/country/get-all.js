@@ -31,7 +31,7 @@ module.exports = ({
 
   const ordered = { ...top, ...sorted };
   return Object.keys(ordered).map((code) => {
-    const obj = { code, name: ordered[code] };
+    const obj = { code, name: ordered[code], alpha3: countries.getAlpha3Code(ordered[code], lang) };
     if (!withFlag) return obj;
     obj.flag = getEmoji(code);
     return obj;

@@ -27,6 +27,8 @@ enum LocaleCountriesWithRegions {
 type LocaleCountry {
   "The ISO-3166 Alpha2 country code"
   id: String!
+  "The ISO-3166 Alpha3 country code"
+  alpha3: String!
   "The country name"
   name: String!
   "The country's flag emoji"
