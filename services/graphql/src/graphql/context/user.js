@@ -3,7 +3,7 @@ const { get } = require('object-path');
 const { membershipService, userService, applicationService } = require('@identity-x/service-clients');
 
 const { isArray } = Array;
-const allowedTypes = ['OrgUser', 'AppUser'];
+const allowedTypes = ['OrgUser', 'AppUser', 'OrgUserApiToken'];
 
 class UserContext {
   constructor(authorization) {
@@ -18,11 +18,13 @@ class UserContext {
       try {
         const [type, token] = authorization.split(' ');
         if (!allowedTypes.includes(type)) throw new Error(`Invalid authorization type. Allowed types are ${allowedTypes.join(' ')}`);
-        this.type = type;
+        this.type = type === 'OrgUserApiToken' ? 'OrgUser' : type;
         this.token = token;
 
         if (type === 'OrgUser') {
           await this.loadForOrg(token);
+        } else if (type === 'OrgUserApiToken') {
+          await this.loadForOrgApiToken(token);
         } else {
           await this.loadForApp(token);
         }
@@ -30,6 +32,12 @@ class UserContext {
         this.error = e;
       }
     }
+  }
+
+  async loadForOrgApiToken(token) {
+    const { token: decoded, user } = await userService.request('verifyApiToken', { token });
+    this.decoded = decoded;
+    this.user = user;
   }
 
   async loadForOrg(token) {
