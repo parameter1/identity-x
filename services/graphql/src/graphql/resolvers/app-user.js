@@ -11,6 +11,10 @@ module.exports = {
     application: (_, __, { app }) => applicationService.request('findById', { id: app.getId() }),
   },
 
+  AppUserExternalEntityId: {
+    id: entity => entity._id,
+  },
+
   AppUser: {
     id: user => user._id,
     accessLevels: ({ accessLevelIds }) => {
@@ -164,6 +168,20 @@ module.exports = {
   },
 
   Mutation: {
+    /**
+     *
+     */
+    addAppUserExternalId: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { userId, identifier, namespace } = input;
+      return applicationService.request('user.externalId.add', {
+        applicationId,
+        userId,
+        identifier,
+        namespace,
+      });
+    },
+
     /**
      *
      */
