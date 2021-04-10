@@ -43,7 +43,7 @@ module.exports = async ({
     ...payload,
     ...initial,
   };
-  const token = sign({ payload: toSign });
+  const token = await sign({ payload: toSign });
   await Token.create({
     _id: jti,
     sub,
