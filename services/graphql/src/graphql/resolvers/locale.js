@@ -28,6 +28,14 @@ module.exports = {
     /**
      *
      */
+    localeCountry: (_, { input }) => {
+      const { code, lang, withFlag } = input;
+      return localeService.request('country.asObject', { code, lang, withFlag });
+    },
+
+    /**
+     *
+     */
     localeRegions: (_, { input }) => {
       const { countryCodes, categories } = input;
       return localeService.request('region.getAll', { countryCodes, categories });

@@ -3,7 +3,11 @@ const gql = require('graphql-tag');
 module.exports = gql`
 
 extend type Query {
+  "Retrieve a single country from a country code."
+  localeCountry(input: LocaleCountryQueryInput!): LocaleCountry
+  "Retrieves all registered countries."
   localeCountries(input: LocaleCountriesQueryInput = {}): [LocaleCountry!]!
+  "Retrieves all registered regions for a provided country."
   localeRegions(input: LocaleRegionsQueryInput = {}): [LocaleRegion!]!
 }
 
@@ -46,6 +50,15 @@ type LocaleRegion {
   category: LocaleRegionCategory!
   "The country information"
   country: LocaleCountry!
+}
+
+input LocaleCountryQueryInput {
+  "The ISO-3166 Alpha2 country code to query."
+  code: String!
+  "The language to return."
+  lang: String = "en"
+  "Whether to include the country flag emoji."
+  withFlag: Boolean = true
 }
 
 input LocaleCountriesQueryInput {
