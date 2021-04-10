@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken');
 const uuid = require('uuid/v4');
 const { createRequiredParamError } = require('@base-cms/micro').service;
-const { TOKEN_SECRET } = require('../env');
 const Token = require('../mongodb/models/token');
+const sign = require('./sign');
 
 /**
  * Creates an encoded JWT for the provided payload.
@@ -44,7 +43,7 @@ module.exports = async ({
     ...payload,
     ...initial,
   };
-  const token = jwt.sign(toSign, TOKEN_SECRET);
+  const token = sign({ payload: toSign });
   await Token.create({
     _id: jti,
     sub,
