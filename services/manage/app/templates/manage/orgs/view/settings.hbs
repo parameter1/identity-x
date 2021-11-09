@@ -22,9 +22,14 @@
           <Textarea @id="org.consentPolicy" @class="form-control" @value={{this.model.consentPolicy}} @rows={{5}} />
         </div>
 
-        <div class="form-group mb-0">
+        <div class="form-group">
           <FormElements::Label @for="org.emailConsentRequest">Request for Email Consent</FormElements::Label>
           <Textarea @id="org.emailConsentRequest" @class="form-control" @value={{this.model.emailConsentRequest}} @rows={{2}} />
+        </div>
+
+        <div class="form-group mb-0">
+          <FormElements::Label @for="org.appUserAllowedStaleDays">Allowed User Profile Staleness (in days)</FormElements::Label>
+          <Input @id="org.appUserAllowedStaleDays" @type="number" @min="0" @class="form-control" @value={{this.model.appUserAllowedStaleDays}} />
         </div>
       </div>
       <div class="card-footer">

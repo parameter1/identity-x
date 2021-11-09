@@ -13,6 +13,7 @@ const mutation = gql`
       description
       consentPolicy
       emailConsentRequest
+      appUserAllowedStaleDays
     }
   }
 `;
@@ -44,7 +45,14 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
           consentPolicy,
           emailConsentRequest,
         } = this.model;
-        const payload = { name, description, consentPolicy, emailConsentRequest };
+        const appUserAllowedStaleDays = parseFloat(this.model.appUserAllowedStaleDays);
+        const payload = {
+          name,
+          description,
+          consentPolicy,
+          emailConsentRequest,
+          appUserAllowedStaleDays: appUserAllowedStaleDays > 0 ? appUserAllowedStaleDays : null,
+        };
         const input = { id, payload };
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateOrganization');

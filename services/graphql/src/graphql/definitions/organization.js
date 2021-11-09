@@ -37,6 +37,7 @@ type Organization {
   photoURL: String @projection
   consentPolicy: String @projection
   emailConsentRequest: String @projection
+  appUserAllowedStaleDays: Float @projection
 
   company: OrganizationCompany @projection
   regionalConsentPolicies(input: OrganizationRegionalConsentPoliciesInput = {}): [OrganizationRegionalConsentPolicy!]! @projection
@@ -127,6 +128,7 @@ input UpdateOrganizationPayloadInput {
   description: String
   consentPolicy: String
   emailConsentRequest: String
+  appUserAllowedStaleDays: Float
 }
 
 input UpdateOrganizationMutationInput {

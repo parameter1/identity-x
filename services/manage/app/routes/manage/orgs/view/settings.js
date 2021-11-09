@@ -13,6 +13,7 @@ const query = gql`
       description
       consentPolicy
       emailConsentRequest
+      appUserAllowedStaleDays
       company {
         ...OrganizationCompanyFragment
       }
