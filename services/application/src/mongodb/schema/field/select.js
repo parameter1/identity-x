@@ -17,6 +17,14 @@ const optionSchema = new Schema({
     type: Number,
     default: 0,
   },
+
+  /**
+   * An external identifier value to use when an external ID/namespace is present on the question.
+   */
+  externalIdentifier: {
+    type: String,
+    trim: true,
+  },
 });
 
 const schema = new Schema({

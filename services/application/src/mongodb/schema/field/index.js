@@ -1,5 +1,6 @@
 const { Schema } = require('mongoose');
 const { applicationPlugin } = require('@identity-x/mongoose-plugins');
+const externalIdentifierPlugin = require('../plugins/external-identifier');
 
 const schema = new Schema({
   /**
@@ -41,6 +42,7 @@ const schema = new Schema({
 });
 
 schema.plugin(applicationPlugin, { collateWhen: ['name', 'label'] });
+schema.plugin(externalIdentifierPlugin, { fieldName: 'externalId', multi: false });
 
 schema.index({ name: 1, _id: 1 }, { collation: { locale: 'en_US' } });
 schema.index({ label: 1, _id: 1 }, { collation: { locale: 'en_US' } });
