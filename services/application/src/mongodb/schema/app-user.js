@@ -4,6 +4,7 @@ const { emailValidator, applicationPlugin, localePlugin } = require('@identity-x
 const { localeService } = require('@identity-x/service-clients');
 const connection = require('../connection');
 const accessLevelPlugin = require('./plugins/access-level');
+const externalIdentifierPlugin = require('./plugins/external-identifier');
 const teamPlugin = require('./plugins/team');
 const { isBurnerDomain } = require('../../utils/burner-email');
 
@@ -38,46 +39,6 @@ const customSelectFieldAnswerSchema = new Schema({
   values: {
     type: [Schema.Types.ObjectId],
     default: () => [],
-  },
-});
-
-const externalIdentifierSchema = new Schema({
-  _id: false,
-  value: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-  },
-});
-
-const externalNamespaceSchema = new Schema({
-  _id: false,
-  provider: {
-    type: String,
-  },
-  tenant: {
-    type: String,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-});
-
-const externalIdSchema = new Schema({
-  _id: {
-    type: String,
-    required: true,
-  },
-  identifier: {
-    type: externalIdentifierSchema,
-    required: true,
-  },
-  namespace: {
-    type: externalNamespaceSchema,
-    required: true,
   },
 });
 
@@ -160,15 +121,12 @@ const schema = new Schema({
     type: [customSelectFieldAnswerSchema],
     default: () => [],
   },
-  externalIds: {
-    type: [externalIdSchema],
-    default: () => [],
-  },
 }, { timestamps: true });
 
 schema.plugin(applicationPlugin, { collateWhen: ['email'] });
 schema.plugin(accessLevelPlugin);
 schema.plugin(teamPlugin);
+schema.plugin(externalIdentifierPlugin);
 schema.plugin(localePlugin, { localeService });
 
 schema.pre('validate', async function setDomain() {
