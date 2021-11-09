@@ -41,6 +41,8 @@ interface FieldInterface {
   createdAt: Date! @projection
   "The date the field was updated."
   updatedAt: Date! @projection
+  "An external ID + namespaces associated with this custom field."
+  externalId: FieldInterfaceExternalEntityId @projection
 }
 
 type FieldInterfaceConnection {
@@ -52,6 +54,23 @@ type FieldInterfaceConnection {
 type FieldInterfaceEdge {
   node: FieldInterface!
   cursor: String!
+}
+
+type FieldInterfaceExternalEntityId {
+  id: String!
+  identifier: FieldInterfaceExternalIdentifier!
+  namespace: FieldInterfaceExternalNamespace!
+}
+
+type FieldInterfaceExternalIdentifier {
+  value: String!
+  type: String
+}
+
+type FieldInterfaceExternalNamespace {
+  provider: String
+  tenant: String
+  type: String!
 }
 
 type SelectField implements FieldInterface {
@@ -69,6 +88,8 @@ type SelectField implements FieldInterface {
   createdAt: Date! @projection
   "The date the field was updated."
   updatedAt: Date! @projection
+  "An external ID + namespaces associated with this custom field."
+  externalId: FieldInterfaceExternalEntityId @projection
 
   "Whether the select field supports multiple answers."
   multiple: Boolean! @projection
@@ -81,6 +102,8 @@ type SelectFieldOption {
   id: String!
   "The select option label. This is the value the user will see within the form control."
   label: String!
+  "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
+  externalIdentifier: String
 }
 
 input CreateSelectFieldMutationInput {
