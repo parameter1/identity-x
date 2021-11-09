@@ -7,6 +7,7 @@
       <p>Active: {{#if field.active}}Yes{{else}}No{{/if}}</p>
       <p>Allow Multiple Answers: {{#if field.multiple}}Yes{{else}}No{{/if}}</p>
       <p>Globally Required: {{#if field.required}}Yes{{else}}No{{/if}}</p>
+      {{#if field.externalId.id}}<p>External ID: <em>{{field.externalId.id}}</em></p>{{/if}}
     </div>
 
     <ArrayList @label="Options" @values={{options}} />
