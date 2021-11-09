@@ -24,6 +24,7 @@ const optionSchema = new Schema({
   externalIdentifier: {
     type: String,
     trim: true,
+    default: null,
   },
 });
 

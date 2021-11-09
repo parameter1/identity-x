@@ -21,6 +21,13 @@ module.exports = {
   /**
    *
    */
+  FieldInterfaceExternalEntityId: {
+    id: externalId => externalId._id,
+  },
+
+  /**
+   *
+   */
   SelectField: {
     /**
      *
@@ -30,11 +37,11 @@ module.exports = {
     /**
      *
      */
-    options: ({ options }) => (isArray(options) ? options : []).sort((a, b) => {
+    options: field => (isArray(field.options) ? field.options : []).sort((a, b) => {
       if (a.index > b.index) return 1;
       if (a.index < b.index) return -1;
       return 0;
-    }),
+    }).map(option => ({ field, option })),
   },
 
   /**
@@ -44,7 +51,19 @@ module.exports = {
     /**
      *
      */
-    id: option => option._id,
+    id: ({ option }) => option._id,
+
+    /**
+     *
+     */
+    label: ({ option }) => option.label,
+
+    /**
+     *
+     */
+    externalIdentifier: ({ field, option }) => (
+      field.externalId ? option.externalIdentifier : null
+    ),
   },
 
   /**
@@ -61,6 +80,7 @@ module.exports = {
         required,
         active,
         multiple,
+        externalId,
         options,
       } = input;
       const applicationId = app.getId();
@@ -73,6 +93,7 @@ module.exports = {
           required,
           active,
           multiple,
+          externalId,
           options,
         },
       });
@@ -93,6 +114,7 @@ module.exports = {
         required,
         active,
         multiple,
+        externalId,
         options,
       } = input;
       if (!options.length) throw new UserInputError('The select field options cannot be empty.');
@@ -106,6 +128,7 @@ module.exports = {
           required,
           active,
           multiple,
+          externalId,
           options,
         },
       });
