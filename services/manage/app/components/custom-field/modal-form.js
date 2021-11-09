@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { set } from '@ember/object';
 import { inject } from '@ember/service';
 
 export default Component.extend({
@@ -8,10 +9,12 @@ export default Component.extend({
   title: null,
   isActionRunning: false,
   isUpdating: false,
+  optionExternalIdsEnabled: false,
 
   init() {
     this._super(...arguments);
-    if (!this.model) this.set('model', {});
+    if (!this.model) this.set('model', { options: [] });
+    if (!this.model.externalId) this.set('model.externalId', { namespace: {}, identifier: {} });
   },
 
   actions: {
@@ -26,6 +29,17 @@ export default Component.extend({
 
     reorderOptions(options) {
       this.set('model.options', options);
+    },
+
+    clearOptionExternalIds() {
+      this.set('optionExternalIdsEnabled', false);
+      this.get('model.options').forEach((option) => {
+        set(option, 'externalIdentifier', null);
+      });
+    },
+
+    enableOptionExternalIds() {
+      this.set('optionExternalIdsEnabled', true);
     },
 
     returnToList() {

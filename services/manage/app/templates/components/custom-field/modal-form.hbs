@@ -38,6 +38,41 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <CustomField::ExternalId
+              @class="form-group"
+              @externalId={{model.externalId}}
+              @on-show={{action "enableOptionExternalIds"}}
+              @on-clear={{action "clearOptionExternalIds"}}
+            />
+          </div>
+        </div>
+        {{!-- <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <FormElements::Label @for="custom-field.external-id" @class="mb-0">External ID</FormElements::Label>
+              <div class="row mx-n1">
+                <div class="col-3 px-1">
+                  <FormElements::Label @for="custom-field.external-id-provider" @class="small mb-0">Provider</FormElements::Label>
+                  <Input @id="custom-field.external-id-provider" @type="text" @class="form-control form-control-sm" @value={{this.model.externalId.provider}} />
+                </div>
+                <div class="col-3 px-1">
+                  <FormElements::Label @for="custom-field.external-id-tenant" @class="small mb-0">Tenant</FormElements::Label>
+                  <Input @id="custom-field.external-id-tenant" @type="text" @class="form-control form-control-sm" @value={{this.model.externalId.tenant}} />
+                </div>
+                <div class="col-3 px-1">
+                  <FormElements::Label @for="custom-field.external-id-entity-type" @class="small mb-0">Entity Type</FormElements::Label>
+                  <Input @id="custom-field.external-id-entity-type" @type="text" @class="form-control form-control-sm" @value={{this.model.externalId.entityType}} />
+                </div>
+                <div class="col-3 px-1">
+                  <FormElements::Label @for="custom-field.external-id-value" @class="small mb-0">ID</FormElements::Label>
+                  <Input @id="custom-field.external-id-value" @type="text" @class="form-control form-control-sm" @value={{this.model.externalId.value}} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> --}}
 
         <div class="row">
           <div class="col">
@@ -45,6 +80,7 @@
               <CustomField::Options
                 @options={{this.model.options}}
                 @disabled={{this.isActionRunning}}
+                @showExternalIds={{this.optionExternalIdsEnabled}}
                 @reorder={{action "reorderOptions"}}
                 @remove={{action "removeOption"}}
               />

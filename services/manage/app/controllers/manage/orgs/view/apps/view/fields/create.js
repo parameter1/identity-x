@@ -30,15 +30,29 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           required,
           active,
           multiple,
+          externalId,
         } = this.get('model');
         const input = {
           name,
           label,
-          options: options.map(({ label }) => ({ label })),
           required,
           active,
           multiple,
+          externalId: {
+            ...(externalId && externalId.namespace && externalId.namespace.type && {
+              namespace: {
+                provider: externalId.namespace.provider,
+                tenant: externalId.namespace.tenant,
+                type: externalId.namespace.type,
+              },
+            }),
+            ...(externalId && externalId.identifier && externalId.identifier.value && {
+              identifier: { value: externalId.identifier.value },
+            }),
+          },
+          options: options.map((option) => ({ id: option.id, label: option.label, externalIdentifier: option.externalIdentifier })),
         };
+        if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
         const refetchQueries = ['AppFields'];
         await this.mutate({ mutation, variables, refetchQueries }, 'createSelectField');
