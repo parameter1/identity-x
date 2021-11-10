@@ -43,20 +43,27 @@ module.exports = {
       return regionalConsentAnswers.filter(answer => policyIds.includes(answer._id));
     },
 
-    customSelectFieldAnswers: ({ customSelectFieldAnswers }, { input }, { app }) => {
+    customSelectFieldAnswers: async ({ customSelectFieldAnswers }, { input }, { app }) => {
       const {
         fieldIds,
         onlyAnswered,
         onlyActive,
         sort,
       } = input;
-      return applicationService.request('field.userSelectAnswers', {
+      const selectFieldAnswers = await applicationService.request('field.userSelectAnswers', {
         applicationId: app.getId(),
         fieldIds,
         customSelectFieldAnswers,
         onlyAnswered,
         onlyActive,
         sort,
+      });
+      return selectFieldAnswers.map((selectFieldAnswer) => {
+        const { field } = selectFieldAnswer;
+        return {
+          ...selectFieldAnswer,
+          answers: selectFieldAnswer.answers.map(answer => ({ field, option: answer })),
+        };
       });
     },
 
