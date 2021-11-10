@@ -97,6 +97,19 @@ const schema = new Schema({
   lastSeen: {
     type: Date,
   },
+  /**
+   * The last time the _user_ updated/verified their profile information
+   */
+  profileLastVerifiedAt: {
+    type: Date,
+  },
+  /**
+   * Whether the user's profile _should_ be verified by resubmitting
+   */
+  forceProfileReVerification: {
+    type: Boolean,
+    default: false,
+  },
   givenName: {
     type: String,
     trim: true,

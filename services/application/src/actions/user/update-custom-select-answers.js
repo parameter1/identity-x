@@ -6,7 +6,12 @@ const { AppUser } = require('../../mongodb/models');
 
 const { isArray } = Array;
 
-module.exports = async ({ id, applicationId, answers } = {}) => {
+module.exports = async ({
+  id,
+  applicationId,
+  answers,
+  profileLastVerifiedAt,
+} = {}) => {
   if (!id) throw createRequiredParamError('id');
   if (!applicationId) throw createRequiredParamError('applicationId');
 
@@ -21,6 +26,10 @@ module.exports = async ({ id, applicationId, answers } = {}) => {
     .map(({ fieldId, optionIds }) => ({ _id: fieldId, values: optionIds }));
 
   user.set('customSelectFieldAnswers', toSet);
+  if (profileLastVerifiedAt) {
+    user.set('profileLastVerifiedAt', profileLastVerifiedAt);
+    user.set('forceProfileReVerification', false);
+  }
   try {
     await user.save();
     return user;
