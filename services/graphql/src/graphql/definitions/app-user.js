@@ -78,6 +78,9 @@ type AppUser {
   teams: [Team]  @projection(localField: "teamIds")
   lastLoggedIn: Date @projection
   verified: Boolean @projection
+  mustReVerifyProfile: Boolean! @projection(localField: "forceProfileReVerification", needs: ["profileLastVerifiedAt"])
+  forceProfileReVerification: Boolean
+  profileLastVerifiedAt: Date @projection
   banned: Boolean @projection
   receiveEmail: Boolean @projection
   regionalConsentAnswers: [AppUserRegionalConsentAnswer!]! @projection

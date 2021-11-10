@@ -59,6 +59,18 @@ module.exports = {
         sort,
       });
     },
+
+    mustReVerifyProfile: ({ forceProfileReVerification, profileLastVerifiedAt }, _, { app }) => {
+      if (forceProfileReVerification) return true; // verify flag has been hard set.
+      const { appUserAllowedStaleDays } = app.org;
+      if (!appUserAllowedStaleDays) return false; // stale threshold not set
+      if (!profileLastVerifiedAt) return true; // profile never verified
+
+      const ms = appUserAllowedStaleDays * 24 * 60 * 60 * 1000;
+      const mustBeAtLeast = new Date(Date.now() - ms);
+      const lastVerified = new Date(profileLastVerifiedAt);
+      return lastVerified < mustBeAtLeast;
+    },
   },
 
   AppUserRegionalConsentAnswer: {
@@ -422,6 +434,7 @@ module.exports = {
         id,
         applicationId,
         answers,
+        profileLastVerifiedAt: new Date(),
       });
     },
 
@@ -453,6 +466,7 @@ module.exports = {
           regionCode,
           postalCode,
           receiveEmail,
+          profileLastVerifiedAt: new Date(),
         },
       });
     },
