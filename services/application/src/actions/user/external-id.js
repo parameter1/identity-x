@@ -20,9 +20,36 @@ module.exports = {
 
     const externalId = new EntityID(identifier, namespace);
     const id = externalId.toString();
+    const nsIdentifier = externalId.toNamespaceIdentifier();
 
-    // external ID already set. do nothing and return user.
-    if (user.externalIds.some(({ _id }) => _id === id)) return user;
+    const hasExistingExternalIds = Boolean(user.externalIds.length);
+    if (!hasExistingExternalIds) {
+      user.externalIds.push({
+        _id: id,
+        identifier: externalId.identifier,
+        namespace: externalId.namespace,
+      });
+      return user.save();
+    }
+
+    const alreadyHasExternalId = user.externalIds.some(({ _id }) => _id === id);
+    if (alreadyHasExternalId) return user;
+
+    const currentExternalIdWithSameNamespace = user.externalIds.find((doc) => {
+      const eid = new EntityID(doc.identifier, doc.namespace);
+      const currentNsIdentifier = eid.toNamespaceIdentifier();
+      return currentNsIdentifier === nsIdentifier;
+    });
+    if (!currentExternalIdWithSameNamespace) {
+      user.externalIds.push({
+        _id: id,
+        identifier: externalId.identifier,
+        namespace: externalId.namespace,
+      });
+      return user.save();
+    }
+    // remove the old ID and replace with the new.
+    user.externalIds.pull({ _id: currentExternalIdWithSameNamespace._id });
     user.externalIds.push({
       _id: id,
       identifier: externalId.identifier,
