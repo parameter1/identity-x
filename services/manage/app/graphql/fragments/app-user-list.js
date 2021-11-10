@@ -41,5 +41,8 @@ export default gql`
         name
       }
     }
+    forceProfileReVerification
+    mustReVerifyProfile
+    profileLastVerifiedAt
   }
 `;
