@@ -4,6 +4,15 @@ const { isObject } = require('@base-cms/utils');
 const AppUser = require('../../mongodb/models/app-user');
 const EntityID = require('../../entity-id/id');
 
+const pushId = (user, externalId) => {
+  const id = externalId.toString();
+  user.externalIds.push({
+    _id: id,
+    identifier: externalId.identifier,
+    namespace: externalId.namespace,
+  });
+};
+
 module.exports = {
   add: async ({
     applicationId,
@@ -24,11 +33,7 @@ module.exports = {
 
     const hasExistingExternalIds = Boolean(user.externalIds.length);
     if (!hasExistingExternalIds) {
-      user.externalIds.push({
-        _id: id,
-        identifier: externalId.identifier,
-        namespace: externalId.namespace,
-      });
+      pushId(user, externalId);
       return user.save();
     }
 
@@ -41,20 +46,12 @@ module.exports = {
       return currentNsIdentifier === nsIdentifier;
     });
     if (!currentExternalIdWithSameNamespace) {
-      user.externalIds.push({
-        _id: id,
-        identifier: externalId.identifier,
-        namespace: externalId.namespace,
-      });
+      pushId(user, externalId);
       return user.save();
     }
     // remove the old ID and replace with the new.
     user.externalIds.pull({ _id: currentExternalIdWithSameNamespace._id });
-    user.externalIds.push({
-      _id: id,
-      identifier: externalId.identifier,
-      namespace: externalId.namespace,
-    });
+    pushId(user, externalId);
     return user.save();
   },
 };
