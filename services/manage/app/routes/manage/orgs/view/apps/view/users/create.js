@@ -5,6 +5,7 @@ export default Route.extend({
     return {
       accessLevels: [],
       teams: [],
+      isNew: true,
     };
   },
 });

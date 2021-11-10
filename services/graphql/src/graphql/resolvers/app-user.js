@@ -390,6 +390,7 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        forceProfileReVerification,
       } = payload;
 
       return applicationService.request('user.updateOne', {
@@ -406,6 +407,7 @@ module.exports = {
           countryCode,
           regionCode,
           postalCode,
+          forceProfileReVerification,
         },
       });
     },

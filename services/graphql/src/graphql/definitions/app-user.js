@@ -298,6 +298,7 @@ input UpdateAppUserPayloadInput {
   postalCode: String
   accessLevelIds: [String!] = []
   teamIds: [String!] = []
+  forceProfileReVerification: Boolean = false
 }
 
 input UpdateAppUserMutationInput {
