@@ -20,6 +20,7 @@ extend type Mutation {
   sendAppUserLoginLink(input: SendAppUserLoginLinkMutationInput!): String @requiresApp # must be public
   loginAppUser(input: LoginAppUserMutationInput!): AppUserAuthentication! @requiresApp # must be public
   logoutAppUser(input: LogoutAppUserMutationInput!): String! @requiresApp # must be public
+  logoutAppUserWithData(input: LogoutAppUserWithDataMutationInput!): AppUser @requiresApp # must be public
 
   setAppUserBanned(input: SetAppUserBannedMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   setAppUserRegionalConsent(input: SetAppUserRegionalConsentMutationInput!): AppUser! @requiresAuth(type: AppUser) # can only be set by self
@@ -203,6 +204,10 @@ input LoginAppUserMutationInput {
 }
 
 input LogoutAppUserMutationInput {
+  token: String!
+}
+
+input LogoutAppUserWithDataMutationInput {
   token: String!
 }
 

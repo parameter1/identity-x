@@ -298,6 +298,19 @@ module.exports = {
     /**
      *
      */
+    logoutAppUserWithData: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { token } = input;
+      return applicationService.request('user.logout', {
+        applicationId,
+        token,
+        returnUser: true,
+      });
+    },
+
+    /**
+     *
+     */
     sendAppUserLoginLink: (_, { input }, { app }) => {
       const applicationId = app.getId();
       const {
