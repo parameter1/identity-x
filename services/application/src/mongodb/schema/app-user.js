@@ -102,11 +102,6 @@ const schema = new Schema({
    */
   profileLastVerifiedAt: {
     type: Date,
-    default() {
-      if (!this.verified) return null;
-      // when verified, use the ID date
-      return this._id.getTimestamp();
-    },
   },
   /**
    * Whether the user's profile _should_ be verified by resubmitting
