@@ -11,9 +11,15 @@ const query = gql`
       multiple
       required
       active
+      externalId {
+        id
+        identifier { value }
+        namespace { provider tenant type }
+      }
       options {
         id
         label
+        externalIdentifier
       }
     }
   }

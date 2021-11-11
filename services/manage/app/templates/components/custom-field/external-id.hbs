@@ -1,0 +1,30 @@
+<FormElements::Label @class="mb-0">
+  External ID
+  {{#if isShowing}}
+    <a href="#remove-external-id" class="small" title="Remove External ID" {{action "remove"}}>Remove</a>
+  {{else}}
+    <a href="#add-external-id" class="small" title="Add External ID" {{action "add"}}>Add</a>
+  {{/if}}
+</FormElements::Label>
+{{#if isShowing}}
+  <div class="form-group">
+    <div class="row mx-n1">
+      <div class="col-3 px-1">
+        <FormElements::Label @for="custom-field.external-id-provider" @class="small mb-0">Provider</FormElements::Label>
+        <Input @id="custom-field.external-id-provider" @required={{true}} @type="text" @class="form-control form-control-sm" @value={{externalId.namespace.provider}} />
+      </div>
+      <div class="col-3 px-1">
+        <FormElements::Label @for="custom-field.external-id-tenant" @class="small mb-0">Tenant</FormElements::Label>
+        <Input @id="custom-field.external-id-tenant" @required={{true}} @type="text" @class="form-control form-control-sm" @value={{externalId.namespace.tenant}} />
+      </div>
+      <div class="col-3 px-1">
+        <FormElements::Label @for="custom-field.external-id-entity-type" @class="small mb-0">Entity Type</FormElements::Label>
+        <Input @id="custom-field.external-id-entity-type" @required={{true}} @type="text" @class="form-control form-control-sm" @value={{externalId.namespace.type}} />
+      </div>
+      <div class="col-3 px-1">
+        <FormElements::Label @for="custom-field.external-id-value" @class="small mb-0">ID</FormElements::Label>
+        <Input @id="custom-field.external-id-value" @required={{true}} @type="text" @class="form-control form-control-sm" @value={{externalId.identifier.value}} />
+      </div>
+    </div>
+  </div>
+{{/if}}

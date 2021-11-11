@@ -56,3 +56,9 @@
     <AppUser::Fields::Teams @dropdownClass="in-modal-dropdown" @value={{this.model.teams}} @on-change={{action "setTeams"}} />
   </div>
 </div>
+
+{{#unless this.model.isNew}}
+  <div class="d-flex justify-content-between mt-3 ml-n2">
+    <FormElements::ToggleButton @value={{this.model.forceProfileReVerification}} @onLabel="Force Profile Re-Verification" />
+  </div>
+{{/unless}}

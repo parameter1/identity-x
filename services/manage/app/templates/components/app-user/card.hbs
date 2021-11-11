@@ -57,12 +57,22 @@
     </div>
 
     <div class="app-user-details app-user-details--login-info">
-      Last Logged In:
-      {{#if this.user.lastLoggedIn}}
-        {{moment-format this.user.lastLoggedIn "MM/DD/YYYY h:mma"}}
-      {{else}}
-        Never
-      {{/if}}
+      <div>
+        Last Logged In:
+        {{#if this.user.lastLoggedIn}}
+          {{moment-format this.user.lastLoggedIn "MM/DD/YYYY h:mma"}}
+        {{else}}
+          Never
+        {{/if}}
+      </div>
+      <div>
+        Profile Last Verified:
+        {{#if this.user.profileLastVerifiedAt}}
+          {{moment-format this.user.profileLastVerifiedAt "MM/DD/YYYY h:mma"}}
+        {{else}}
+          Never
+        {{/if}}
+      </div>
     </div>
 
     <ArrayList @label="Access Levels" @values={{accessLevels}} />

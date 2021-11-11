@@ -4,6 +4,15 @@ const { isObject } = require('@base-cms/utils');
 const AppUser = require('../../mongodb/models/app-user');
 const EntityID = require('../../entity-id/id');
 
+const pushId = (user, externalId) => {
+  const id = externalId.toString();
+  user.externalIds.push({
+    _id: id,
+    identifier: externalId.identifier,
+    namespace: externalId.namespace,
+  });
+};
+
 module.exports = {
   add: async ({
     applicationId,
@@ -20,14 +29,29 @@ module.exports = {
 
     const externalId = new EntityID(identifier, namespace);
     const id = externalId.toString();
+    const nsIdentifier = externalId.toNamespaceIdentifier();
 
-    // external ID already set. do nothing and return user.
-    if (user.externalIds.some(({ _id }) => _id === id)) return user;
-    user.externalIds.push({
-      _id: id,
-      identifier: externalId.identifier,
-      namespace: externalId.namespace,
+    const hasExistingExternalIds = Boolean(user.externalIds.length);
+    if (!hasExistingExternalIds) {
+      pushId(user, externalId);
+      return user.save();
+    }
+
+    const alreadyHasExternalId = user.externalIds.some(({ _id }) => _id === id);
+    if (alreadyHasExternalId) return user;
+
+    const currentExternalIdWithSameNamespace = user.externalIds.find((doc) => {
+      const eid = new EntityID(doc.identifier, doc.namespace);
+      const currentNsIdentifier = eid.toNamespaceIdentifier();
+      return currentNsIdentifier === nsIdentifier;
     });
+    if (!currentExternalIdWithSameNamespace) {
+      pushId(user, externalId);
+      return user.save();
+    }
+    // remove the old ID and replace with the new.
+    user.externalIds.pull({ _id: currentExternalIdWithSameNamespace._id });
+    pushId(user, externalId);
     return user.save();
   },
 };

@@ -8,12 +8,24 @@
           @value={{option.label}}
           @required={{true}}
           @disabled={{this.disabled}}
+          @class={{this.optionClass}}
           type="text"
-          class="form-control"
           placeholder="Enter option label"
           aria-label="Enter option label"
         />
         <div class="input-group-append">
+          {{#if showExternalIds}}
+            <Input
+              @class="border-left border-right-0 rounded-0"
+              @required={{true}}
+              @value={{option.externalIdentifier}}
+              @disabled={{this.disabled}}
+              type="text"
+              class="form-control"
+              placeholder="External ID"
+              aria-label="External ID"
+            />
+          {{/if}}
           <button
             type="button"
             title="Drag to re-order option"

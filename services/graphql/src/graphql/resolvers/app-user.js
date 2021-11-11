@@ -43,14 +43,14 @@ module.exports = {
       return regionalConsentAnswers.filter(answer => policyIds.includes(answer._id));
     },
 
-    customSelectFieldAnswers: ({ customSelectFieldAnswers }, { input }, { app }) => {
+    customSelectFieldAnswers: async ({ customSelectFieldAnswers }, { input }, { app }) => {
       const {
         fieldIds,
         onlyAnswered,
         onlyActive,
         sort,
       } = input;
-      return applicationService.request('field.userSelectAnswers', {
+      const selectFieldAnswers = await applicationService.request('field.userSelectAnswers', {
         applicationId: app.getId(),
         fieldIds,
         customSelectFieldAnswers,
@@ -58,6 +58,25 @@ module.exports = {
         onlyActive,
         sort,
       });
+      return selectFieldAnswers.map((selectFieldAnswer) => {
+        const { field } = selectFieldAnswer;
+        return {
+          ...selectFieldAnswer,
+          answers: selectFieldAnswer.answers.map(answer => ({ field, option: answer })),
+        };
+      });
+    },
+
+    mustReVerifyProfile: ({ forceProfileReVerification, profileLastVerifiedAt }, _, { app }) => {
+      if (forceProfileReVerification) return true; // verify flag has been hard set.
+      const { appUserAllowedStaleDays } = app.org;
+      if (!appUserAllowedStaleDays) return false; // stale threshold not set
+      if (!profileLastVerifiedAt) return true; // profile never verified
+
+      const ms = appUserAllowedStaleDays * 24 * 60 * 60 * 1000;
+      const mustBeAtLeast = new Date(Date.now() - ms);
+      const lastVerified = new Date(profileLastVerifiedAt);
+      return lastVerified < mustBeAtLeast;
     },
   },
 
@@ -286,6 +305,19 @@ module.exports = {
     /**
      *
      */
+    logoutAppUserWithData: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { token } = input;
+      return applicationService.request('user.logout', {
+        applicationId,
+        token,
+        returnUser: true,
+      });
+    },
+
+    /**
+     *
+     */
     sendAppUserLoginLink: (_, { input }, { app }) => {
       const applicationId = app.getId();
       const {
@@ -378,6 +410,7 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        forceProfileReVerification,
       } = payload;
 
       return applicationService.request('user.updateOne', {
@@ -394,6 +427,7 @@ module.exports = {
           countryCode,
           regionCode,
           postalCode,
+          forceProfileReVerification,
         },
       });
     },
@@ -422,6 +456,7 @@ module.exports = {
         id,
         applicationId,
         answers,
+        profileLastVerifiedAt: new Date(),
       });
     },
 
@@ -453,6 +488,7 @@ module.exports = {
           regionCode,
           postalCode,
           receiveEmail,
+          profileLastVerifiedAt: new Date(),
         },
       });
     },

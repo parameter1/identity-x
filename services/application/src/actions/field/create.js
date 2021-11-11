@@ -3,6 +3,7 @@ const { createRequiredParamError, createParamError } = require('@base-cms/micro'
 const { handleError } = require('@identity-x/utils').mongoose;
 const { Application } = require('../../mongodb/models');
 const SelectField = require('../../mongodb/models/field/select');
+const prepareExternalId = require('./utils/prepare-external-id');
 
 const createSelect = async ({
   application,
@@ -11,8 +12,10 @@ const createSelect = async ({
   required,
   active,
   multiple,
+  externalId: eid,
   options,
 } = {}) => {
+  const externalId = prepareExternalId(eid);
   const select = new SelectField({
     applicationId: application._id,
     name,
@@ -20,7 +23,12 @@ const createSelect = async ({
     required,
     active,
     multiple,
-    options: options.map((option, index) => ({ ...option, index })),
+    externalId,
+    options: options.map((option, index) => ({
+      ...option,
+      externalIdentifier: externalId ? option.externalIdentifier : null,
+      index,
+    })),
   });
   await select.save();
   return select;

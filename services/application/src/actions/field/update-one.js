@@ -4,6 +4,7 @@ const { handleError } = require('@identity-x/utils').mongoose;
 
 const { Application } = require('../../mongodb/models');
 const SelectField = require('../../mongodb/models/field/select');
+const prepareExternalId = require('./utils/prepare-external-id');
 
 const updateSelect = async ({
   id,
@@ -19,6 +20,7 @@ const updateSelect = async ({
     multiple,
     required,
     active,
+    externalId: eid,
     options,
   } = payload;
 
@@ -28,15 +30,19 @@ const updateSelect = async ({
     if (!currentOptionIds.includes(option.id)) throw createError(404, `No select option found for ${option.id} in question ${id}`);
   });
 
+  const externalId = prepareExternalId(eid);
+
   select.set({
     name,
     label,
     multiple,
     required,
     active,
+    externalId,
     options: options.map((option, index) => ({
       ...option,
       ...(option.id && { _id: option.id }),
+      externalIdentifier: externalId ? option.externalIdentifier : null,
       index,
     })),
   });

@@ -13,6 +13,7 @@ const fields = gql`
           label
           required
           active
+          externalId { id }
           ... on SelectField {
             options {
               id
@@ -41,6 +42,14 @@ const matchFields = gql`
           label
           required
           active
+          externalId { id }
+          ... on SelectField {
+            options {
+              id
+              label
+            }
+            multiple
+          }
         }
       }
       pageInfo {

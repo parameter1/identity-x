@@ -41,6 +41,8 @@ interface FieldInterface {
   createdAt: Date! @projection
   "The date the field was updated."
   updatedAt: Date! @projection
+  "An external ID + namespaces associated with this custom field."
+  externalId: FieldInterfaceExternalEntityId @projection
 }
 
 type FieldInterfaceConnection {
@@ -52,6 +54,23 @@ type FieldInterfaceConnection {
 type FieldInterfaceEdge {
   node: FieldInterface!
   cursor: String!
+}
+
+type FieldInterfaceExternalEntityId {
+  id: String!
+  identifier: FieldInterfaceExternalIdentifier!
+  namespace: FieldInterfaceExternalNamespace!
+}
+
+type FieldInterfaceExternalIdentifier {
+  value: String!
+  type: String
+}
+
+type FieldInterfaceExternalNamespace {
+  provider: String
+  tenant: String
+  type: String!
 }
 
 type SelectField implements FieldInterface {
@@ -69,6 +88,8 @@ type SelectField implements FieldInterface {
   createdAt: Date! @projection
   "The date the field was updated."
   updatedAt: Date! @projection
+  "An external ID + namespaces associated with this custom field."
+  externalId: FieldInterfaceExternalEntityId @projection
 
   "Whether the select field supports multiple answers."
   multiple: Boolean! @projection
@@ -81,6 +102,8 @@ type SelectFieldOption {
   id: String!
   "The select option label. This is the value the user will see within the form control."
   label: String!
+  "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
+  externalIdentifier: String
 }
 
 input CreateSelectFieldMutationInput {
@@ -96,11 +119,15 @@ input CreateSelectFieldMutationInput {
   multiple: Boolean = false
   "The initial options for the select field. By default, no options are set."
   options: [CreateSelectFieldOptionInput!] = []
+  "The external namespace + ID for this field."
+  externalId: FieldInterfaceExternalIdMutationInput
 }
 
 input CreateSelectFieldOptionInput {
   "The select option label. This is the value the user will see within the form control."
   label: String!
+  "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
+  externalIdentifier: String
 }
 
 input FieldInterfaceSortInput {
@@ -126,6 +153,29 @@ input SelectFieldQueryInput {
   id: String!
 }
 
+input FieldInterfaceExternalIdMutationInput {
+  "The external identifier input."
+  identifier: FieldInterfaceExternalIdentifierInput!
+  "The external namespace input."
+  namespace: FieldInterfaceExternalNamespaceInput!
+}
+
+input FieldInterfaceExternalIdentifierInput {
+  "The external identifier value."
+  value: String!
+  "The (optional) external identifier type - for distinguishing between different types of IDs."
+  type: String
+}
+
+input FieldInterfaceExternalNamespaceInput {
+  "The (optional) namespace provider."
+  provider: String
+  "The (optional) namespace tenant."
+  tenant: String
+  "The namespace model type."
+  type: String!
+}
+
 input UpdateSelectFieldMutationInput {
   "The select field identifier to update."
   id: String!
@@ -139,6 +189,8 @@ input UpdateSelectFieldMutationInput {
   active: Boolean = true
   "Whether the select field supports multiple answers."
   multiple: Boolean = false
+  "The external namespace + ID for this field."
+  externalId: FieldInterfaceExternalIdMutationInput
   "The options for the select field. Options with IDs will be updated (where found). Options missing IDs will be treated as new."
   options: [UpdateSelectFieldOptionInput!]!
 }
@@ -148,6 +200,8 @@ input UpdateSelectFieldOptionInput {
   id: String
   "The select option label. This is the value the user will see within the form control."
   label: String!
+  "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
+  externalIdentifier: String
 }
 
 `;

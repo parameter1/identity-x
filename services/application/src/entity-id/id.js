@@ -20,6 +20,12 @@ class EntityID {
     return [namespace, identifier].map(v => `${v}`).join('*');
   }
 
+  toNamespaceIdentifier() {
+    const ns = this.namespace.toString();
+    const { type } = this.identifier;
+    return type ? `${ns}~${type}` : ns;
+  }
+
   /**
    *
    */

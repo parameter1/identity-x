@@ -15,7 +15,11 @@ module.exports = async ({ id, applicationId, payload } = {}) => {
 
   const user = await AppUser.findByIdForApp(id, applicationId);
   if (!user) throw createError(404, `No user was found for '${id}'`);
-  user.set(payload);
+  const { profileLastVerifiedAt, ...rest } = payload;
+  user.set({
+    ...rest,
+    ...(profileLastVerifiedAt && { profileLastVerifiedAt, forceProfileReVerification: false }),
+  });
 
   try {
     await user.save();

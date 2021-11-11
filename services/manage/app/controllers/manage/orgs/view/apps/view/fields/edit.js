@@ -13,9 +13,15 @@ const mutation = gql`
       multiple
       required
       active
+      externalId {
+        id
+        namespace { provider tenant type }
+        identifier { value }
+      }
       options {
         id
         label
+        externalIdentifier
       }
     }
   }
@@ -36,6 +42,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           required,
           active,
           options,
+          externalId,
         } = this.get('model');
 
         const input = {
@@ -45,8 +52,21 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           multiple,
           required,
           active,
-          options: options.map((option) => ({ id: option.id, label: option.label })),
+          externalId: {
+            ...(externalId && externalId.namespace && externalId.namespace.type && {
+              namespace: {
+                provider: externalId.namespace.provider,
+                tenant: externalId.namespace.tenant,
+                type: externalId.namespace.type,
+              },
+            }),
+            ...(externalId && externalId.identifier && externalId.identifier.value && {
+              identifier: { value: externalId.identifier.value },
+            }),
+          },
+          options: options.map((option) => ({ id: option.id, label: option.label, externalIdentifier: option.externalIdentifier })),
         };
+        if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateSelectField');
         await closeModal();

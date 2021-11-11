@@ -88,6 +88,19 @@ const schema = new Schema({
     type: String,
     trim: true,
   },
+  /**
+   * The the amount of time, in days, that an AppUser's profile can
+   * remain stale until needing to be resubmitted. A null value means
+   * no stale time is enforced.
+   */
+  appUserAllowedStaleDays: {
+    type: Number,
+    default: null,
+    set: (v) => {
+      if (!v || Number.isNaN(v) || v < 0) return null;
+      return v;
+    },
+  },
   regionalConsentPolicies: {
     type: [regionalConsentPolicySchema],
     default: () => [],

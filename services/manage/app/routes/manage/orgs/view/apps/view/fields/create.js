@@ -7,6 +7,7 @@ export default Route.extend({
       multiple: false,
       active: false,
       required: false,
+      externalId: { identifier: {}, namespace: {} },
     };
   },
 });

@@ -20,6 +20,7 @@ extend type Mutation {
   sendAppUserLoginLink(input: SendAppUserLoginLinkMutationInput!): String @requiresApp # must be public
   loginAppUser(input: LoginAppUserMutationInput!): AppUserAuthentication! @requiresApp # must be public
   logoutAppUser(input: LogoutAppUserMutationInput!): String! @requiresApp # must be public
+  logoutAppUserWithData(input: LogoutAppUserWithDataMutationInput!): AppUser @requiresApp # must be public
 
   setAppUserBanned(input: SetAppUserBannedMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   setAppUserRegionalConsent(input: SetAppUserRegionalConsentMutationInput!): AppUser! @requiresAuth(type: AppUser) # can only be set by self
@@ -78,6 +79,9 @@ type AppUser {
   teams: [Team]  @projection(localField: "teamIds")
   lastLoggedIn: Date @projection
   verified: Boolean @projection
+  mustReVerifyProfile: Boolean! @projection(localField: "forceProfileReVerification", needs: ["profileLastVerifiedAt"])
+  forceProfileReVerification: Boolean
+  profileLastVerifiedAt: Date @projection
   banned: Boolean @projection
   receiveEmail: Boolean @projection
   regionalConsentAnswers: [AppUserRegionalConsentAnswer!]! @projection
@@ -203,6 +207,10 @@ input LogoutAppUserMutationInput {
   token: String!
 }
 
+input LogoutAppUserWithDataMutationInput {
+  token: String!
+}
+
 input ManageCreateAppUserMutationInput {
   email: String!
   givenName: String
@@ -295,6 +303,7 @@ input UpdateAppUserPayloadInput {
   postalCode: String
   accessLevelIds: [String!] = []
   teamIds: [String!] = []
+  forceProfileReVerification: Boolean = false
 }
 
 input UpdateAppUserMutationInput {

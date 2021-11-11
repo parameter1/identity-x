@@ -38,6 +38,16 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <CustomField::ExternalId
+              @class="form-group"
+              @externalId={{model.externalId}}
+              @on-show={{action "enableOptionExternalIds"}}
+              @on-clear={{action "clearOptionExternalIds"}}
+            />
+          </div>
+        </div>
 
         <div class="row">
           <div class="col">
@@ -45,6 +55,7 @@
               <CustomField::Options
                 @options={{this.model.options}}
                 @disabled={{this.isActionRunning}}
+                @showExternalIds={{this.optionExternalIdsEnabled}}
                 @reorder={{action "reorderOptions"}}
                 @remove={{action "removeOption"}}
               />
