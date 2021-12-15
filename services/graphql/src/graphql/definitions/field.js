@@ -9,9 +9,15 @@ extend type Query {
   matchFields(input: MatchFieldsQueryInput!): FieldInterfaceConnection! @requiresAppRole
   "Finds a single select field by ID."
   selectField(input: SelectFieldQueryInput!): SelectField
+  "Finds a single boolean field by ID."
+  booleanField(input: BooleanFieldQueryInput!): BooleanField
 }
 
 extend type Mutation {
+  "Creates a new boolean field for the current application context."
+  createBooleanField(input: CreateBooleanFieldMutationInput!): BooleanField! @requiresAppRole(roles: [Owner, Administrator, Member])
+  "Updates an existing boolean field with the provided input."
+  updateBooleanField(input: UpdateBooleanFieldMutationInput!): BooleanField! @requiresAppRole(roles: [Owner, Administrator, Member])
   "Creates a new select field for the current application context."
   createSelectField(input: CreateSelectFieldMutationInput!): SelectField! @requiresAppRole(roles: [Owner, Administrator, Member])
   "Updates an existing select field with the provided input."
@@ -73,6 +79,28 @@ type FieldInterfaceExternalNamespace {
   type: String!
 }
 
+type BooleanField implements FieldInterface {
+  "The internal field ID."
+  id: String! @projection(localField: "_id")
+  "The internal name of the field."
+  name: String! @projection
+  "The user-facing field label. This is what will appear on a form."
+  label: String! @projection
+  "Whether the field is globally required."
+  required: Boolean! @projection
+  "Whether the field is currently active."
+  active: Boolean! @projection
+  "The date the field was created."
+  createdAt: Date! @projection
+  "The date the field was updated."
+  updatedAt: Date! @projection
+  "An external ID + namespaces associated with this custom field."
+  externalId: FieldInterfaceExternalEntityId @projection
+
+  "Value of the answer"
+  value: Boolean! @projection
+}
+
 type SelectField implements FieldInterface {
   "The internal field ID."
   id: String! @projection(localField: "_id")
@@ -104,6 +132,21 @@ type SelectFieldOption {
   label: String!
   "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
   externalIdentifier: String
+}
+
+input CreateBooleanFieldMutationInput {
+  "The internal name of the field."
+  name: String!
+  "The user-facing field label. This is what will appear on a form."
+  label: String!
+  "Whether the field is globally required."
+  required: Boolean = false
+  "Whether the field is currently active."
+  active: Boolean = true
+  "Whether the select field supports multiple answers."
+  value: Boolean = false
+  "The external namespace + ID for this field."
+  externalId: FieldInterfaceExternalIdMutationInput
 }
 
 input CreateSelectFieldMutationInput {
@@ -149,6 +192,10 @@ input MatchFieldsQueryInput {
   excludeIds: [String!] = []
 }
 
+input BooleanFieldQueryInput {
+  id: String!
+}
+
 input SelectFieldQueryInput {
   id: String!
 }
@@ -174,6 +221,21 @@ input FieldInterfaceExternalNamespaceInput {
   tenant: String
   "The namespace model type."
   type: String!
+}
+
+input UpdateBooleanFieldMutationInput {
+  "The select field identifier to update."
+  id: String!
+  "The internal name of the field."
+  name: String!
+  "The user-facing field label. This is what will appear on a form."
+  label: String!
+  "Whether the field is globally required."
+  required: Boolean = false
+  "Whether the field is currently active."
+  active: Boolean = true
+  "The external namespace + ID for this field."
+  externalId: FieldInterfaceExternalIdMutationInput
 }
 
 input UpdateSelectFieldMutationInput {
