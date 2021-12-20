@@ -3,6 +3,7 @@ const { createRequiredParamError, createParamError } = require('@base-cms/micro'
 const { handleError } = require('@identity-x/utils').mongoose;
 
 const { Application } = require('../../mongodb/models');
+const BooleanField = require('../../mongodb/models/field/boolean');
 const SelectField = require('../../mongodb/models/field/select');
 const prepareExternalId = require('./utils/prepare-external-id');
 
@@ -50,6 +51,35 @@ const updateSelect = async ({
   await select.save();
   return select;
 };
+const updateBoolean = async ({
+  id,
+  application,
+  payload,
+} = {}) => {
+  const boolean = await BooleanField.findByIdForApp(id, application._id);
+  if (!boolean) throw createError(404, `No boolean field was found for '${id}'`);
+
+  const {
+    name,
+    label,
+    required,
+    active,
+    externalId: eid,
+  } = payload;
+
+  const externalId = prepareExternalId(eid);
+
+  boolean.set({
+    name,
+    label,
+    required,
+    active,
+    externalId,
+  });
+
+  await boolean.save();
+  return boolean;
+};
 
 module.exports = async ({
   id,
@@ -58,7 +88,7 @@ module.exports = async ({
   payload = {},
 } = {}) => {
   if (!id) throw createRequiredParamError('id');
-  const supportedTypes = ['select'];
+  const supportedTypes = ['select', 'boolean'];
   if (!supportedTypes.includes(type)) throw createParamError('type', type, supportedTypes);
   if (!applicationId) throw createRequiredParamError('applicationId');
 
@@ -67,7 +97,12 @@ module.exports = async ({
 
   // for now, only select field types are supported.
   try {
-    return updateSelect({ id, application, payload });
+    switch (type) {
+      case 'boolean':
+        return updateBoolean({ id, application, payload });
+      default:
+        return updateSelect({ id, application, payload });
+    }
   } catch (e) {
     throw handleError(createError, e);
   }
