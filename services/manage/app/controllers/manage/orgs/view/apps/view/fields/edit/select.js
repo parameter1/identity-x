@@ -43,7 +43,6 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           active,
           options,
           externalId,
-          __typeName: type,
         } = this.get('model');
 
         const input = {
@@ -64,10 +63,8 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
               identifier: { value: externalId.identifier.value },
             }),
           },
-          ...(type === 'SelectField' && {
-            multiple,
-            options: options.map((option) => ({ id: option.id, label: option.label, externalIdentifier: option.externalIdentifier }))
-          }),
+          multiple,
+          options: options.map((option) => ({ id: option.id, label: option.label, externalIdentifier: option.externalIdentifier }))
         };
         if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
