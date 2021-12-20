@@ -38,42 +38,46 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <CustomField::ExternalId
-              @class="form-group"
-              @externalId={{model.externalId}}
-              @on-show={{action "enableOptionExternalIds"}}
-              @on-clear={{action "clearOptionExternalIds"}}
-            />
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col">
-            <div class="form-group">
-              <CustomField::Options
-                @options={{this.model.options}}
-                @disabled={{this.isActionRunning}}
-                @showExternalIds={{this.optionExternalIdsEnabled}}
-                @reorder={{action "reorderOptions"}}
-                @remove={{action "removeOption"}}
+        {{#unless this.model.id}}
+          <div class="row">
+            <div class="col">
+              {{log this.model}}
+              <FormElements::Label @for="field.type" @required={{true}}>Field Type</FormElements::Label>
+              <FormElements::Select
+                @id="field.type"
+                @required={{true}}
+                @value={{this.model.createType}}
+                @on-change={{action "setFieldType"}}
+                @class="custom-select" as |select|
+              >
+                <select.option>Please Select One</select.option>
+                <select.option @value="boolean">Boolean</select.option>
+                <select.option @value="select">Select</select.option>
+              </FormElements::Select>
+            </div>
+          </div>
+
+        {{else}}
+          <div class="row">
+            <div class="col">
+              <CustomField::ExternalId
+                @class="form-group"
+                @externalId={{model.externalId}}
+                @on-show={{action "enableOptionExternalIds"}}
+                @on-clear={{action "clearOptionExternalIds"}}
               />
             </div>
           </div>
-        </div>
 
-        <div class="d-flex justify-content-between mt-3 ml-n2">
-          <FormElements::ToggleButton @value={{this.model.multiple}} @onLabel="Allow Multiple Answers" />
-        </div>
+          <div class="d-flex justify-content-between mt-3 ml-n2">
+            <FormElements::ToggleButton @value={{this.model.required}} @onLabel="Globally Required" />
+          </div>
 
-        <div class="d-flex justify-content-between mt-3 ml-n2">
-          <FormElements::ToggleButton @value={{this.model.required}} @onLabel="Globally Required" />
-        </div>
-
-        <div class="d-flex justify-content-between mt-3 ml-n2">
-          <FormElements::ToggleButton @value={{this.model.active}} @onLabel="Active" />
-        </div>
+          <div class="d-flex justify-content-between mt-3 ml-n2">
+            <FormElements::ToggleButton @value={{this.model.active}} @onLabel="Active" />
+          </div>
+        {{/unless}}
       {{/modal.body}}
 
       {{#modal.footer}}

@@ -9,8 +9,9 @@
       <p>Globally Required: {{#if field.required}}Yes{{else}}No{{/if}}</p>
       {{#if field.externalId.id}}<p>External ID: <em>{{field.externalId.id}}</em></p>{{/if}}
     </div>
-
-    <ArrayList @label="Options" @values={{options}} />
+    {{#if (eq field.__typename "SelectField")}}
+      <ArrayList @label="Options" @values={{options}} />
+    {{/if}}
   </div>
   <div class="card-footer">
     {{#if (eq field.__typename "SelectField")}}
