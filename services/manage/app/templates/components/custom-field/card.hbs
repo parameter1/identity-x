@@ -13,8 +13,15 @@
     <ArrayList @label="Options" @values={{options}} />
   </div>
   <div class="card-footer">
-    {{#link-to "manage.orgs.view.apps.view.fields.edit" field.id class="btn btn-primary" role="button"}}
-      {{entypo-icon "edit" class="mr-1"}} Modify
-    {{/link-to}}
+    {{#if (eq field.__typename "SelectField")}}
+      {{#link-to "manage.orgs.view.apps.view.fields.edit.select" field.id class="btn btn-primary" role="button"}}
+        {{entypo-icon "edit" class="mr-1"}} Modify
+      {{/link-to}}
+    {{/if}}
+    {{#if (eq field.__typename "BooleanField")}}
+      {{#link-to "manage.orgs.view.apps.view.fields.edit.boolean" field.id class="btn btn-primary" role="button"}}
+        {{entypo-icon "edit" class="mr-1"}} Modify
+      {{/link-to}}
+    {{/if}}
   </div>
 </ListCard>

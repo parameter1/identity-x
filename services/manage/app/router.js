@@ -62,7 +62,10 @@ Router.map(function() {
             });
             this.route('fields', function() {
               this.route('create');
-              this.route('edit', { path: ':field_id' });
+              this.route('edit', function() {
+                this.route('boolean', { path: 'boolean/:field_id' });
+                this.route('select', { path: 'select/:field_id' });
+              });
             });
           });
         });
