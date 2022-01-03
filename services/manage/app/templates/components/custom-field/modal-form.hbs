@@ -39,26 +39,7 @@
           </div>
         </div>
 
-        {{#unless this.model.id}}
-          <div class="row">
-            <div class="col">
-              {{log this.model}}
-              <FormElements::Label @for="field.type" @required={{true}}>Field Type</FormElements::Label>
-              <FormElements::Select
-                @id="field.type"
-                @required={{true}}
-                @value={{this.model.createType}}
-                @on-change={{action "setFieldType"}}
-                @class="custom-select" as |select|
-              >
-                <select.option>Please Select One</select.option>
-                <select.option @value="boolean">Boolean</select.option>
-                <select.option @value="select">Select</select.option>
-              </FormElements::Select>
-            </div>
-          </div>
-
-        {{else}}
+        {{#if this.model.id}}
           <div class="row">
             <div class="col">
               <CustomField::ExternalId
@@ -77,7 +58,24 @@
           <div class="d-flex justify-content-between mt-3 ml-n2">
             <FormElements::ToggleButton @value={{this.model.active}} @onLabel="Active" />
           </div>
-        {{/unless}}
+        {{else}}
+          <div class="row">
+            <div class="col">
+              <FormElements::Label @for="field.type" @required={{true}}>Field Type</FormElements::Label>
+              <FormElements::Select
+                @id="field.type"
+                @required={{true}}
+                @value={{this.model.createType}}
+                @on-change={{action "setFieldType"}}
+                @class="custom-select" as |select|
+              >
+                <select.option>Please Select One</select.option>
+                <select.option @value="boolean">Boolean</select.option>
+                <select.option @value="select">Select</select.option>
+              </FormElements::Select>
+            </div>
+          </div>
+        {{/if}}
       {{/modal.body}}
 
       {{#modal.footer}}
