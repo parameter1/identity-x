@@ -22,8 +22,8 @@ module.exports = async ({
   if (!fields.length) return [];
 
   // ensure answers are an array
-  const customFieldAnswers = !isArray(customBooleanFieldAnswers) ||
-  !customBooleanFieldAnswers.length
+  const customFieldAnswers = !isArray(customBooleanFieldAnswers)
+  || !customBooleanFieldAnswers.length
     ? []
     : customBooleanFieldAnswers;
 
