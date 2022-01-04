@@ -15,6 +15,7 @@ const manageCreate = require('./manage-create');
 const regionalConsentAnswer = require('./regional-constent-answer');
 const sendLoginLink = require('./send-login-link');
 const setUnverifiedData = require('./set-unverified-data');
+const updateCustomBooleanAnswers = require('./update-custom-boolean-answers');
 const updateCustomSelectAnswers = require('./update-custom-select-answers');
 const updateOne = require('./update-one');
 const verifyAuth = require('./verify-auth');
@@ -36,6 +37,7 @@ module.exports = {
   setUnverifiedData,
   updateField: params => updateField(AppUser, params),
   updateFieldWithApp: params => updateFieldWithApp(AppUser, params),
+  updateCustomBooleanAnswers,
   updateCustomSelectAnswers,
   updateOne,
   verifyAuth,
