@@ -43,6 +43,30 @@ module.exports = {
       return regionalConsentAnswers.filter(answer => policyIds.includes(answer._id));
     },
 
+    customBooleanFieldAnswers: async ({ customBooleanFieldAnswers }, { input }, { app }) => {
+      const {
+        fieldIds,
+        onlyAnswered,
+        onlyActive,
+        sort,
+      } = input;
+      const booleanFieldAnswers = await applicationService.request('field.userBooleanAnswers', {
+        applicationId: app.getId(),
+        fieldIds,
+        customBooleanFieldAnswers,
+        onlyAnswered,
+        onlyActive,
+        sort,
+      });
+      return booleanFieldAnswers.map((booleanFieldAnswer) => {
+        const { id, value } = booleanFieldAnswer;
+        return {
+          ...booleanFieldAnswer,
+          answers: [{ id, value }],
+        };
+      });
+    },
+
     customSelectFieldAnswers: async ({ customSelectFieldAnswers }, { input }, { app }) => {
       const {
         fieldIds,
@@ -429,6 +453,34 @@ module.exports = {
           postalCode,
           forceProfileReVerification,
         },
+      });
+    },
+
+    /**
+     *
+     */
+    updateAppUserCustomBooleanAnswers: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { id, answers } = input;
+      return applicationService.request('user.updateCustomBooleanAnswers', {
+        id,
+        applicationId,
+        answers,
+      });
+    },
+
+    /**
+     *
+     */
+    updateOwnAppUserCustomBooleanAnswers: (_, { input }, { user }) => {
+      const id = user.getId();
+      const applicationId = user.getAppId();
+      const { answers } = input;
+      return applicationService.request('user.updateCustomBooleanAnswers', {
+        id,
+        applicationId,
+        answers,
+        profileLastVerifiedAt: new Date(),
       });
     },
 
