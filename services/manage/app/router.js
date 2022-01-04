@@ -53,6 +53,7 @@ Router.map(function() {
             this.route('users', function() {
               this.route('create');
               this.route('edit', { path: ':email' }, function() {
+                this.route('custom-boolean-fields');
                 this.route('custom-select-fields');
                 this.route('external-ids');
               });
