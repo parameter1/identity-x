@@ -6,6 +6,7 @@ const {
 const { createParamError } = require('@base-cms/micro').service;
 const create = require('./create');
 const updateOne = require('./update-one');
+const userBooleanAnswers = require('./user-boolean-answers');
 const userSelectAnswers = require('./user-select-answers');
 
 const Field = require('../../mongodb/models/field');
@@ -27,5 +28,6 @@ module.exports = {
   listForApp: params => listForApp(Field, params),
   matchForApp: params => matchForApp(Field, params),
   updateOne,
+  userBooleanAnswers,
   userSelectAnswers,
 };
