@@ -51,6 +51,22 @@
             </div>
           </div>
 
+          {{#if (eq this.model.__typename "SelectField")}}
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <CustomField::Options
+                    @options={{this.model.options}}
+                    @disabled={{this.isActionRunning}}
+                    @showExternalIds={{this.optionExternalIdsEnabled}}
+                    @reorder={{action "reorderOptions"}}
+                    @remove={{action "removeOption"}}
+                  />
+                </div>
+              </div>
+            </div>
+          {{/if}}
+
           <div class="d-flex justify-content-between mt-3 ml-n2">
             <FormElements::ToggleButton @value={{this.model.required}} @onLabel="Globally Required" />
           </div>
