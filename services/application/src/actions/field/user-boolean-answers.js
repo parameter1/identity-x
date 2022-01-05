@@ -32,13 +32,13 @@ module.exports = async ({
 
   const mapped = fields.map((field) => {
     const fieldAnswer = customFieldAnswers.find(answer => `${answer._id}` === `${field._id}`);
-    const obj = {
+    const value = (fieldAnswer) ? fieldAnswer.value : false;
+    return {
       id: field._id,
       field,
-      hasAnswered: Boolean(fieldAnswer.length),
-      value: fieldAnswer.value,
+      hasAnswered: Boolean(value),
+      value,
     };
-    return obj;
   });
   return onlyAnswered ? mapped.filter(field => field.hasAnswered) : mapped;
 };
