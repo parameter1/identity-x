@@ -143,8 +143,6 @@ input CreateBooleanFieldMutationInput {
   required: Boolean = false
   "Whether the field is currently active."
   active: Boolean = true
-  "Whether the select field supports multiple answers."
-  value: Boolean = false
   "The external namespace + ID for this field."
   externalId: FieldInterfaceExternalIdMutationInput
 }
