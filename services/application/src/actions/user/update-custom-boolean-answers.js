@@ -23,12 +23,12 @@ module.exports = async ({
 
   // get all current answers as object { id, value }
   const userObj = user.customBooleanFieldAnswers.reduce(
-    (obj, item) => Object.assign(obj, { [item._id]: item.value }), {},
+    (obj, item) => ({ ...obj, [item._id]: item.value }), {},
   );
 
   // get new answers as object { id, value }
   const newAnswers = answers.reduce(
-    (obj, item) => Object.assign(obj, { [item.fieldId]: item.value }), {},
+    (obj, item) => ({ ...obj, [item.fieldId]: item.value }), {},
   );
 
   // merge new and old ansers to account for old non active answers

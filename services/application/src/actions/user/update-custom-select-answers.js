@@ -23,14 +23,14 @@ module.exports = async ({
 
   // get all current answers as object { id, value }
   const userObj = user.customSelectFieldAnswers.reduce(
-    (obj, item) => Object.assign(obj, { [item._id]: item.values }), {},
+    (obj, item) => ({ ...obj, [item._id]: item.values }), {},
   );
 
   const newAnswers = answers
     .filter(({ optionIds }) => optionIds.length) // ignore/unset fields without options
     .map(({ fieldId, optionIds }) => ({ _id: fieldId, values: optionIds }))
     .reduce(
-      (obj, item) => Object.assign(obj, { [item._id]: item.values }), {},
+      (obj, item) => ({ ...obj, [item._id]: item.values }), {},
     );
 
   // merge new and old ansers to account for old non active answers
