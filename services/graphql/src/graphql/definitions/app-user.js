@@ -128,7 +128,7 @@ type AppUserCustomBooleanFieldAnswer {
   field: BooleanField!
   "Whether the user has answered the question."
   hasAnswered: Boolean!
-  "The answered field option(s). This will always be an array, even if the field is a single-select only. An empty value signifies a non, or no longer valid, answer. It's up to the implementing components to account for this."
+  "The answered value. This will always be a boolean value. An empty value signifies a non answer. It's up to the implementing components to account for this."
   value: Boolean!
 }
 
@@ -340,24 +340,24 @@ input UpdateAppUserMutationInput {
 input UpdateAppUserCustomBooleanAnswersMutationInput {
   "The user id to update."
   id: String!
-  "The answers to set/update. An empty array will _unset_ all existing answers. A null value will do nothing."
+  "The answers to set/update. An empty array or null value will do nothing."
   answers: [UpdateAppUserCustomBooleanAnswer!]
 }
 
 input UpdateOwnAppUserCustomBooleanAnswersMutationInput {
-  "The answers to set/update for the current user. An empty array will _unset_ all existing answers. A null value will do nothing."
+  "The answers to set/update for the current user. An empty array or null value will do nothing."
   answers: [UpdateAppUserCustomBooleanAnswer!]
 }
 
 input UpdateAppUserCustomSelectAnswersMutationInput {
   "The user id to update."
   id: String!
-  "The answers to set/update. An empty array will _unset_ all existing answers. A null value will do nothing."
+  "The answers to set/update. An empty array or null value will do nothing."
   answers: [UpdateAppUserCustomSelectAnswer!]
 }
 
 input UpdateOwnAppUserCustomSelectAnswersMutationInput {
-  "The answers to set/update for the current user. An empty array will _unset_ all existing answers. A null value will do nothing."
+  "The answers to set/update for the current user. An empty array or null value will do nothing."
   answers: [UpdateAppUserCustomSelectAnswer!]
 }
 
