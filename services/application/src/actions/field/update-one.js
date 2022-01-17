@@ -65,6 +65,8 @@ const updateBoolean = async ({
     required,
     active,
     externalId: eid,
+    whenTrue,
+    whenFalse,
   } = payload;
 
   const externalId = prepareExternalId(eid);
@@ -75,6 +77,8 @@ const updateBoolean = async ({
     required,
     active,
     externalId,
+    whenTrue,
+    whenFalse,
   });
 
   await boolean.save();
