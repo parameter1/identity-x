@@ -4,6 +4,7 @@
     <p class="card-text">{{field.label}}</p>
 
     <div class="app-user-details app-user-details--locale">
+      <p>Type: {{type}}</p>
       <p>Active: {{#if field.active}}Yes{{else}}No{{/if}}</p>
       {{#if (eq field.__typename "SelectField")}}
         <p>Allow Multiple Answers: {{#if field.multiple}}Yes{{else}}No{{/if}}</p>
