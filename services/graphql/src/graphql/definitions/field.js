@@ -107,9 +107,9 @@ type BooleanField implements FieldInterface {
   "An external ID + namespaces associated with this custom field."
   externalId: FieldInterfaceExternalEntityId @projection
   "The value and type of answer when true."
-  whenTrue: BooleanFieldValueWhen!
+  whenTrue: BooleanFieldValueWhen! @projection
   "The value and type of answer when false."
-  whenFalse: BooleanFieldValueWhen!
+  whenFalse: BooleanFieldValueWhen! @projection
 }
 
 type BooleanFieldValueWhen {
