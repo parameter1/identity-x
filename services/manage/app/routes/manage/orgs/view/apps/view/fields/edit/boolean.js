@@ -6,6 +6,7 @@ const query = gql`
   query AppFieldsEdit($input: BooleanFieldQueryInput!) {
     booleanField(input: $input) {
       id
+      type
       name
       label
       required

@@ -9,7 +9,8 @@ export default Component.extend({
     return options ? options.map((option) => option.label) : null;
   }),
 
-  type: computed('field.__typename', function() {
-    return this.get('field.__typename').replace(/Field$/, '');
+  type: computed('field.type', function() {
+    const type = this.get('field.type');
+    return `${type[0].toUpperCase()}${type.slice(1)}`;
   }),
 });

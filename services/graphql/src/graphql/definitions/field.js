@@ -41,6 +41,8 @@ enum FieldInterfaceSortField {
 interface FieldInterface {
   "The internal field ID."
   id: String! @projection(localField: "_id")
+  "The field type."
+  type: String! @projection(localField: "_type")
   "The internal name of the field."
   name: String! @projection
   "The user-facing field label. This is what will appear on a form."
@@ -88,6 +90,8 @@ type FieldInterfaceExternalNamespace {
 type BooleanField implements FieldInterface {
   "The internal field ID."
   id: String! @projection(localField: "_id")
+  "The field type."
+  type: String! @projection(localField: "_type")
   "The internal name of the field."
   name: String! @projection
   "The user-facing field label. This is what will appear on a form."
@@ -116,6 +120,8 @@ type BooleanFieldValueWhen {
 type SelectField implements FieldInterface {
   "The internal field ID."
   id: String! @projection(localField: "_id")
+  "The field type."
+  type: String! @projection(localField: "_type")
   "The internal name of the field."
   name: String! @projection
   "The user-facing field label. This is what will appear on a form."

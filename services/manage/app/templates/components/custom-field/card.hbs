@@ -6,23 +6,23 @@
     <div class="app-user-details app-user-details--locale">
       <p>Type: {{type}}</p>
       <p>Active: {{#if field.active}}Yes{{else}}No{{/if}}</p>
-      {{#if (eq field.__typename "SelectField")}}
+      {{#if (eq field.type "select")}}
         <p>Allow Multiple Answers: {{#if field.multiple}}Yes{{else}}No{{/if}}</p>
       {{/if}}
       <p>Globally Required: {{#if field.required}}Yes{{else}}No{{/if}}</p>
       {{#if field.externalId.id}}<p>External ID: <em>{{field.externalId.id}}</em></p>{{/if}}
     </div>
-    {{#if (eq field.__typename "SelectField")}}
+    {{#if (eq field.type "select")}}
       <ArrayList @label="Options" @values={{options}} />
     {{/if}}
   </div>
   <div class="card-footer">
-    {{#if (eq field.__typename "SelectField")}}
+    {{#if (eq field.type "select")}}
       {{#link-to "manage.orgs.view.apps.view.fields.edit.select" field.id class="btn btn-primary" role="button"}}
         {{entypo-icon "edit" class="mr-1"}} Modify
       {{/link-to}}
     {{/if}}
-    {{#if (eq field.__typename "BooleanField")}}
+    {{#if (eq field.type "boolean")}}
       {{#link-to "manage.orgs.view.apps.view.fields.edit.boolean" field.id class="btn btn-primary" role="button"}}
         {{entypo-icon "edit" class="mr-1"}} Modify
       {{/link-to}}

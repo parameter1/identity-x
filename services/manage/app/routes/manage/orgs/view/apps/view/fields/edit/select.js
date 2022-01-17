@@ -6,6 +6,7 @@ const query = gql`
   query AppFieldsEdit($input: SelectFieldQueryInput!) {
     selectField(input: $input) {
       id
+      type
       name
       label
       multiple

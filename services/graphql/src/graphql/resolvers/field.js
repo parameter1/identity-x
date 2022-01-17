@@ -33,6 +33,11 @@ module.exports = {
      *
      */
     id: field => field._id,
+
+    /**
+     *
+     */
+    type: field => field._type,
   },
 
   /**
@@ -43,6 +48,11 @@ module.exports = {
      *
      */
     id: field => field._id,
+
+    /**
+     *
+     */
+    type: field => field._type,
 
     /**
      *
