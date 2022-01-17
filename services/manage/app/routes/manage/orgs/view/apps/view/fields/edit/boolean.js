@@ -16,6 +16,14 @@ const query = gql`
         identifier { value }
         namespace { provider tenant type }
       }
+      whenTrue {
+        value
+        type
+      }
+      whenFalse {
+        value
+        type
+      }
     }
   }
 `;

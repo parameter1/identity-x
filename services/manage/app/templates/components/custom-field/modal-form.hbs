@@ -67,6 +67,26 @@
             </div>
           {{/if}}
 
+          {{#if (eq this.model.type "boolean")}}
+            <hr>
+            <div class="row">
+              <div class="col">
+                <CustomField::BooleanAnswerWhen
+                  @label="Checked"
+                  @type={{this.model.whenTrue.type}}
+                  @value={{this.model.whenTrue.value}}
+                />
+
+                <CustomField::BooleanAnswerWhen
+                  @label="Unchecked"
+                  @type={{this.model.whenFalse.type}}
+                  @value={{this.model.whenFalse.value}}
+                />
+              </div>
+            </div>
+          {{/if}}
+
+
           <div class="d-flex justify-content-between mt-3 ml-n2">
             <FormElements::ToggleButton @value={{this.model.required}} @onLabel="Globally Required" />
           </div>

@@ -17,6 +17,14 @@ const mutation = gql`
         namespace { provider tenant type }
         identifier { value }
       }
+      whenTrue {
+        value
+        type
+      }
+      whenFalse {
+        value
+        type
+      }
     }
   }
 `;
@@ -35,6 +43,8 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           required,
           active,
           externalId,
+          whenTrue,
+          whenFalse,
         } = this.get('model');
 
         const input = {
@@ -54,6 +64,14 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             ...(externalId && externalId.identifier && externalId.identifier.value && {
               identifier: { value: externalId.identifier.value },
             }),
+          },
+          whenTrue: {
+            type: whenTrue.type,
+            value: whenTrue.value,
+          },
+          whenFalse: {
+            type: whenFalse.type,
+            value: whenFalse.value,
           },
         };
         if (!Object.keys(input.externalId).length) delete input.externalId;
