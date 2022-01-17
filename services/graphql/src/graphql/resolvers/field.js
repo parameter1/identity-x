@@ -149,6 +149,8 @@ module.exports = {
         required,
         active,
         externalId,
+        whenTrue,
+        whenFalse,
       } = input;
       return applicationService.request('field.updateOne', {
         id,
@@ -160,6 +162,8 @@ module.exports = {
           required,
           active,
           externalId,
+          whenTrue,
+          whenFalse,
         },
       });
     },

@@ -24,6 +24,12 @@ extend type Mutation {
   updateSelectField(input: UpdateSelectFieldMutationInput!): SelectField! @requiresAppRole(roles: [Owner, Administrator, Member])
 }
 
+enum BooleanFieldValueWhenTypeEnum {
+  BOOLEAN
+  NUMBER
+  STRING
+}
+
 enum FieldInterfaceSortField {
   id
   name
@@ -96,9 +102,15 @@ type BooleanField implements FieldInterface {
   updatedAt: Date! @projection
   "An external ID + namespaces associated with this custom field."
   externalId: FieldInterfaceExternalEntityId @projection
+  "The value and type of answer when true."
+  whenTrue: BooleanFieldValueWhen!
+  "The value and type of answer when false."
+  whenFalse: BooleanFieldValueWhen!
+}
 
-  "Value of the answer"
-  value: Boolean! @projection
+type BooleanFieldValueWhen {
+  value: String!
+  type: BooleanFieldValueWhenTypeEnum!
 }
 
 type SelectField implements FieldInterface {
@@ -234,6 +246,20 @@ input UpdateBooleanFieldMutationInput {
   active: Boolean = true
   "The external namespace + ID for this field."
   externalId: FieldInterfaceExternalIdMutationInput
+  "The value and type of answer when true."
+  whenTrue: UpdateBooleanFieldWhenTrueMutationInput = {}
+  "The value and type of answer when false."
+  whenFalse: UpdateBooleanFieldWhenFalseMutationInput = {}
+}
+
+input UpdateBooleanFieldWhenTrueMutationInput {
+  value: String = "true"
+  type: BooleanFieldValueWhenTypeEnum = BOOLEAN
+}
+
+input UpdateBooleanFieldWhenFalseMutationInput {
+  value: String = "false"
+  type: BooleanFieldValueWhenTypeEnum = BOOLEAN
 }
 
 input UpdateSelectFieldMutationInput {
