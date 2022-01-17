@@ -5,16 +5,26 @@
 
     <div class="app-user-details app-user-details--locale">
       <p>Active: {{#if field.active}}Yes{{else}}No{{/if}}</p>
-      <p>Allow Multiple Answers: {{#if field.multiple}}Yes{{else}}No{{/if}}</p>
+      {{#if (eq field.__typename "SelectField")}}
+        <p>Allow Multiple Answers: {{#if field.multiple}}Yes{{else}}No{{/if}}</p>
+      {{/if}}
       <p>Globally Required: {{#if field.required}}Yes{{else}}No{{/if}}</p>
       {{#if field.externalId.id}}<p>External ID: <em>{{field.externalId.id}}</em></p>{{/if}}
     </div>
-
-    <ArrayList @label="Options" @values={{options}} />
+    {{#if (eq field.__typename "SelectField")}}
+      <ArrayList @label="Options" @values={{options}} />
+    {{/if}}
   </div>
   <div class="card-footer">
-    {{#link-to "manage.orgs.view.apps.view.fields.edit" field.id class="btn btn-primary" role="button"}}
-      {{entypo-icon "edit" class="mr-1"}} Modify
-    {{/link-to}}
+    {{#if (eq field.__typename "SelectField")}}
+      {{#link-to "manage.orgs.view.apps.view.fields.edit.select" field.id class="btn btn-primary" role="button"}}
+        {{entypo-icon "edit" class="mr-1"}} Modify
+      {{/link-to}}
+    {{/if}}
+    {{#if (eq field.__typename "BooleanField")}}
+      {{#link-to "manage.orgs.view.apps.view.fields.edit.boolean" field.id class="btn btn-primary" role="button"}}
+        {{entypo-icon "edit" class="mr-1"}} Modify
+      {{/link-to}}
+    {{/if}}
   </div>
 </ListCard>

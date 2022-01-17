@@ -22,27 +22,25 @@ module.exports = async ({
   if (!isArray(answers)) return user;
 
   // get all current answers as object { id, value }
-  const userObj = user.customSelectFieldAnswers.reduce(
-    (obj, item) => ({ ...obj, [item._id]: item.values }), {},
+  const userObj = user.customBooleanFieldAnswers.reduce(
+    (obj, item) => ({ ...obj, [item._id]: item.value }), {},
   );
 
-  const newAnswers = answers
-    .filter(({ optionIds }) => optionIds.length) // ignore/unset fields without options
-    .map(({ fieldId, optionIds }) => ({ _id: fieldId, values: optionIds }))
-    .reduce(
-      (obj, item) => ({ ...obj, [item._id]: item.values }), {},
-    );
+  // get new answers as object { id, value }
+  const newAnswers = answers.reduce(
+    (obj, item) => ({ ...obj, [item.fieldId]: item.value }), {},
+  );
 
   // merge new and old ansers to account for old non active answers
   const mergedAnwsers = { ...userObj, ...newAnswers };
 
-  // convert merged answers into valid array of { _id, values } answers
+  // convert merged answers into valid array of { _id, value } answers
   const toSet = Object.keys(mergedAnwsers).map((key) => {
-    const obj = { _id: key, values: mergedAnwsers[key] };
+    const obj = { _id: key, value: mergedAnwsers[key] };
     return obj;
   });
 
-  user.set('customSelectFieldAnswers', toSet);
+  user.set('customBooleanFieldAnswers', toSet);
   if (profileLastVerifiedAt) {
     user.set('profileLastVerifiedAt', profileLastVerifiedAt);
     user.set('forceProfileReVerification', false);

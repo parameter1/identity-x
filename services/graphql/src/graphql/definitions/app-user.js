@@ -25,6 +25,8 @@ extend type Mutation {
   setAppUserBanned(input: SetAppUserBannedMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   setAppUserRegionalConsent(input: SetAppUserRegionalConsentMutationInput!): AppUser! @requiresAuth(type: AppUser) # can only be set by self
 
+  updateAppUserCustomBooleanAnswers(input: UpdateAppUserCustomBooleanAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
+  updateOwnAppUserCustomBooleanAnswers(input: UpdateOwnAppUserCustomBooleanAnswersMutationInput!): AppUser! @requiresAuth(type: AppUser)
   updateAppUserCustomSelectAnswers(input: UpdateAppUserCustomSelectAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   updateOwnAppUserCustomSelectAnswers(input: UpdateOwnAppUserCustomSelectAnswersMutationInput!): AppUser! @requiresAuth(type: AppUser)
 
@@ -85,6 +87,8 @@ type AppUser {
   banned: Boolean @projection
   receiveEmail: Boolean @projection
   regionalConsentAnswers: [AppUserRegionalConsentAnswer!]! @projection
+  "Shows all answers to custom boolean questions. By default this will include all questions, even if the user has not answered."
+  customBooleanFieldAnswers(input: AppUserCustomBooleanFieldAnswersInput = {}): [AppUserCustomBooleanFieldAnswer!]! @projection
   "Shows all answers to custom select questions. By default this will include all questions, even if the user has not answered."
   customSelectFieldAnswers(input: AppUserCustomSelectFieldAnswersInput = {}): [AppUserCustomSelectFieldAnswer!]! @projection
   "Lists all external IDs + namespaces associated with this user."
@@ -117,6 +121,17 @@ type AppUserRegionalConsentAnswer {
   policy: OrganizationRegionalConsentPolicy!
 }
 
+type AppUserCustomBooleanFieldAnswer {
+  "The user-to-answer identifier."
+  id: String!
+  "The custom boolean field that was answered."
+  field: BooleanField!
+  "Whether the user has answered the question."
+  hasAnswered: Boolean!
+  "The answered value. This will always be a boolean value. An empty value signifies a non answer. It's up to the implementing components to account for this."
+  value: Boolean!
+}
+
 type AppUserCustomSelectFieldAnswer {
   "The user-to-answer identifier."
   id: String!
@@ -147,6 +162,17 @@ type AppUserAuthentication {
 type AppUserAuthToken {
   id: String!
   value: String!
+}
+
+input AppUserCustomBooleanFieldAnswersInput {
+  "Only return answers for the provided field IDs. An empty value will return all answers."
+  fieldIds: [String!] = []
+  "If true, will only return answers the user has set. Otherwise, all questions will be return, with empty answers where not set. This will also be filtered by the fieldIds input."
+  onlyAnswered: Boolean = false
+  "If true, will only return active questions. This will also be filtered by the fieldIds and onlyAnswered inputs."
+  onlyActive: Boolean = false
+  "Optionally sort by fields on the custom field."
+  sort: FieldInterfaceSortInput = {}
 }
 
 input AppUserCustomSelectFieldAnswersInput {
@@ -311,16 +337,35 @@ input UpdateAppUserMutationInput {
   payload: UpdateAppUserPayloadInput!
 }
 
+input UpdateAppUserCustomBooleanAnswersMutationInput {
+  "The user id to update."
+  id: String!
+  "The answers to set/update. An empty array or null value will do nothing."
+  answers: [UpdateAppUserCustomBooleanAnswer!]
+}
+
+input UpdateOwnAppUserCustomBooleanAnswersMutationInput {
+  "The answers to set/update for the current user. An empty array or null value will do nothing."
+  answers: [UpdateAppUserCustomBooleanAnswer!]
+}
+
 input UpdateAppUserCustomSelectAnswersMutationInput {
   "The user id to update."
   id: String!
-  "The answers to set/update. An empty array will _unset_ all existing answers. A null value will do nothing."
+  "The answers to set/update. An empty array or null value will do nothing."
   answers: [UpdateAppUserCustomSelectAnswer!]
 }
 
 input UpdateOwnAppUserCustomSelectAnswersMutationInput {
-  "The answers to set/update for the current user. An empty array will _unset_ all existing answers. A null value will do nothing."
+  "The answers to set/update for the current user. An empty array or null value will do nothing."
   answers: [UpdateAppUserCustomSelectAnswer!]
+}
+
+input UpdateAppUserCustomBooleanAnswer {
+  "The custom boolean field ID."
+  fieldId: String!
+  "The value of the boolean field"
+  value: Boolean!
 }
 
 input UpdateAppUserCustomSelectAnswer {

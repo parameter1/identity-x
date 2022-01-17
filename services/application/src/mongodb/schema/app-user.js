@@ -29,6 +29,23 @@ const regionalConsentAnswerSchema = new Schema({
  * The built-in `_id` field of this sub-document represents
  * the custom select field id.
  */
+const customBooleanFieldAnswerSchema = new Schema({
+  /**
+   * The custom select field answer(s).
+   *
+   * These are always stored as an array of answered option IDs,
+   * regardless if the question is single or multi.
+   */
+  value: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+/**
+ * The built-in `_id` field of this sub-document represents
+ * the custom select field id.
+ */
 const customSelectFieldAnswerSchema = new Schema({
   /**
    * The custom select field answer(s).
@@ -129,6 +146,10 @@ const schema = new Schema({
     type: String,
     trim: true,
     set: stripLines,
+  },
+  customBooleanFieldAnswers: {
+    type: [customBooleanFieldAnswerSchema],
+    default: () => [],
   },
   customSelectFieldAnswers: {
     type: [customSelectFieldAnswerSchema],

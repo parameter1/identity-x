@@ -1,0 +1,29 @@
+<form {{action "save" on="submit"}}>
+  <fieldset disabled={{this.isActionRunning}}>
+    <BsModal::Body>
+      {{#each this.model.customBooleanFieldAnswers as |answer|}}
+        <FormElements::Label>
+          {{answer.field.name}}
+        </FormElements::Label>
+        <div class="row mb-4 mx-2">
+          <div class="col-sm-1">
+            <FormElements::ToggleButton @value={{answer.value}} />
+          </div>
+          <div class="col-sm-11">
+            <span class="small text-muted">
+              {{answer.field.label}}
+            </span>
+            {{#if (not answer.field.active)}}<span class="small text-warning">[inactive]</span>{{/if}}
+          </div>
+        </div>
+      {{else}}
+        <div class="row">
+          <p class="text-muted">No custom fields have been created.</p>
+        </div>
+      {{/each}}
+    </BsModal::Body>
+    <BsModal::Footer>
+      <FormElements::SubmitButton @class="btn btn-success" @isSaving={{this.isActionRunning}} />
+    </BsModal::Footer>
+  </fieldset>
+</form>

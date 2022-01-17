@@ -6,6 +6,7 @@ export default Component.extend({
   router: inject(),
 
   tagName: '',
+  fieldType: 'select',
   title: null,
   isActionRunning: false,
   isUpdating: false,
@@ -13,7 +14,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    if (!this.model) this.set('model', { options: [] });
+    if (!this.model) this.set('model', { options: [], createType: 'select' });
     if (!this.model.externalId) this.set('model.externalId', { namespace: {}, identifier: {} });
   },
 
@@ -40,6 +41,10 @@ export default Component.extend({
 
     enableOptionExternalIds() {
       this.set('optionExternalIdsEnabled', true);
+    },
+
+    setFieldType(value) {
+      this.set('model.createType', value);
     },
 
     returnToList() {

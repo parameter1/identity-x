@@ -28,6 +28,16 @@ module.exports = {
   /**
    *
    */
+  BooleanField: {
+    /**
+     *
+     */
+    id: field => field._id,
+  },
+
+  /**
+   *
+   */
   SelectField: {
     /**
      *
@@ -73,6 +83,31 @@ module.exports = {
     /**
      *
      */
+    createBooleanField: (_, { input }, { app }) => {
+      const {
+        name,
+        label,
+        required,
+        active,
+        externalId,
+      } = input;
+      const applicationId = app.getId();
+      return applicationService.request('field.create', {
+        type: 'boolean',
+        applicationId,
+        payload: {
+          name,
+          label,
+          required,
+          active,
+          externalId,
+        },
+      });
+    },
+
+    /**
+     *
+     */
     createSelectField: (_, { input }, { app }) => {
       const {
         name,
@@ -95,6 +130,36 @@ module.exports = {
           multiple,
           externalId,
           options,
+        },
+      });
+    },
+
+    /**
+     *
+     */
+    /**
+     *
+     */
+    updateBooleanField: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const {
+        id,
+        name,
+        label,
+        required,
+        active,
+        externalId,
+      } = input;
+      return applicationService.request('field.updateOne', {
+        id,
+        type: 'boolean',
+        applicationId,
+        payload: {
+          name,
+          label,
+          required,
+          active,
+          externalId,
         },
       });
     },
@@ -176,6 +241,15 @@ module.exports = {
         sort,
         excludeIds,
       });
+    },
+
+    /**
+     *
+     */
+    booleanField: (_, { input }, ctx, info) => {
+      const { id } = input;
+      const fields = typeProjection(info);
+      return applicationService.request('field.findById', { id, type: 'boolean', fields });
     },
 
     /**

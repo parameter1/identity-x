@@ -4,13 +4,26 @@ import AppQueryMixin from '@identity-x/manage/mixins/app-query';
 import gql from 'graphql-tag';
 import { inject } from '@ember/service';
 
-const mutation = gql`
-  mutation AppSelectFieldCreate($input: CreateSelectFieldMutationInput!) {
-    createSelectField(input: $input) {
-      id
-    }
+const mutations = {
+  select: {
+    mutation: gql`
+      mutation AppSelectFieldCreate($input: CreateSelectFieldMutationInput!) {
+        createSelectField(input: $input) {
+          id
+        }
+      }`,
+    fieldType: 'createSelectField',
+  },
+  boolean: {
+    mutation: gql`
+      mutation AppBooleanFieldCreate($input: CreateBooleanFieldMutationInput!) {
+        createBooleanField(input: $input) {
+          id
+        }
+      }`,
+    fieldType: 'createBooleanField',
   }
-`;
+};
 
 export default Controller.extend(ActionMixin, AppQueryMixin, {
   errorNotifier: inject(),
@@ -26,36 +39,17 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
         const {
           name,
           label,
-          options,
-          required,
-          active,
-          multiple,
-          externalId,
+          createType
         } = this.get('model');
         const input = {
           name,
           label,
-          required,
-          active,
-          multiple,
-          externalId: {
-            ...(externalId && externalId.namespace && externalId.namespace.type && {
-              namespace: {
-                provider: externalId.namespace.provider,
-                tenant: externalId.namespace.tenant,
-                type: externalId.namespace.type,
-              },
-            }),
-            ...(externalId && externalId.identifier && externalId.identifier.value && {
-              identifier: { value: externalId.identifier.value },
-            }),
-          },
-          options: options.map((option) => ({ id: option.id, label: option.label, externalIdentifier: option.externalIdentifier })),
         };
-        if (!Object.keys(input.externalId).length) delete input.externalId;
+
         const variables = { input };
         const refetchQueries = ['AppFields'];
-        await this.mutate({ mutation, variables, refetchQueries }, 'createSelectField');
+        const { mutation, fieldType } = mutations[createType];
+        await this.mutate({ mutation, variables, refetchQueries }, fieldType);
         await closeModal();
       } catch (e) {
         this.errorNotifier.show(e);
