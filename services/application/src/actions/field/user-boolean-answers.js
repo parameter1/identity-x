@@ -18,7 +18,7 @@ module.exports = async ({
     ...(onlyActive && { active: { $ne: false } }),
   };
   const fields = await BooleanField.find(fieldQuery, {}, { sort: $sort.value });
-  // return nothing when no custom selects are found.
+  // return nothing when no custom booleans are found.
   if (!fields.length) return [];
 
   // ensure answers are an array
@@ -32,11 +32,15 @@ module.exports = async ({
 
   const mapped = fields.map((field) => {
     const fieldAnswer = customFieldAnswers.find(answer => `${answer._id}` === `${field._id}`);
-    const value = (fieldAnswer) ? fieldAnswer.value : false;
+    const answer = fieldAnswer ? fieldAnswer.value : null;
+    let value = null;
+    if (fieldAnswer === true) ({ value } = field.whenTrue);
+    if (fieldAnswer === false) ({ value } = field.whenFalse);
     return {
       id: field._id,
       field,
-      hasAnswered: Boolean(value),
+      hasAnswered: Boolean(fieldAnswer),
+      answer,
       value,
     };
   });
