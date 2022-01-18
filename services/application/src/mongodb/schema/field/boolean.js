@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 
 const type = {
   type: String,
-  enum: ['STRING', 'NUMBER', 'BOOLEAN'],
+  enum: ['STRING', 'INTEGER', 'BOOLEAN', 'FLOAT'],
   default: 'BOOLEAN',
 };
 

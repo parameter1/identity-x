@@ -26,7 +26,8 @@ extend type Mutation {
 
 enum BooleanFieldValueWhenTypeEnum {
   BOOLEAN
-  NUMBER
+  FLOAT
+  INTEGER
   STRING
 }
 
