@@ -28,6 +28,18 @@ module.exports = {
   /**
    *
    */
+  FieldValue: {
+    /**
+     *
+     */
+    value({ value }) {
+      return `${value}`;
+    },
+  },
+
+  /**
+   *
+   */
   BooleanField: {
     /**
      *

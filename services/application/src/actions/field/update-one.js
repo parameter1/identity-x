@@ -77,9 +77,14 @@ const updateBoolean = async ({
     required,
     active,
     externalId,
-    whenTrue,
-    whenFalse,
   });
+
+  // types must be set before values so the internal cast function sees the new type before
+  // converting the value.
+  boolean.set('whenTrue.type', whenTrue.type);
+  boolean.set('whenTrue.value', whenTrue.value);
+  boolean.set('whenFalse.type', whenFalse.type);
+  boolean.set('whenFalse.value', whenFalse.value);
 
   await boolean.save();
   return boolean;

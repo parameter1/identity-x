@@ -24,7 +24,7 @@ extend type Mutation {
   updateSelectField(input: UpdateSelectFieldMutationInput!): SelectField! @requiresAppRole(roles: [Owner, Administrator, Member])
 }
 
-enum BooleanFieldValueWhenTypeEnum {
+enum FieldValueTypeEnum {
   BOOLEAN
   FLOAT
   INTEGER
@@ -58,6 +58,11 @@ interface FieldInterface {
   updatedAt: Date! @projection
   "An external ID + namespaces associated with this custom field."
   externalId: FieldInterfaceExternalEntityId @projection
+}
+
+type FieldValue {
+  type: FieldValueTypeEnum!
+  value: String!
 }
 
 type FieldInterfaceConnection {
@@ -108,14 +113,9 @@ type BooleanField implements FieldInterface {
   "An external ID + namespaces associated with this custom field."
   externalId: FieldInterfaceExternalEntityId @projection
   "The value and type of answer when true."
-  whenTrue: BooleanFieldValueWhen! @projection
+  whenTrue: FieldValue! @projection
   "The value and type of answer when false."
-  whenFalse: BooleanFieldValueWhen! @projection
-}
-
-type BooleanFieldValueWhen {
-  value: String!
-  type: BooleanFieldValueWhenTypeEnum!
+  whenFalse: FieldValue! @projection
 }
 
 type SelectField implements FieldInterface {
@@ -261,12 +261,12 @@ input UpdateBooleanFieldMutationInput {
 
 input UpdateBooleanFieldWhenTrueMutationInput {
   value: String = "true"
-  type: BooleanFieldValueWhenTypeEnum = BOOLEAN
+  type: FieldValueTypeEnum = BOOLEAN
 }
 
 input UpdateBooleanFieldWhenFalseMutationInput {
   value: String = "false"
-  type: BooleanFieldValueWhenTypeEnum = BOOLEAN
+  type: FieldValueTypeEnum = BOOLEAN
 }
 
 input UpdateSelectFieldMutationInput {
