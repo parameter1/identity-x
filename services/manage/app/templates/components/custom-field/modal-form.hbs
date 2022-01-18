@@ -87,6 +87,12 @@
           {{/if}}
 
 
+          {{#if (eq this.model.type "select")}}
+            <div class="d-flex justify-content-between mt-3 ml-n2">
+              <FormElements::ToggleButton @value={{this.model.multiple}} @onLabel="Allow Multiple Answers" />
+            </div>
+          {{/if}}
+
           <div class="d-flex justify-content-between mt-3 ml-n2">
             <FormElements::ToggleButton @value={{this.model.required}} @onLabel="Globally Required" />
           </div>
