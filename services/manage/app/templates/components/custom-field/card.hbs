@@ -1,7 +1,9 @@
 <ListCard>
   <div class="card-body">
     <h2 class="card-title">{{field.name}}</h2>
-    <p class="card-text">{{field.label}}</p>
+    <p class="card-text">
+      <CustomField::Label @value={{field.label}} />
+    </p>
 
     <div class="app-user-details app-user-details--locale">
       <p>Type: {{type}}</p>
