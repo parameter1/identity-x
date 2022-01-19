@@ -128,8 +128,10 @@ type AppUserCustomBooleanFieldAnswer {
   field: BooleanField!
   "Whether the user has answered the question."
   hasAnswered: Boolean!
-  "The answered value. This will always be a boolean value. An empty value signifies a non answer. It's up to the implementing components to account for this."
-  value: Boolean!
+  "The boolean answer. A null value signifies a non answer. It's up to the implementing components to account for this."
+  answer: Boolean
+  "The corresponding answer value based on the question's whenTrue/whenFalse values."
+  value: JSON
 }
 
 type AppUserCustomSelectFieldAnswer {

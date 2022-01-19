@@ -9,6 +9,7 @@ const fields = gql`
       edges {
         node {
           id
+          type
           name
           label
           required
@@ -38,6 +39,7 @@ const matchFields = gql`
       edges {
         node {
           id
+          type
           name
           label
           required

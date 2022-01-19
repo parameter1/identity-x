@@ -24,6 +24,13 @@ extend type Mutation {
   updateSelectField(input: UpdateSelectFieldMutationInput!): SelectField! @requiresAppRole(roles: [Owner, Administrator, Member])
 }
 
+enum FieldValueTypeEnum {
+  BOOLEAN
+  FLOAT
+  INTEGER
+  STRING
+}
+
 enum FieldInterfaceSortField {
   id
   name
@@ -35,6 +42,8 @@ enum FieldInterfaceSortField {
 interface FieldInterface {
   "The internal field ID."
   id: String! @projection(localField: "_id")
+  "The field type."
+  type: String! @projection(localField: "_type")
   "The internal name of the field."
   name: String! @projection
   "The user-facing field label. This is what will appear on a form."
@@ -49,6 +58,11 @@ interface FieldInterface {
   updatedAt: Date! @projection
   "An external ID + namespaces associated with this custom field."
   externalId: FieldInterfaceExternalEntityId @projection
+}
+
+type FieldValue {
+  type: FieldValueTypeEnum!
+  value: String!
 }
 
 type FieldInterfaceConnection {
@@ -82,6 +96,8 @@ type FieldInterfaceExternalNamespace {
 type BooleanField implements FieldInterface {
   "The internal field ID."
   id: String! @projection(localField: "_id")
+  "The field type."
+  type: String! @projection(localField: "_type")
   "The internal name of the field."
   name: String! @projection
   "The user-facing field label. This is what will appear on a form."
@@ -96,14 +112,17 @@ type BooleanField implements FieldInterface {
   updatedAt: Date! @projection
   "An external ID + namespaces associated with this custom field."
   externalId: FieldInterfaceExternalEntityId @projection
-
-  "Value of the answer"
-  value: Boolean! @projection
+  "The value and type of answer when true."
+  whenTrue: FieldValue! @projection
+  "The value and type of answer when false."
+  whenFalse: FieldValue! @projection
 }
 
 type SelectField implements FieldInterface {
   "The internal field ID."
   id: String! @projection(localField: "_id")
+  "The field type."
+  type: String! @projection(localField: "_type")
   "The internal name of the field."
   name: String! @projection
   "The user-facing field label. This is what will appear on a form."
@@ -234,6 +253,20 @@ input UpdateBooleanFieldMutationInput {
   active: Boolean = true
   "The external namespace + ID for this field."
   externalId: FieldInterfaceExternalIdMutationInput
+  "The value and type of answer when true."
+  whenTrue: UpdateBooleanFieldWhenTrueMutationInput = {}
+  "The value and type of answer when false."
+  whenFalse: UpdateBooleanFieldWhenFalseMutationInput = {}
+}
+
+input UpdateBooleanFieldWhenTrueMutationInput {
+  value: String = "true"
+  type: FieldValueTypeEnum = BOOLEAN
+}
+
+input UpdateBooleanFieldWhenFalseMutationInput {
+  value: String = "false"
+  type: FieldValueTypeEnum = BOOLEAN
 }
 
 input UpdateSelectFieldMutationInput {

@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          {{#if (eq this.model.__typename "SelectField")}}
+          {{#if (eq this.model.type "select")}}
             <div class="row">
               <div class="col">
                 <div class="form-group">
@@ -64,6 +64,32 @@
                   />
                 </div>
               </div>
+            </div>
+          {{/if}}
+
+          {{#if (eq this.model.type "boolean")}}
+            <hr>
+            <div class="row">
+              <div class="col">
+                <CustomField::BooleanAnswerWhen
+                  @label="Checked"
+                  @type={{this.model.whenTrue.type}}
+                  @value={{this.model.whenTrue.value}}
+                />
+
+                <CustomField::BooleanAnswerWhen
+                  @label="Unchecked"
+                  @type={{this.model.whenFalse.type}}
+                  @value={{this.model.whenFalse.value}}
+                />
+              </div>
+            </div>
+          {{/if}}
+
+
+          {{#if (eq this.model.type "select")}}
+            <div class="d-flex justify-content-between mt-3 ml-n2">
+              <FormElements::ToggleButton @value={{this.model.multiple}} @onLabel="Allow Multiple Answers" />
             </div>
           {{/if}}
 
@@ -85,9 +111,8 @@
                 @on-change={{action "setFieldType"}}
                 @class="custom-select" as |select|
               >
-                <select.option>Please Select One</select.option>
-                <select.option @value="boolean">Boolean</select.option>
                 <select.option @value="select">Select</select.option>
+                <select.option @value="boolean">Boolean</select.option>
               </FormElements::Select>
             </div>
           </div>

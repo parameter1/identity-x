@@ -8,6 +8,7 @@ export default Route.extend({
       active: false,
       required: false,
       externalId: { identifier: {}, namespace: {} },
+      createType: 'select',
     };
   },
 });

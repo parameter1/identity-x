@@ -1,0 +1,32 @@
+<div class="form-group">
+  <FormElements::Label @class="mb-0">When {{this.label}}</FormElements::Label>
+  <div class="row">
+    <div class="col-md-6">
+      <FormElements::Label @class="small">Value</FormElements::Label>
+      <Input
+        @value={{this.value}}
+        @disabled={{this.disabled}}
+        type="text"
+        class="form-control"
+        placeholder="Value"
+        aria-label="Value"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <FormElements::Label @class="small">Type</FormElements::Label>
+      <FormElements::Select
+        @value={{this.type}}
+        @class="custom-select"
+        @disabled={{this.disabled}}
+        @on-change={{action (mut this.type)}}
+        as |select|
+      >
+        <select.option @value="BOOLEAN">Boolean</select.option>
+        <select.option @value="INTEGER">Integer</select.option>
+        <select.option @value="FLOAT">Float</select.option>
+        <select.option @value="STRING">String</select.option>
+      </FormElements::Select>
+    </div>
+  </div>
+</div>

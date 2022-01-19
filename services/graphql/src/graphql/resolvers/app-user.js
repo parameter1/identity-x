@@ -58,13 +58,7 @@ module.exports = {
         onlyActive,
         sort,
       });
-      return booleanFieldAnswers.map((booleanFieldAnswer) => {
-        const { id, value } = booleanFieldAnswer;
-        return {
-          ...booleanFieldAnswer,
-          answers: [{ id, value }],
-        };
-      });
+      return booleanFieldAnswers;
     },
 
     customSelectFieldAnswers: async ({ customSelectFieldAnswers }, { input }, { app }) => {
@@ -101,6 +95,14 @@ module.exports = {
       const mustBeAtLeast = new Date(Date.now() - ms);
       const lastVerified = new Date(profileLastVerifiedAt);
       return lastVerified < mustBeAtLeast;
+    },
+  },
+
+  AppUserCustomBooleanFieldAnswer: {
+    value: ({ field, answer }) => {
+      if (answer == null) return null;
+      if (answer) return field.whenTrue.value;
+      return field.whenFalse.value;
     },
   },
 

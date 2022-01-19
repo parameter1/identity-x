@@ -6,6 +6,7 @@ const query = gql`
   query AppFieldsEdit($input: BooleanFieldQueryInput!) {
     booleanField(input: $input) {
       id
+      type
       name
       label
       required
@@ -14,6 +15,14 @@ const query = gql`
         id
         identifier { value }
         namespace { provider tenant type }
+      }
+      whenTrue {
+        value
+        type
+      }
+      whenFalse {
+        value
+        type
       }
     }
   }

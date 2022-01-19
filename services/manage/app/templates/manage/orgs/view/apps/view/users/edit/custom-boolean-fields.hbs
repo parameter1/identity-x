@@ -11,7 +11,7 @@
           </div>
           <div class="col-sm-11">
             <span class="small text-muted">
-              {{answer.field.label}}
+              <CustomField::Label @value={{answer.field.label}} />
             </span>
             {{#if (not answer.field.active)}}<span class="small text-warning">[inactive]</span>{{/if}}
           </div>

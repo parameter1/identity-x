@@ -28,11 +28,28 @@ module.exports = {
   /**
    *
    */
+  FieldValue: {
+    /**
+     *
+     */
+    value({ value }) {
+      return `${value}`;
+    },
+  },
+
+  /**
+   *
+   */
   BooleanField: {
     /**
      *
      */
     id: field => field._id,
+
+    /**
+     *
+     */
+    type: field => field._type,
   },
 
   /**
@@ -43,6 +60,11 @@ module.exports = {
      *
      */
     id: field => field._id,
+
+    /**
+     *
+     */
+    type: field => field._type,
 
     /**
      *
@@ -149,6 +171,8 @@ module.exports = {
         required,
         active,
         externalId,
+        whenTrue,
+        whenFalse,
       } = input;
       return applicationService.request('field.updateOne', {
         id,
@@ -160,6 +184,8 @@ module.exports = {
           required,
           active,
           externalId,
+          whenTrue,
+          whenFalse,
         },
       });
     },
