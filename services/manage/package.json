@@ -1,6 +1,6 @@
 {
   "name": "@identity-x/manage",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "description": "IdentityX manage application",
   "repository": "https://github.com/base-cms/id-me/tree/master/services/manage",
