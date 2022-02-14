@@ -59,11 +59,11 @@ module.exports = function localePlugin(schema, { localeService } = {}) {
       type: String,
       trim: true,
     },
-    address: {
+    street: {
       type: String,
       trim: true,
     },
-    address2: {
+    addressExtra: {
       type: String,
       trim: true,
     },

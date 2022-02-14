@@ -28,8 +28,8 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           regionCode,
           postalCode,
           city,
-          address,
-          address2,
+          street,
+          addressExtra,
         } = this.get('model');
 
         const payload = {
@@ -38,8 +38,8 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           regionCode,
           postalCode,
           city,
-          address,
-          address2,
+          street,
+          addressExtra,
         };
         const input = { id, payload };
         const variables = { input };
