@@ -241,6 +241,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
       } = input;
       const payload = {
         givenName,
@@ -250,6 +253,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
       };
       return applicationService.request('user.create', {
         applicationId,
@@ -282,6 +288,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
       } = input;
       const payload = {
         email,
@@ -294,6 +303,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
       };
       return applicationService.request('user.manageCreate', {
         applicationId,
@@ -398,6 +410,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
         regionalConsentAnswers,
       } = input;
 
@@ -409,6 +424,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
         regionalConsentAnswers,
       };
 
@@ -436,6 +454,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
         forceProfileReVerification,
       } = payload;
 
@@ -453,6 +474,9 @@ module.exports = {
           countryCode,
           regionCode,
           postalCode,
+          city,
+          address,
+          address2,
           forceProfileReVerification,
         },
       });
@@ -528,6 +552,9 @@ module.exports = {
         countryCode,
         regionCode,
         postalCode,
+        city,
+        address,
+        address2,
         receiveEmail,
       } = input;
       return applicationService.request('user.updateOne', {
@@ -541,6 +568,9 @@ module.exports = {
           countryCode,
           regionCode,
           postalCode,
+          city,
+          address,
+          address2,
           receiveEmail,
           profileLastVerifiedAt: new Date(),
         },
