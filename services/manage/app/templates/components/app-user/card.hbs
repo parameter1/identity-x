@@ -43,6 +43,9 @@
     <div class="app-user-details app-user-details--locale">
       {{#if (or this.user.region.name this.user.postalCode)}}
         <p>
+          {{#if this.user.city}}
+            <span>{{this.user.city}},</span>
+          {{/if}}
           {{#if this.user.region.name}}
             <span>{{this.user.region.name}}</span>
           {{/if}}

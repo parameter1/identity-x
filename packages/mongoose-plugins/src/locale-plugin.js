@@ -55,6 +55,18 @@ module.exports = function localePlugin(schema, { localeService } = {}) {
         message: 'Invalid postal code {VALUE} for the provided country.',
       },
     },
+    city: {
+      type: String,
+      trim: true,
+    },
+    street: {
+      type: String,
+      trim: true,
+    },
+    addressExtra: {
+      type: String,
+      trim: true,
+    },
   });
 
   schema.pre('validate', async function convertCountryCode() {

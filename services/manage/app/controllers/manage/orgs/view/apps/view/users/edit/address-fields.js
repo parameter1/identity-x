@@ -6,7 +6,7 @@ import { inject } from '@ember/service';
 import fragment from '@identity-x/manage/graphql/fragments/app-user-list';
 
 const mutation = gql`
-  mutation AppUserEdit($input: UpdateAppUserMutationInput!) {
+  mutation AppUserEditAddress($input: UpdateAppUserMutationInput!) {
     updateAppUser(input: $input) {
       ...AppUserListFragment
     }
@@ -24,24 +24,22 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
         const {
           id,
           email,
-          givenName,
-          familyName,
-          accessLevels,
-          teams,
-          organization,
-          organizationTitle,
-          forceProfileReVerification,
+          countryCode,
+          regionCode,
+          postalCode,
+          city,
+          street,
+          addressExtra,
         } = this.get('model');
 
         const payload = {
           email,
-          givenName,
-          familyName,
-          accessLevelIds: accessLevels.map(level => level.id),
-          teamIds: teams.map(team => team.id),
-          organization,
-          organizationTitle,
-          forceProfileReVerification,
+          countryCode,
+          regionCode,
+          postalCode,
+          city,
+          street,
+          addressExtra,
         };
         const input = { id, payload };
         const variables = { input };

@@ -19,20 +19,6 @@
       <Input @id="app-user.email" @type="email" @required={{true}} @disabled={{this.model.verified}} @class="form-control" @value={{this.model.email}} />
     </div>
   </div>
-  <div class="col-sm-6">
-    <AppUser::Fields::Country @value={{this.model.countryCode}} @on-change={{action "setCountryCode"}} />
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-6">
-    <AppUser::Fields::Region @value={{this.model.regionCode}} @countryCode={{this.model.countryCode}} @on-change={{action "setRegionCode"}} />
-  </div>
-  <div class="col-sm-6">
-    <div class="form-group">
-      <FormElements::Label @for="app-user.postal-code">Postal/ZIP Code</FormElements::Label>
-      <Input @id="app-user.postal-code" @type="text" @class="form-control" @value={{this.model.postalCode}} />
-    </div>
-  </div>
 </div>
 <div class="row">
   <div class="col-sm-6">

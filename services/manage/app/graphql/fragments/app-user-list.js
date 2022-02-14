@@ -16,6 +16,9 @@ export default gql`
       id
       name
     }
+    street
+    addressExtra
+    city
     countryCode
     country {
       id
