@@ -14,15 +14,5 @@ export default Component.extend({
     setTeams(teams) {
       this.set('model.teams', teams);
     },
-
-    setCountryCode(countryCode) {
-      this.set('model.countryCode', countryCode);
-      this.send('setRegionCode', '');
-    },
-
-    setRegionCode(regionCode) {
-      this.set('model.regionCode', regionCode);
-      this.set('model.postalCode', '');
-    },
   },
 });

@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <FormElements::Label @for="app-user.address">Address</FormElements::Label>
+      <Input @id="app-user.address" @type="text" @class="form-control" @value={{this.model.address}} />
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <FormElements::Label @for="app-user.address2">Apartment, suite, etc</FormElements::Label>
+      <Input @id="app-user.address2" @type="text" @class="form-control" @value={{this.model.address2}} />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <FormElements::Label @for="app-user.city">City</FormElements::Label>
+      <Input @id="app-user.city" @type="text" @class="form-control" @value={{this.model.city}} />
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <AppUser::Fields::Region @value={{this.model.regionCode}} @countryCode={{this.model.countryCode}} @on-change={{action "setRegionCode"}} />
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <AppUser::Fields::Country @value={{this.model.countryCode}} @on-change={{action "setCountryCode"}} />
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <FormElements::Label @for="app-user.postal-code">ZIP/Postal Code</FormElements::Label>
+      <Input @id="app-user.postal-code" @type="text" @class="form-control" @value={{this.model.postalCode}} />
+    </div>
+  </div>
+</div>
