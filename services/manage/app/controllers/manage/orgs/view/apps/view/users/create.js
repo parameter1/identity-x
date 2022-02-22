@@ -32,6 +32,9 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           countryCode,
           regionCode,
           postalCode,
+          street,
+          addressExtra,
+          city,
           phoneNumber,
         } = this.get('model');
         const input = {
@@ -45,6 +48,9 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           countryCode,
           regionCode,
           postalCode,
+          street,
+          addressExtra,
+          city,
           phoneNumber,
         };
         const variables = { input };
