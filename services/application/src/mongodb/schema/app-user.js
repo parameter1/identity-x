@@ -134,6 +134,10 @@ const schema = new Schema({
     trim: true,
     set: stripLines,
   },
+  phoneNumber: {
+    type: String,
+    trim: true,
+  },
   organization: {
     type: String,
     trim: true,
