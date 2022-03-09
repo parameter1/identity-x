@@ -18,6 +18,7 @@ export default gql`
     }
     street
     addressExtra
+    phoneNumber
     city
     countryCode
     country {

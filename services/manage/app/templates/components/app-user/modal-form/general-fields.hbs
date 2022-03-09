@@ -19,6 +19,12 @@
       <Input @id="app-user.email" @type="email" @required={{true}} @disabled={{this.model.verified}} @class="form-control" @value={{this.model.email}} />
     </div>
   </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <FormElements::Label @for="app-user.phone-number">Phone Number</FormElements::Label>
+      <Input @id="app-user.phone-number" @type="tel" @class="form-control" @value={{this.model.phoneNumber}} />
+    </div>
+  </div>
 </div>
 <div class="row">
   <div class="col-sm-6">
