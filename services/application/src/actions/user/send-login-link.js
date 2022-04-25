@@ -1,7 +1,7 @@
 const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { tokenService, mailerService, organizationService } = require('@identity-x/service-clients');
-const { get, getAsObject } = require('@base-cms/object-path');
+const { getAsObject } = require('@base-cms/object-path');
 const { stripLines } = require('@identity-x/utils');
 const { Application } = require('../../mongodb/models');
 const { SENDING_DOMAIN } = require('../../env');
@@ -24,7 +24,7 @@ module.exports = async ({
   redirectTo,
   applicationId,
   appContextId,
-  eventLabel,
+  requestOrigin,
   email,
 } = {}) => {
   if (!authUrl) throw createRequiredParamError('authUrl');
@@ -56,7 +56,7 @@ module.exports = async ({
   if (supportEmail) addressValues.push(supportEmail);
 
   const { token } = await createLoginToken({ applicationId, email: user.email });
-  let url = (eventLabel) ? `${authUrl}?token=${token}&eventLabel=${eventLabel}` : `${authUrl}?token=${token}`;
+  let url = (requestOrigin) ? `${authUrl}?token=${token}&requestOrigin=${requestOrigin}` : `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
   const supportEmailHtml = supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : '';
