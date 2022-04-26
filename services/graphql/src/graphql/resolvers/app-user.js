@@ -364,6 +364,7 @@ module.exports = {
       const applicationId = app.getId();
       const {
         email,
+        source,
         authUrl,
         redirectTo,
         appContextId,
@@ -373,6 +374,7 @@ module.exports = {
         appContextId,
         authUrl,
         redirectTo,
+        source,
         email,
       });
     },

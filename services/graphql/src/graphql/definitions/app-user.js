@@ -266,6 +266,7 @@ input ManageCreateAppUserMutationInput {
 
 input SendAppUserLoginLinkMutationInput {
   email: String!
+  source: String
   authUrl: String!
   redirectTo: String
   "If provided, will use the matched application context when sending the login email."

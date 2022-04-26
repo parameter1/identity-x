@@ -24,6 +24,7 @@ module.exports = async ({
   redirectTo,
   applicationId,
   appContextId,
+  source,
   email,
 } = {}) => {
   if (!authUrl) throw createRequiredParamError('authUrl');
@@ -56,6 +57,7 @@ module.exports = async ({
 
   const { token } = await createLoginToken({ applicationId, email: user.email });
   let url = `${authUrl}?token=${token}`;
+  if (source) url = `${url}&source=${encodeURIComponent(source)}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
   const supportEmailHtml = supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : '';
