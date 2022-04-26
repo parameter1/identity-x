@@ -364,17 +364,18 @@ module.exports = {
       const applicationId = app.getId();
       const {
         email,
-        requestOrigin,
+        source,
         authUrl,
         redirectTo,
         appContextId,
       } = input;
+      console.log('source: ', source);
       return applicationService.request('user.sendLoginLink', {
         applicationId,
         appContextId,
         authUrl,
         redirectTo,
-        requestOrigin,
+        source,
         email,
       });
     },
