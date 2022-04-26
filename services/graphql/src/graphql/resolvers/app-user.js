@@ -369,7 +369,6 @@ module.exports = {
         redirectTo,
         appContextId,
       } = input;
-      console.log('source: ', source);
       return applicationService.request('user.sendLoginLink', {
         applicationId,
         appContextId,
