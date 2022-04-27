@@ -1,6 +1,6 @@
 {
   "name": "@identity-x/export-service",
-  "version": "1.2.0",
+  "version": "1.7.1",
   "description": "The IdentityX export service.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@limit0.io>",
