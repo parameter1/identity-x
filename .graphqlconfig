@@ -5,7 +5,7 @@
       "extensions": {
         "endpoints": {
           "dev": "http://0.0.0.0:12001",
-          "prod": "https://identity-x.base-cms.io/graphql"
+          "prod": "https://identity-x.parameter1.com/graphql"
         }
       }
     }

@@ -12,7 +12,7 @@ x-env-defaults: &env
   NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY-(unset)}
   NODE_ENV: development
   ORGANIZATION_SERVICE_URL: ${ORGANIZATION_SERVICE_URL-http://organization}
-  SENDING_DOMAIN: ${SENDING_DOMAIN-identity-x.base-cms.io}
+  SENDING_DOMAIN: ${SENDING_DOMAIN-identity-x.parameter1.com}
   TOKEN_SERVICE_URL: ${TOKEN_SERVICE_URL-http://token}
   SUPPORT_EMAIl: ${SUPPORT_EMAIL-root@localhost}
   SUPPORT_ENTITY: ${SUPPORT_ENTITY-My Dev Company}

@@ -10,10 +10,11 @@ const { isBurnerDomain } = require('../../utils/burner-email');
 
 const createLoginToken = ({
   email,
+  data = {},
   applicationId,
   ttl = 60 * 60,
 } = {}) => tokenService.request('create', {
-  payload: { aud: email },
+  payload: { aud: email, data },
   iss: applicationId,
   sub: 'app-user-login-link',
   ttl,
@@ -55,9 +56,8 @@ module.exports = async ({
   const supportEmail = context.email || app.email || company.supportEmail;
   if (supportEmail) addressValues.push(supportEmail);
 
-  const { token } = await createLoginToken({ applicationId, email: user.email });
+  const { token } = await createLoginToken({ applicationId, email: user.email, data: { source } });
   let url = `${authUrl}?token=${token}`;
-  if (source) url = `${url}&source=${encodeURIComponent(source)}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
   const supportEmailHtml = supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : '';
