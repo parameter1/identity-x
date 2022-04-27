@@ -21,6 +21,7 @@ module.exports = async ({
     aud: email,
     iss,
     jti,
+    src,
   } = await tokenService.request('verify', { sub: 'app-user-login-link', token });
 
   if (!email) throw createError(400, 'No email address was provided in the token payload');
@@ -56,5 +57,5 @@ module.exports = async ({
   });
   await user.save();
 
-  return { user: user.toObject(), token: { id: payload.jti, value: authToken } };
+  return { user: user.toObject(), token: { id: payload.jti, value: authToken }, loginSource: src };
 };

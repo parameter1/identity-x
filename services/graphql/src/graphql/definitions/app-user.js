@@ -163,6 +163,7 @@ type AppUserEdge {
 type AppUserAuthentication {
   user: AppUser!
   token: AppUserAuthToken!
+  loginSource: String
 }
 
 type AppUserAuthToken {
