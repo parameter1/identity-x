@@ -199,7 +199,7 @@ type AppUserCustomTextFieldAnswer {
   "Whether the user has answered the question."
   hasAnswered: Boolean!
   "The answered field value. A null value signifies a non answer. It's up to the implementing components to account for this."
-  answer: String
+  value: String
 }
 
 type AppUserConnection @projectUsing(type: "AppUser") {
