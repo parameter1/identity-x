@@ -1,3 +1,4 @@
+const { get } = require('object-path');
 const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { tokenService } = require('@identity-x/service-clients');
@@ -21,7 +22,7 @@ module.exports = async ({
     aud: email,
     iss,
     jti,
-    src,
+    data,
   } = await tokenService.request('verify', { sub: 'app-user-login-link', token });
 
   if (!email) throw createError(400, 'No email address was provided in the token payload');
@@ -57,5 +58,5 @@ module.exports = async ({
   });
   await user.save();
 
-  return { user: user.toObject(), token: { id: payload.jti, value: authToken }, loginSource: src };
+  return { user: user.toObject(), token: { id: payload.jti, value: authToken }, loginSource: get(data, 'source') };
 };
