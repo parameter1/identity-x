@@ -12,17 +12,20 @@ const userSelectAnswers = require('./user-select-answers');
 const Field = require('../../mongodb/models/field');
 const SelectField = require('../../mongodb/models/field/select');
 const BooleanField = require('../../mongodb/models/field/boolean');
+const TextField = require('../../mongodb/models/field/text');
 
 module.exports = {
   create,
   findById: ({ id, type, fields }) => {
-    const supportedTypes = ['select', 'boolean'];
+    const supportedTypes = ['select', 'boolean', 'text'];
     if (!supportedTypes.includes(type)) throw createParamError('type', type, supportedTypes);
     switch (type) {
       case 'boolean':
         return findById(BooleanField, { id, fields });
-      default:
+      case 'select':
         return findById(SelectField, { id, fields });
+      default:
+        return findById(TextField, { id, fields });
     }
   },
   listForApp: params => listForApp(Field, params),

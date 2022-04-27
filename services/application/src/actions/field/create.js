@@ -4,6 +4,7 @@ const { handleError } = require('@identity-x/utils').mongoose;
 const { Application } = require('../../mongodb/models');
 const BooleanField = require('../../mongodb/models/field/boolean');
 const SelectField = require('../../mongodb/models/field/select');
+const TextField = require('../../mongodb/models/field/text');
 const prepareExternalId = require('./utils/prepare-external-id');
 
 const createBoolean = async ({
@@ -56,12 +57,33 @@ const createSelect = async ({
   return select;
 };
 
+const createText = async ({
+  application,
+  name,
+  label,
+  required,
+  active,
+  externalId: eid,
+} = {}) => {
+  const externalId = prepareExternalId(eid);
+  const text = new TextField({
+    applicationId: application._id,
+    name,
+    label,
+    required,
+    active,
+    externalId,
+  });
+  await text.save();
+  return text;
+};
+
 module.exports = async ({
   type,
   applicationId,
   payload = {},
 } = {}) => {
-  const supportedTypes = ['select', 'boolean'];
+  const supportedTypes = ['select', 'boolean', 'text'];
   if (!supportedTypes.includes(type)) throw createParamError('type', type, supportedTypes);
   if (!applicationId) throw createRequiredParamError('applicationId');
 
@@ -73,8 +95,10 @@ module.exports = async ({
     switch (type) {
       case 'boolean':
         return createBoolean({ ...payload, application });
-      default:
+      case 'select':
         return createSelect({ ...payload, application });
+      default:
+        return createText({ ...payload, application });
     }
   } catch (e) {
     throw handleError(createError, e);
