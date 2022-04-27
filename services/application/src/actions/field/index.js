@@ -8,6 +8,7 @@ const create = require('./create');
 const updateOne = require('./update-one');
 const userBooleanAnswers = require('./user-boolean-answers');
 const userSelectAnswers = require('./user-select-answers');
+const userTextAnswers = require('./user-text-answers');
 
 const Field = require('../../mongodb/models/field');
 const SelectField = require('../../mongodb/models/field/select');
@@ -33,4 +34,5 @@ module.exports = {
   updateOne,
   userBooleanAnswers,
   userSelectAnswers,
+  userTextAnswers,
 };

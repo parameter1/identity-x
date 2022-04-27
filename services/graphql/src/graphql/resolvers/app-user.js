@@ -120,6 +120,24 @@ module.exports = {
       });
     },
 
+    customTextFieldAnswers: async ({ customTextFieldAnswers }, { input }, { app }) => {
+      const {
+        fieldIds,
+        onlyAnswered,
+        onlyActive,
+        sort,
+      } = input;
+      const textFieldAnswers = await applicationService.request('field.userTextAnswers', {
+        applicationId: app.getId(),
+        fieldIds,
+        customTextFieldAnswers,
+        onlyAnswered,
+        onlyActive,
+        sort,
+      });
+      return textFieldAnswers;
+    },
+
     mustReVerifyProfile: ({ forceProfileReVerification, profileLastVerifiedAt }, _, { app }) => {
       if (forceProfileReVerification) return true; // verify flag has been hard set.
       const { appUserAllowedStaleDays } = app.org;
@@ -744,6 +762,34 @@ module.exports = {
       const applicationId = user.getAppId();
       const { answers } = input;
       return applicationService.request('user.updateCustomSelectAnswers', {
+        id,
+        applicationId,
+        answers,
+        profileLastVerifiedAt: new Date(),
+      });
+    },
+
+    /**
+     *
+     */
+    updateAppUserCustomTextAnswers: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { id, answers } = input;
+      return applicationService.request('user.updateCustomTextAnswers', {
+        id,
+        applicationId,
+        answers,
+      });
+    },
+
+    /**
+     *
+     */
+    updateOwnAppUserCustomTextAnswers: (_, { input }, { user }) => {
+      const id = user.getId();
+      const applicationId = user.getAppId();
+      const { answers } = input;
+      return applicationService.request('user.updateCustomTextAnswers', {
         id,
         applicationId,
         answers,
