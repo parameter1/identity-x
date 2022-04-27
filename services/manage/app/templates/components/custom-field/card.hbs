@@ -29,5 +29,10 @@
         {{entypo-icon "edit" class="mr-1"}} Modify
       {{/link-to}}
     {{/if}}
+    {{#if (eq field.type "text")}}
+      {{#link-to "manage.orgs.view.apps.view.fields.edit.text" field.id class="btn btn-primary" role="button"}}
+        {{entypo-icon "edit" class="mr-1"}} Modify
+      {{/link-to}}
+    {{/if}}
   </div>
 </ListCard>
