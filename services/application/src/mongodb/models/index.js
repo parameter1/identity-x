@@ -4,7 +4,9 @@ const AppUser = require('./app-user');
 const AppUserLogin = require('./app-user-login');
 const Comment = require('./comment');
 const CommentStream = require('./comment-stream');
+const FieldBoolean = require('./field/boolean');
 const FieldSelect = require('./field/select');
+const FieldText = require('./field/text');
 const Team = require('./team');
 
 module.exports = {
@@ -14,6 +16,8 @@ module.exports = {
   AppUserLogin,
   Comment,
   CommentStream,
+  FieldBoolean,
   FieldSelect,
+  FieldText,
   Team,
 };
