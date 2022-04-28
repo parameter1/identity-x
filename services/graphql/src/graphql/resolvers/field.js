@@ -73,7 +73,7 @@ module.exports = {
       if (a.index > b.index) return 1;
       if (a.index < b.index) return -1;
       return 0;
-    }).map(option => ({ field, option })),
+    }).map(option => ({ field, ...option })),
   },
 
   /**
