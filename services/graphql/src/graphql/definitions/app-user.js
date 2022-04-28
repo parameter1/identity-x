@@ -397,6 +397,13 @@ input UpdateAppUserCustomSelectAnswer {
   fieldId: String!
   "The selected option IDs to select. This must always been an array, even if the question only supports one answer. An empty array will unset any existing options."
   optionIds: [String!]!
+  "The write-in values for this field. This must always been an array, even if the question only supports one answer. An empty array will unset any existing write-ins."
+  writeInValues: [UpdateAppUserCustomSelectAnswerWriteInValue!]
+}
+
+input UpdateAppUserCustomSelectAnswerWriteInValue {
+  optionId: String!
+  value: String
 }
 
 input UpdateOwnAppUserMutationInput {

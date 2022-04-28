@@ -22,24 +22,29 @@ module.exports = async ({
   if (!isArray(answers)) return user;
 
   // get all current answers as object { id, value }
-  const userObj = user.customSelectFieldAnswers.reduce(
-    (obj, item) => ({ ...obj, [item._id]: item.values }), {},
-  );
+  const userObj = user.customSelectFieldAnswers.reduce((obj, { _id, values, writeInValues }) => ({
+    ...obj,
+    [_id]: { values, writeInValues },
+  }), {});
 
   const newAnswers = answers
     .filter(({ optionIds }) => optionIds.length) // ignore/unset fields without options
-    .map(({ fieldId, optionIds }) => ({ _id: fieldId, values: optionIds }))
-    .reduce(
-      (obj, item) => ({ ...obj, [item._id]: item.values }), {},
-    );
+    .map(item => ({ _id: item.fieldId, ...item }))
+    .reduce((obj, { _id, optionIds, writeInValues }) => ({
+      ...obj,
+      [_id]: {
+        values: optionIds,
+        writeInValues: (writeInValues || []).map(v => ({ _id: v.optionId, value: v.value })),
+      },
+    }), {});
 
-  // merge new and old ansers to account for old non active answers
-  const mergedAnwsers = { ...userObj, ...newAnswers };
+  // merge new and old answers to account for old non active answers
+  const mergedAnswers = { ...userObj, ...newAnswers };
 
   // convert merged answers into valid array of { _id, values } answers
-  const toSet = Object.keys(mergedAnwsers).map((key) => {
-    const obj = { _id: key, values: mergedAnwsers[key] };
-    return obj;
+  const toSet = Object.keys(mergedAnswers).map((key) => {
+    const { values, writeInValues } = mergedAnswers[key];
+    return { _id: key, values, writeInValues };
   });
 
   user.set('customSelectFieldAnswers', toSet);
