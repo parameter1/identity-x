@@ -83,24 +83,25 @@ module.exports = {
     /**
      *
      */
-    id: ({ option }) => option._id,
-
-    /**
-     *
-     */
-    label: ({ option }) => option.label,
-
+    id: option => option._id,
     /**
      *
      */
     externalIdentifier: ({ field, option }) => (
       field.externalId ? option.externalIdentifier : null
     ),
+  },
 
+  /**
+   *
+   */
+  SelectFieldOptionAnswer: {
     /**
-     * Whether or not the option supports a write-in (free-form text) value
+     * Legacy support for the old answer format
      */
-    canWriteIn: ({ option }) => option.canWriteIn,
+    id: ({ option }) => option._id,
+    label: ({ option }) => option.label,
+    externalIdentifier: ({ option }) => option.externalIdentifier,
   },
 
   /**

@@ -77,10 +77,16 @@ module.exports = {
         sort,
       });
       return selectFieldAnswers.map((selectFieldAnswer) => {
-        const { field } = selectFieldAnswer;
+        const { field, answers } = selectFieldAnswer;
         return {
           ...selectFieldAnswer,
-          answers: selectFieldAnswer.answers.map(answer => ({ field, option: answer })),
+          answers: answers.map(answer => ({
+            field,
+            // BC support
+            ...answer.option,
+            option: answer.option,
+            writeInValue: answer.writeInValue,
+          })),
         };
       });
     },
