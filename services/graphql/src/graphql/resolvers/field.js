@@ -87,8 +87,8 @@ module.exports = {
     /**
      *
      */
-    externalIdentifier: ({ field, option }) => (
-      field.externalId ? option.externalIdentifier : null
+    externalIdentifier: ({ field, externalIdentifier }) => (
+      field.externalId ? externalIdentifier : null
     ),
   },
 
