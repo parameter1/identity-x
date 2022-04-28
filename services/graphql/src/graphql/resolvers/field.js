@@ -96,6 +96,11 @@ module.exports = {
     externalIdentifier: ({ field, option }) => (
       field.externalId ? option.externalIdentifier : null
     ),
+
+    /**
+     * Whether or not the option supports a write-in (free-form text) value
+     */
+    canWriteIn: ({ option }) => option.canWriteIn,
   },
 
   /**
