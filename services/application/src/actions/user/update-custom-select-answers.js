@@ -28,7 +28,6 @@ module.exports = async ({
   }), {});
 
   const newAnswers = answers
-    .filter(({ optionIds }) => optionIds.length) // ignore/unset fields without options
     .map(item => ({ _id: item.fieldId, ...item }))
     .reduce((obj, { _id, optionIds, writeInValues }) => ({
       ...obj,
