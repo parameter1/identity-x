@@ -35,6 +35,13 @@
             &varr;
           </button>
 
+          <div
+            class="d-flex border border-secondary border-left-0 border-right-0"
+            title="Allow write-in values"
+          >
+            <FormElements::ToggleButton @value={{option.canWriteIn}} @size="small" />
+          </div>
+
           <FormElements::Button
             title="Remove option"
             class="btn btn-outline-danger"

@@ -22,6 +22,7 @@ const mutation = gql`
         id
         label
         externalIdentifier
+        canWriteIn
       }
     }
   }
@@ -64,7 +65,12 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             }),
           },
           multiple,
-          options: options.map((option) => ({ id: option.id, label: option.label, externalIdentifier: option.externalIdentifier }))
+          options: options.map((option) => ({
+            id: option.id,
+            label: option.label,
+            externalIdentifier: option.externalIdentifier,
+            canWriteIn: option.canWriteIn,
+          })),
         };
         if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
