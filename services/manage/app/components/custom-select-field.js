@@ -19,6 +19,10 @@ export default Component.extend({
     return this.answers[0];
   }),
 
+  canWriteIn: computed('selected.{canWriteIn,options.canWriteIn}', function() {
+    return this.get('selected.canWriteIn') || this.get('selected.option.canWriteIn') || false;
+  }),
+
   /**
    * Use the selected answer as the option (when found) to ensure
    * selection highlighting is applied.
