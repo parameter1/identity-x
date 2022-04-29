@@ -150,16 +150,16 @@ type AppUserCustomSelectFieldAnswer {
 }
 
 type SelectFieldOptionAnswer {
-  "BC support: The select option ID. Also used as the option value."
+  "The select option ID. Also used as the option value."
   id: String!
   "The option that was selected"
   option: SelectFieldOption!
   "The write-in value, if supported by the option."
   writeInValue: String
 
-  "BC support: The select option label. This is the value the user will see within the form control."
+  "The select option label. This is the value the user will see within the form control."
   label: String!
-  "BC support: The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
+  "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
   externalIdentifier: String
 }
 
