@@ -18,11 +18,16 @@ const query = gql`
           options {
             id
             label
+            canWriteIn
           }
         }
         answers {
           id
           label
+          option {
+            canWriteIn
+          }
+          writeInValue
         }
       }
     }

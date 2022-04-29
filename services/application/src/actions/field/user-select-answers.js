@@ -35,7 +35,15 @@ module.exports = async ({
     const fieldAnswer = customFieldAnswers.find(answer => `${answer._id}` === `${field._id}`);
     const answeredOptions = fieldAnswer && isArray(fieldAnswer.values)
       ? fieldAnswer.values
-        .map(value => field.options.find(option => `${option._id}` === `${value}`))
+        .map((value) => {
+          const option = field.options.find(o => `${o._id}` === `${value}`);
+          const writeInValue = fieldAnswer.writeInValues.find(v => `${v._id}` === `${value}`);
+          return {
+            ...option,
+            option,
+            ...(option.canWriteIn && writeInValue && { writeInValue: writeInValue.value }),
+          };
+        })
         .filter(option => option)
       : [];
 

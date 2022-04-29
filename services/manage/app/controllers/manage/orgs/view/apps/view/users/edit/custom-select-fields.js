@@ -13,6 +13,10 @@ const mutation = gql`
         answers {
           id
           label
+          option {
+            canWriteIn
+          }
+          writeInValue
         }
       }
     }
@@ -30,7 +34,14 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           id: this.get('model.id'),
           answers: this.get('model.customSelectFieldAnswers').map(({ field, answers }) => {
             const optionIds = answers.map((answer) => answer.id);
-            return { fieldId: field.id, optionIds };
+            return {
+              fieldId: field.id,
+              optionIds,
+              writeInValues: answers.filter((answer) => answer.option ? answer.option.canWriteIn : answer.canWriteIn || false).map((answer) => ({
+                optionId: answer.id,
+                value: answer.writeInValue,
+              })),
+            };
           })
         };
         const variables = { input };

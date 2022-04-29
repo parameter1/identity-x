@@ -30,5 +30,18 @@
     }}
       {{ item.label }}
     {{/power-select}}
+    {{#if this.canWriteIn}}
+      <div class="input-group">
+        <Input
+          @value={{this.selected.writeInValue}}
+          @required={{true}}
+          @disabled={{this.disabled}}
+          class="mt-1 form-control"
+          type="text"
+          placeholder="Write-in value"
+          aria-label="Write-in value"
+        />
+      </div>
+    {{/if}}
   {{/if}}
 </div>

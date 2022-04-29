@@ -43,6 +43,17 @@ const customBooleanFieldAnswerSchema = new Schema({
  * The built-in `_id` field of this sub-document represents
  * the custom select field id.
  */
+const writeInValueSchema = new Schema({
+  value: {
+    type: String,
+    required: true,
+  },
+});
+
+/**
+ * The built-in `_id` field of this sub-document represents
+ * the custom select field id.
+ */
 const customSelectFieldAnswerSchema = new Schema({
   /**
    * The custom select field answer(s).
@@ -52,6 +63,10 @@ const customSelectFieldAnswerSchema = new Schema({
    */
   values: {
     type: [Schema.Types.ObjectId],
+    default: () => [],
+  },
+  writeInValues: {
+    type: [writeInValueSchema],
     default: () => [],
   },
 });

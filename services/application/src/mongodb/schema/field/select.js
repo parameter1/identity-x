@@ -26,6 +26,14 @@ const optionSchema = new Schema({
     trim: true,
     default: null,
   },
+
+  /**
+   * Whether or not the option supports a write-in (free-form text) value
+   */
+  canWriteIn: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const schema = new Schema({

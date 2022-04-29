@@ -2,16 +2,16 @@
   <fieldset disabled={{this.isActionRunning}}>
     <BsModal::Body>
       <div class="row">
-        {{#each this.model.customSelectFieldAnswers as |answer|}}
+        {{#each this.model.customSelectFieldAnswers as |fieldAnswer|}}
           <div class="col-sm-6">
             <CustomSelectField
               @dropdownClass="in-modal-dropdown"
-              @label={{answer.field.label}}
-              @name={{answer.field.name}}
-              @active={{answer.field.active}}
-              @multiple={{answer.field.multiple}}
-              @answers={{answer.answers}}
-              @options={{answer.field.options}}
+              @label={{fieldAnswer.field.label}}
+              @name={{fieldAnswer.field.name}}
+              @active={{fieldAnswer.field.active}}
+              @multiple={{fieldAnswer.field.multiple}}
+              @answers={{fieldAnswer.answers}}
+              @options={{fieldAnswer.field.options}}
               @disabled={{this.isActionRunning}}
             />
           </div>

@@ -21,6 +21,7 @@ const query = gql`
         id
         label
         externalIdentifier
+        canWriteIn
       }
     }
   }

@@ -146,7 +146,21 @@ type AppUserCustomSelectFieldAnswer {
   "Whether the user has answered the question."
   hasAnswered: Boolean!
   "The answered field option(s). This will always be an array, even if the field is a single-select only. An empty value signifies a non, or no longer valid, answer. It's up to the implementing components to account for this."
-  answers: [SelectFieldOption!]!
+  answers: [SelectFieldOptionAnswer!]!
+}
+
+type SelectFieldOptionAnswer {
+  "The select option ID. Also used as the option value."
+  id: String!
+  "The option that was selected"
+  option: SelectFieldOption!
+  "The write-in value, if supported by the option."
+  writeInValue: String
+
+  "The select option label. This is the value the user will see within the form control."
+  label: String!
+  "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
+  externalIdentifier: String
 }
 
 type AppUserConnection @projectUsing(type: "AppUser") {
@@ -397,6 +411,13 @@ input UpdateAppUserCustomSelectAnswer {
   fieldId: String!
   "The selected option IDs to select. This must always been an array, even if the question only supports one answer. An empty array will unset any existing options."
   optionIds: [String!]!
+  "The write-in values for this field. This must always been an array, even if the question only supports one answer. An empty array will unset any existing write-ins."
+  writeInValues: [UpdateAppUserCustomSelectAnswerWriteInValue!]
+}
+
+input UpdateAppUserCustomSelectAnswerWriteInValue {
+  optionId: String!
+  value: String
 }
 
 input UpdateOwnAppUserMutationInput {

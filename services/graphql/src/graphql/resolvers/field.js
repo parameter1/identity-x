@@ -73,7 +73,7 @@ module.exports = {
       if (a.index > b.index) return 1;
       if (a.index < b.index) return -1;
       return 0;
-    }).map(option => ({ field, option })),
+    }).map(option => ({ field, ...option })),
   },
 
   /**
@@ -83,19 +83,25 @@ module.exports = {
     /**
      *
      */
-    id: ({ option }) => option._id,
-
+    id: option => option._id,
     /**
      *
      */
-    label: ({ option }) => option.label,
-
-    /**
-     *
-     */
-    externalIdentifier: ({ field, option }) => (
-      field.externalId ? option.externalIdentifier : null
+    externalIdentifier: ({ field, externalIdentifier }) => (
+      field.externalId ? externalIdentifier : null
     ),
+  },
+
+  /**
+   *
+   */
+  SelectFieldOptionAnswer: {
+    /**
+     * Legacy support for the old answer format
+     */
+    id: ({ option }) => option._id,
+    label: ({ option }) => option.label,
+    externalIdentifier: ({ option }) => option.externalIdentifier,
   },
 
   /**

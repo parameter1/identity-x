@@ -151,6 +151,8 @@ type SelectFieldOption {
   label: String!
   "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
   externalIdentifier: String
+  "Whether free-form, write-in values are supported."
+  canWriteIn: Boolean
 }
 
 input CreateBooleanFieldMutationInput {
@@ -188,6 +190,8 @@ input CreateSelectFieldOptionInput {
   label: String!
   "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
   externalIdentifier: String
+  "Whether free-form, write-in values are supported."
+  canWriteIn: Boolean = false
 }
 
 input FieldInterfaceSortInput {
@@ -295,6 +299,8 @@ input UpdateSelectFieldOptionInput {
   label: String!
   "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
   externalIdentifier: String
+  "Whether free-form, write-in values are supported."
+  canWriteIn: Boolean
 }
 
 `;
