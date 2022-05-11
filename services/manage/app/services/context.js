@@ -5,7 +5,10 @@ import { inject } from '@ember/service';
 export default Service.extend({
   router: inject(),
 
-  orgs: computed.mapBy('userOrganizations', 'organization'),
+  orgs: computed('userOrganizations.[]', function() {
+    const orgs = this.get('userOrganizations') || [];
+    return orgs.map((org) => org.organization).sort((a, b) => a.name.localeCompare(b.name));
+  }),
   apps: computed.map('orgAppQuery.organizationApplications', function(app) {
     return app;
   }),
