@@ -1,3 +1,4 @@
+const { get } = require('object-path');
 const { applicationService } = require('@identity-x/service-clients');
 const { UserInputError } = require('apollo-server-express');
 const typeProjection = require('../utils/type-projection');
@@ -74,6 +75,32 @@ module.exports = {
       if (a.index < b.index) return -1;
       return 0;
     }).map(option => ({ field, ...option })),
+
+    /**
+     *
+     */
+    groups: field => (isArray(field.groups) ? field.groups : []).sort((a, b) => {
+      if (a.index > b.index) return 1;
+      if (a.index < b.index) return -1;
+      return 0;
+    }).map(group => ({ field, ...group })),
+
+  /**
+   *
+   */
+  SelectFieldOptionGroup: {
+    /**
+     *
+     */
+    id: field => field._id,
+    /**
+     *
+     */
+    options: async (parent) => {
+      const optionIds = get(parent, 'optionIds') || [];
+      const options = get(parent, 'options') || get(parent, 'field.options') || [];
+      return options.filter(option => optionIds.includes(option._id));
+    },
   },
 
   /**
@@ -213,6 +240,7 @@ module.exports = {
         multiple,
         externalId,
         options,
+        groups,
       } = input;
       if (!options.length) throw new UserInputError('The select field options cannot be empty.');
       return applicationService.request('field.updateOne', {
@@ -227,6 +255,7 @@ module.exports = {
           multiple,
           externalId,
           options,
+          groups,
         },
       });
     },
