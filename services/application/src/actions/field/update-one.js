@@ -23,6 +23,7 @@ const updateSelect = async ({
     active,
     externalId: eid,
     options,
+    groups,
   } = payload;
 
   const optionsWithIds = options.filter(option => option.id);
@@ -44,6 +45,11 @@ const updateSelect = async ({
       ...option,
       ...(option.id && { _id: option.id }),
       externalIdentifier: externalId ? option.externalIdentifier : null,
+      index,
+    })),
+    groups: groups.map((group, index) => ({
+      ...group,
+      ...(group.id && { _id: group.id }),
       index,
     })),
   });

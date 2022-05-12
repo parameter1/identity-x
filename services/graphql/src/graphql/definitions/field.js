@@ -60,6 +60,15 @@ interface FieldInterface {
   externalId: FieldInterfaceExternalEntityId @projection
 }
 
+interface SelectFieldOptionChoice {
+  "The option group ID."
+  id: String! @projection(localField: "_id")
+  "The option label."
+  label: String! @projection
+  "The option index number. Used for sorting."
+  index: Int! @projection
+}
+
 type FieldValue {
   type: FieldValueTypeEnum!
   value: String!
@@ -145,9 +154,12 @@ type SelectField implements FieldInterface {
 
   "The select groups."
   groups: [SelectFieldOptionGroup!]! @projection(needs: ["options"])
+
+  "Option group definitions to assign options to groups."
+  choices: [SelectFieldOptionChoice!]! @projection(needs: ["options", "groups"])
 }
 
-type SelectFieldOption {
+type SelectFieldOption implements SelectFieldOptionChoice {
   "The select option ID. Also used as the option value."
   id: String! @projection(localField: "_id")
   "The select option label. This is the value the user will see within the form control."
@@ -158,7 +170,7 @@ type SelectFieldOption {
   canWriteIn: Boolean
 }
 
-type SelectFieldOptionGroup {
+type SelectFieldOptionGroup implements SelectFieldOptionChoice {
   "The option group ID."
   id: String! @projection(localField: "_id")
   "The option group label. This is the value the user will see within the form control."

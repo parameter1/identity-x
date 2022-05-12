@@ -85,6 +85,33 @@ module.exports = {
       return 0;
     }).map(group => ({ field, ...group })),
 
+    /**
+     * Returns a sorted, formatted, combined set of options and groups.
+     */
+    choices: (parent) => {
+      const { groups, options } = parent;
+      return groups.reduce((arr, group) => ([
+        ...arr.filter(o => !group.optionIds.includes(o._id)),
+        // Pass the options through to the group
+        { ...group, options },
+      ]), options).sort((a, b) => a.index - b.index);
+    },
+  },
+
+  /**
+   *
+   */
+  SelectFieldOptionChoice: {
+    /**
+     *
+     */
+    __resolveType: doc => (Array.isArray(doc.optionIds) ? 'SelectFieldOptionGroup' : 'SelectFieldOption'),
+    /**
+     *
+     */
+    id: field => field._id,
+  },
+
   /**
    *
    */
