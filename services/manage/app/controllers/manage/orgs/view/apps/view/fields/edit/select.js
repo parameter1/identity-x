@@ -24,6 +24,11 @@ const mutation = gql`
         externalIdentifier
         canWriteIn
       }
+      groups {
+        id
+        label
+        optionIds
+      }
     }
   }
 `;
@@ -44,6 +49,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           active,
           options,
           externalId,
+          groups,
         } = this.get('model');
 
         const input = {
@@ -70,6 +76,11 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             label: option.label,
             externalIdentifier: option.externalIdentifier,
             canWriteIn: option.canWriteIn,
+          })),
+          groups: groups.map((group) => ({
+            id: group.id,
+            label: group.label,
+            optionIds: group.optionIds,
           })),
         };
         if (!Object.keys(input.externalId).length) delete input.externalId;

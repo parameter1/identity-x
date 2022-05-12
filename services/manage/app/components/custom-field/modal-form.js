@@ -28,8 +28,16 @@ export default Component.extend({
       }
     },
 
+    removeGroup(group) {
+      this.get('model.groups').removeObject(group);
+    },
+
     reorderOptions(options) {
       this.set('model.options', options);
+    },
+
+    reorderGroups(groups) {
+      this.set('model.groups', groups);
     },
 
     clearOptionExternalIds() {

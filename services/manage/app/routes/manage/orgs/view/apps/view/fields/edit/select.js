@@ -23,6 +23,11 @@ const query = gql`
         externalIdentifier
         canWriteIn
       }
+      groups {
+        id
+        label
+        optionIds
+      }
     }
   }
 `;

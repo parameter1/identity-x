@@ -65,6 +65,19 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <CustomField::Groups
+                    @groups={{this.model.groups}}
+                    @options={{this.model.options}}
+                    @disabled={{this.isActionRunning}}
+                    @reorder={{action "reorderGroups"}}
+                    @remove={{action "removeGroup"}}
+                  />
+                </div>
+              </div>
+            </div>
           {{/if}}
 
           {{#if (eq this.model.type "boolean")}}

@@ -1,0 +1,23 @@
+<FormElements::Label>Option Groups</FormElements::Label>
+
+<div>
+  <div {{sortable-group groupName="groups" onChange=(action this.reorder)}}>
+    {{#each groups as |group|}}
+      <CustomField::Group
+        @model={{group}}
+        @disabled={{this.disabled}}
+        @remove={{action this.remove}}
+      />
+    {{/each}}
+  </div>
+</div>
+
+<FormElements::Button
+  title="Add group"
+  class="btn btn-outline-success"
+  @click={{action "add"}}
+  @disabled={{this.disabled}}
+>
+  <EntypoIcon @name="circle-with-plus" />
+  Add
+</FormElements::Button>

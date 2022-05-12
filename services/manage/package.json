@@ -15,6 +15,7 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
+    "start:local": "./node_modules/.bin/ember serve --port 12002 --proxy http://localhost:12001",
     "test": "eslint . && ember-template-lint ."
   },
   "devDependencies": {
