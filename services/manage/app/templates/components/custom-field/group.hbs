@@ -35,11 +35,12 @@
     selected=selectedOptions
     class="form-control"
     dropdownClass="in-modal-dropdown"
-    options=this.formattedOptions
+    options=this.selectableOptions
     onchange=(action "handleChange")
-    closeOnSelect=false
+    closeOnSelect=true
     disabled=disabled
     placeholder="Select options"
+    searchEnabled=false
     as |item|
   }}
     {{ item.label }}

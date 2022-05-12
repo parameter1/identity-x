@@ -1,11 +1,12 @@
 <FormElements::Label>Option Groups</FormElements::Label>
 
 <div>
-  <div {{sortable-group groupName="groups" onChange=(action this.reorder)}}>
+  <div {{sortable-group onChange=(action this.reorder)}}>
     {{#each groups as |group|}}
       <CustomField::Group
         @model={{group}}
         @options={{this.options}}
+        @disabledOptions={{this.disabledOptions}}
         @disabled={{this.disabled}}
         @remove={{action this.remove}}
       />
