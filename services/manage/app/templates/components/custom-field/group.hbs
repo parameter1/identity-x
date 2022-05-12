@@ -1,43 +1,48 @@
-<div class="input-group mb-1" {{sortable-item groupName="groups"  model=model}}>
-  <Input
-    @value={{model.label}}
-    @required={{true}}
-    @disabled={{this.disabled}}
-    class="form-control"
-    type="text"
-    placeholder="Enter group label"
-    aria-label="Enter group label"
-  />
+<div class="mb-2" {{sortable-item groupName="groups" model=model}}>
+  <div class="input-group mb-1">
+    <Input
+      @value={{model.label}}
+      @required={{true}}
+      @disabled={{this.disabled}}
+      class="form-control"
+      type="text"
+      placeholder="Enter group label"
+      aria-label="Enter group label"
+    />
 
-  {{!-- {{#power-select-multiple
-    selected=group.optionIds
+    <div class="input-group-append">
+      <button
+        type="button"
+        title="Drag to re-order group"
+        class="btn btn-outline-secondary handle"
+        {{sortable-handle}}
+      >
+        &varr;
+      </button>
+
+      <FormElements::Button
+        title="Remove group"
+        class="btn btn-outline-danger"
+        @click={{action this.remove this.model}}
+        @disabled={{this.disabled}}
+      >
+        <EntypoIcon @name="circle-with-cross" />
+      </FormElements::Button>
+    </div>
+  </div>
+
+  {{#power-select-multiple
+    selected=selectedOptions
+    class="form-control"
     dropdownClass="in-modal-dropdown"
     options=this.formattedOptions
     onchange=(action "handleChange")
     closeOnSelect=false
     disabled=disabled
+    placeholder="Select options"
     as |item|
   }}
     {{ item.label }}
-  {{/power-select-multiple}} --}}
+  {{/power-select-multiple}}
 
-  <div class="input-group-append">
-    <button
-      type="button"
-      title="Drag to re-order group"
-      class="btn btn-outline-secondary handle"
-      {{sortable-handle}}
-    >
-      &varr;
-    </button>
-
-    <FormElements::Button
-      title="Remove group"
-      class="btn btn-outline-danger"
-      @click={{action this.remove this.model}}
-      @disabled={{this.disabled}}
-    >
-      <EntypoIcon @name="circle-with-cross" />
-    </FormElements::Button>
-  </div>
 </div>

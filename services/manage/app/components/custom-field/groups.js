@@ -13,7 +13,7 @@ export default Component.extend({
 
   actions: {
     add() {
-      this.groups.pushObject({ label: '' });
+      this.groups.pushObject({ label: '', optionIds: [] });
     },
   },
 });

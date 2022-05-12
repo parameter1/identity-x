@@ -5,6 +5,7 @@
     {{#each groups as |group|}}
       <CustomField::Group
         @model={{group}}
+        @options={{this.options}}
         @disabled={{this.disabled}}
         @remove={{action this.remove}}
       />
