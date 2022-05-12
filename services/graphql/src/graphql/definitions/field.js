@@ -65,8 +65,6 @@ interface SelectFieldOptionChoice {
   id: String! @projection(localField: "_id")
   "The option label."
   label: String! @projection
-  "The option index number. Used for sorting."
-  index: Int! @projection
 }
 
 type FieldValue {
