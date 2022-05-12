@@ -1,0 +1,51 @@
+<div class="mb-2 sortable-item" {{sortable-item groupName="options" model=model}}>
+  <div class="input-group">
+    <Input
+      @value={{model.label}}
+      @required={{true}}
+      @disabled={{this.disabled}}
+      @class={{this.optionClass}}
+      type="text"
+      placeholder="Enter option label"
+      aria-label="Enter option label"
+    />
+    <div class="input-group-append">
+      {{#if showExternalIds}}
+        <Input
+          @class="border-left border-right-0 rounded-0"
+          @required={{true}}
+          @value={{model.externalIdentifier}}
+          @disabled={{this.disabled}}
+          type="text"
+          class="form-control"
+          placeholder="External ID"
+          aria-label="External ID"
+        />
+      {{/if}}
+      <button
+        type="button"
+        title="Drag to re-order option"
+        class="btn btn-outline-secondary handle"
+        {{sortable-handle}}
+      >
+        &varr;
+      </button>
+
+      <div
+        class="d-flex border border-secondary border-left-0 border-right-0"
+        title="Allow write-in values"
+      >
+        <FormElements::ToggleButton @value={{model.canWriteIn}} @size="small" />
+      </div>
+
+      <FormElements::Button
+        title="Remove group"
+        class="btn btn-outline-danger"
+        @click={{action this.remove this.model}}
+        @disabled={{this.disabled}}
+      >
+        <EntypoIcon @name="circle-with-cross" />
+      </FormElements::Button>
+    </div>
+  </div>
+</div>
