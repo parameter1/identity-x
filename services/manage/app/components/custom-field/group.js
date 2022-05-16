@@ -20,12 +20,12 @@ export default Component.extend({
     return options.filter((option) => optionIds.includes(option.id)).sort((a, b) => a.index - b.index);
   }),
 
-  selectableOptions: computed('model.optionIds.[]', 'options.[]', 'disabledOptions.[]', function() {
+  selectableOptions: computed('model.optionIds.[]', 'options.[]', 'disabledOptionIds.[]', function() {
     const optionIds = this.get('model.optionIds');
     const options = this.get('options') || [];
-    const disabledOptions = this.get('disabledOptions') || [];
-    const disabledOptionIds = disabledOptions.map((option) => option.id);
-    return options.filter((option) => option.id && !optionIds.includes(option.id) && !disabledOptionIds.includes(option.id));
+    const disabledOptionIds = this.get('disabledOptionIds') || [];
+    console.log(disabledOptionIds);
+    return options.filter((option) => !optionIds.includes(option.id) && !disabledOptionIds.includes(option.id) && option.id);
   }),
 
   groupName: computed('label', function() {

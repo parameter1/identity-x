@@ -16,6 +16,11 @@ export default Component.extend({
     ]), options).sort((a, b) => a.index - b.index);
   }),
 
+  disabledOptionIds: computed('groups.{@each.optionIds.[],[]}', function () {
+    const groups = this.get('groups') || [];
+    return groups.reduce((arr, group) => ([ ...arr, ...group.optionIds ]), []);
+  }),
+
   index: computed('choices.{[],@each.optionIds.[]}', function () {
     const choices = this.get('choices') || [];
     return choices.reduce((n, c) => c.optionIds ? n + 1 + c.optionIds.length : n + 1, 0);
