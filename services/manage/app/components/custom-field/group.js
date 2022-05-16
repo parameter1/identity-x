@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
 
 const { isArray } = Array;
 
@@ -14,10 +14,10 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
-  selectedOptions: computed('model.optionIds.[]', 'options.[]', function() {
+  selectedOptions: computed('model.optionIds.[]', 'options.{@each.index,[]}', function() {
     const optionIds = this.get('model.optionIds');
     const options = this.get('options') || [];
-    return options.filter((option) => optionIds.includes(option.id));
+    return options.filter((option) => optionIds.includes(option.id)).sort((a, b) => a.index - b.index);
   }),
 
   selectableOptions: computed('model.optionIds.[]', 'options.[]', 'disabledOptions.[]', function() {
@@ -45,7 +45,11 @@ export default Component.extend({
       this.set('model.optionIds', this.get('model.optionIds').filter((id) => id !== option.id));
     },
     reorder(options) {
-      this.set('model.optionIds', options.map((option) => option.id));
+      let startIndex = false;
+      options.forEach((option, index) => {
+        if (startIndex === false) startIndex = option.index;
+        set(option, 'index', startIndex + index);
+      });
     },
     toggle() {
       this.set('showOptions', !this.get('showOptions'));
