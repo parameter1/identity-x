@@ -20,24 +20,41 @@ export default Component.extend({
 
   actions: {
     removeOption(option) {
-      const confirm = `Are you sure you want to remove option ${option.label}? All users who previously selected ${option.label} will no longer have this data as an answer.`;
-      if (this.isUpdating) {
-        if (window.confirm(confirm)) this.get('model.options').removeObject(option);
+      // Find the item by ID, and remove it from the array
+      const item = this.get('model.options').findBy('id', option.id);
+      const confirm = `Are you sure you want to remove option ${item.label}? All users who previously selected ${item.label} will no longer have this data as an answer.`;
+      if (this.isUpdating && item.id) {
+        if (window.confirm(confirm)) this.get('model.options').removeObject(item);
       } else {
-        this.get('model.options').removeObject(option);
+        this.get('model.options').removeObject(item);
       }
     },
 
     removeGroup(group) {
-      this.get('model.groups').removeObject(group);
+      // Find the item by ID, and remove it from the array
+      const item = this.get('model.groups').findBy('id', group.id);
+      this.get('model.groups').removeObject(item);
     },
 
-    reorderOptions(options) {
-      this.set('model.options', options);
-    },
-
-    reorderGroups(groups) {
-      this.set('model.groups', groups);
+    /**
+     * set model.options and model.groups based on incoming ordered selection array.
+     */
+    reorder(ordered) {
+      let i = 0;
+      ordered.forEach((item) => {
+        set(item, 'index', i);
+        i++;
+        if (item.__typename === 'SelectFieldOptionGroup') {
+          const optionIds = item.optionIds || [];
+          optionIds.forEach((optionId) => {
+            const option = this.get('model.options').findBy('id', optionId);
+            if (option) {
+              set(option, 'index', i);
+              i++;
+            }
+          });
+        }
+      });
     },
 
     clearOptionExternalIds() {

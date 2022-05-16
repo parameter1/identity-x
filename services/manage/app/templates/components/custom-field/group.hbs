@@ -1,4 +1,4 @@
-<div class="mb-2 sortable-item border border-dashed rounded p-1" {{sortable-item groupName="groups" model=model}}>
+<div class="mb-2 sortable-item border border-dashed rounded p-1" {{sortable-item groupName="choices" model=model}}>
   <div class="input-group mb-1">
     <Input
       @value={{model.label}}
@@ -21,6 +21,15 @@
       </button>
 
       <FormElements::Button
+        title="Edit group options"
+        @class={{editButtonClasses}}
+        @click={{action "toggle"}}
+        @disabled={{this.disabled}}
+      >
+        <EntypoIcon @name="edit" />
+      </FormElements::Button>
+
+      <FormElements::Button
         title="Remove group"
         class="btn btn-outline-danger"
         @click={{action this.remove this.model}}
@@ -31,19 +40,34 @@
     </div>
   </div>
 
-  {{#power-select-multiple
-    selected=selectedOptions
-    class="form-control"
-    dropdownClass="in-modal-dropdown"
-    options=this.selectableOptions
-    onchange=(action "handleChange")
-    closeOnSelect=true
-    disabled=disabled
-    placeholder="Select options"
-    searchEnabled=false
-    as |item|
-  }}
-    {{ item.label }}
-  {{/power-select-multiple}}
+  {{#if showOptions}}
+    <div {{sortable-group groupName=groupName onChange=(action "reorder")}} class="px-1 pt-1">
+      {{#each selectedOptions as |option|}}
+        <CustomField::Option
+          @model={{find-by this.options "id" option.id}}
+          @showExternalIds={{this.showExternalIds}}
+          @disabled={{this.disabled}}
+          @remove={{action "removeOption"}}
+          @groupName={{groupName}}
+        />
+      {{/each}}
+    </div>
+  {{else}}
+    {{#power-select-multiple
+      selected=selectedOptions
+      class="form-control"
+      dropdownClass="in-modal-dropdown"
+      options=this.selectableOptions
+      onchange=(action "handleChange")
+      closeOnSelect=true
+      disabled=disabled
+      placeholder="Select options"
+      searchField="label"
+      searchEnabled=false
+      as |item|
+    }}
+      {{ item.label }}
+    {{/power-select-multiple}}
+  {{/if}}
 
 </div>

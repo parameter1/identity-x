@@ -56,24 +56,13 @@
               <div class="col">
                 <div class="form-group">
                   <CustomField::Options
-                    @options={{this.model.options}}
-                    @disabled={{this.isActionRunning}}
-                    @showExternalIds={{this.optionExternalIdsEnabled}}
-                    @reorder={{action "reorderOptions"}}
-                    @remove={{action "removeOption"}}
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <CustomField::Groups
                     @groups={{this.model.groups}}
                     @options={{this.model.options}}
                     @disabled={{this.isActionRunning}}
-                    @reorder={{action "reorderGroups"}}
-                    @remove={{action "removeGroup"}}
+                    @showExternalIds={{this.optionExternalIdsEnabled}}
+                    @reorder={{action "reorder"}}
+                    @removeOption={{action "removeOption"}}
+                    @removeGroup={{action "removeGroup"}}
                   />
                 </div>
               </div>
