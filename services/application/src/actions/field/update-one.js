@@ -32,8 +32,6 @@ const updateSelect = async ({
     if (!currentOptionIds.includes(option.id)) throw createError(404, `No select option found for ${option.id} in question ${id}`);
   });
 
-  // @todo validate selected option ids for each group?
-
   const externalId = prepareExternalId(eid);
 
   select.set({
