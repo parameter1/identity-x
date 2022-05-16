@@ -24,7 +24,6 @@ export default Component.extend({
     const optionIds = this.get('model.optionIds');
     const options = this.get('options') || [];
     const disabledOptionIds = this.get('disabledOptionIds') || [];
-    console.log(disabledOptionIds);
     return options.filter((option) => !optionIds.includes(option.id) && !disabledOptionIds.includes(option.id) && option.id);
   }),
 
