@@ -20,12 +20,14 @@ const mutation = gql`
       }
       options {
         id
+        index
         label
         externalIdentifier
         canWriteIn
       }
       groups {
         id
+        index
         label
         optionIds
       }
@@ -73,12 +75,14 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           multiple,
           options: options.map((option) => ({
             id: option.id,
+            index: option.index,
             label: option.label,
             externalIdentifier: option.externalIdentifier,
             canWriteIn: option.canWriteIn,
           })),
           groups: groups.map((group) => ({
             id: group.id,
+            index: group.index,
             label: group.label,
             optionIds: group.optionIds,
           })),

@@ -22,11 +22,13 @@ const query = gql`
         label
         externalIdentifier
         canWriteIn
+        index
       }
       groups {
         id
         label
         optionIds
+        index
       }
     }
   }

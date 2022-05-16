@@ -32,6 +32,8 @@ const updateSelect = async ({
     if (!currentOptionIds.includes(option.id)) throw createError(404, `No select option found for ${option.id} in question ${id}`);
   });
 
+  // @todo validate selected option ids for each group?
+
   const externalId = prepareExternalId(eid);
 
   select.set({
@@ -41,16 +43,14 @@ const updateSelect = async ({
     required,
     active,
     externalId,
-    options: options.map((option, index) => ({
+    options: options.sort((a, b) => a.index - b.index).map(option => ({
       ...option,
       ...(option.id && { _id: option.id }),
       externalIdentifier: externalId ? option.externalIdentifier : null,
-      index,
     })),
-    groups: groups.map((group, index) => ({
+    groups: groups.sort((a, b) => a.index - b.index).map(group => ({
       ...group,
       ...(group.id && { _id: group.id }),
-      index,
     })),
   });
 

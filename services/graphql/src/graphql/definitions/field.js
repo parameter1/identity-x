@@ -65,6 +65,8 @@ interface SelectFieldOptionChoice {
   id: String! @projection(localField: "_id")
   "The option label."
   label: String! @projection
+  "The option index number. Used for sorting."
+  index: Int! @projection
 }
 
 type FieldValue {
@@ -166,6 +168,8 @@ type SelectFieldOption implements SelectFieldOptionChoice {
   externalIdentifier: String
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
+  "The order of the option. When rendered, options and groups will be sorted using this value."
+  index: Int!
 }
 
 type SelectFieldOptionGroup implements SelectFieldOptionChoice {
@@ -173,6 +177,8 @@ type SelectFieldOptionGroup implements SelectFieldOptionChoice {
   id: String! @projection(localField: "_id")
   "The option group label. This is the value the user will see within the form control."
   label: String!
+  "The order of the option group. When rendered, options and groups will be sorted using this value."
+  index: Int!
   "The options in this group."
   options: [SelectFieldOption!]! @projection
   optionIds: [String!]!
@@ -326,6 +332,8 @@ input UpdateSelectFieldOptionInput {
   externalIdentifier: String
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
+  "The order of the option. When rendered, options and groups will be sorted using this value."
+  index: Int = 0
 }
 
 input UpdateSelectFieldOptionGroupInput {
@@ -333,6 +341,8 @@ input UpdateSelectFieldOptionGroupInput {
   id: String
   "The option group label. This is the value the user will see within the form control."
   label: String!
+  "The order of the option group. When rendered, options and groups will be sorted using this value."
+  index: Int = 0
   "The options in this group."
   optionIds: [String!]! = []
 }
