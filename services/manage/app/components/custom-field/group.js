@@ -25,7 +25,7 @@ export default Component.extend({
     const options = this.get('options') || [];
     const disabledOptions = this.get('disabledOptions') || [];
     const disabledOptionIds = disabledOptions.map((option) => option.id);
-    return options.filter((option) => !optionIds.includes(option.id) && !disabledOptionIds.includes(option.id));
+    return options.filter((option) => option.id && !optionIds.includes(option.id) && !disabledOptionIds.includes(option.id));
   }),
 
   groupName: computed('label', function() {
