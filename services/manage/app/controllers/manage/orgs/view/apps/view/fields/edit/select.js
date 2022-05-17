@@ -39,7 +39,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
   errorNotifier: inject(),
 
   actions: {
-    async update(closeModal) {
+    async update() {
       try {
         this.startAction();
         const {
@@ -90,7 +90,6 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
         if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateSelectField');
-        await closeModal();
       } catch (e) {
         this.errorNotifier.show(e);
       } finally {
