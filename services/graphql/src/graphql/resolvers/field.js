@@ -141,9 +141,7 @@ module.exports = {
     /**
      *
      */
-    externalIdentifier: ({ field, externalIdentifier }) => (
-      field.externalId ? externalIdentifier : null
-    ),
+    externalIdentifier: option => option.externalIdentifier,
   },
 
   /**
