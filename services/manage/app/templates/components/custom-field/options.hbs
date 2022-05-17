@@ -5,7 +5,8 @@
     {{#each choices as |choice|}}
       {{#if (eq choice.__typename "SelectFieldOptionGroup")}}
         <CustomField::Group
-          @model={{find-by this.groups "id" choice.id}}
+          @model={{choice}}
+          @choices={{this.choices}}
           @options={{this.options}}
           @disabled={{this.disabled}}
           @remove={{action this.removeGroup}}
@@ -14,7 +15,7 @@
         />
       {{else}}
         <CustomField::Option
-          @model={{find-by this.options "id" choice.id}}
+          @model={{choice}}
           @showExternalIds={{this.showExternalIds}}
           @disabled={{this.disabled}}
           @remove={{action this.removeOption}}

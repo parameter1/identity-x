@@ -47,9 +47,9 @@
 
   {{#if showOptions}}
     <div {{sortable-group groupName=groupName onChange=(action "reorder")}} class="mt-4">
-      {{#each selectedOptions as |option|}}
+      {{#each model.options as |option|}}
         <CustomField::Option
-          @model={{find-by this.options "id" option.id}}
+          @model={{option}}
           @showExternalIds={{this.showExternalIds}}
           @disabled={{this.disabled}}
           @remove={{action "removeOption"}}

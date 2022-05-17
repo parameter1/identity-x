@@ -23,56 +23,48 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    if (!this.model) this.set('model', { options: [], createType: 'select' });
+    if (!this.model) this.set('model', { choices: [], createType: 'select' });
     if (!this.model.externalId) this.set('model.externalId', { namespace: {}, identifier: {} });
   },
 
   actions: {
     removeOption(option) {
-      // Find the item by ID, and remove it from the array
-      const item = this.get('model.options').findBy('id', option.id);
-      const confirm = `Are you sure you want to remove option ${item.label}? All users who previously selected ${item.label} will no longer have this data as an answer.`;
-      if (this.isUpdating && item.id) {
-        if (window.confirm(confirm)) this.get('model.options').removeObject(item);
+      const confirm = `Are you sure you want to remove option ${option.label}? All users who previously selected ${option.label} will no longer have this data as an answer.`;
+      if (this.isUpdating && option.id) {
+        if (window.confirm(confirm)) this.get('model.choices').removeObject(option);
       } else {
-        this.get('model.options').removeObject(item);
+        this.get('model.choices').removeObject(option);
       }
     },
 
     removeGroup(group) {
-      // Find the item by ID, and remove it from the array
-      const item = this.get('model.groups').findBy('id', group.id);
-      const confirm = `Are you sure you want to remove group ${item.label}? All child options will be ungrouped.`;
-      if (this.isUpdating && item.id) {
-        if (window.confirm(confirm)) this.get('model.groups').removeObject(item);
+      const confirm = `Are you sure you want to remove group ${group.label}? All child options will be ungrouped.`;
+      if (this.isUpdating && group.id) {
+        if (window.confirm(confirm)) {
+          const options = group.options || [];
+          options.forEach(option => this.get('model.choices').pushObject(option));
+          this.get('model.choices').removeObject(group);
+        }
       } else {
-        this.get('model.groups').removeObject(item);
+        const options = group.options || [];
+        options.forEach(option => this.get('model.choices').pushObject(option));
+        this.get('model.choices').removeObject(group);
       }
     },
 
     /**
-     * set model.options and model.groups based on incoming ordered selection array.
+     *
      */
     reorder(ordered) {
       let i = 0;
       ordered.forEach((item) => {
         set(item, 'index', i);
-        if (item.__typename === 'SelectFieldOptionGroup') {
-          const found = this.get('model.groups').findBy('id', item.id);
-          if (found) set(found, 'index', i);
-        } else {
-          const found = this.get('model.options').findBy('id', item.id);
-          if (found) set(found, 'index', i);
-        }
         i++;
-        if (item.__typename === 'SelectFieldOptionGroup') {
-          const optionIds = item.optionIds || [];
-          optionIds.forEach((optionId) => {
-            const found = this.get('model.options').findBy('id', optionId);
-            if (found) {
-              set(found, 'index', i);
-              i++;
-            }
+        if (item.options) {
+          const options = item.options || [];
+          options.forEach((option) => {
+            set(option, 'index', i);
+            i++;
           });
         }
       });

@@ -7,9 +7,9 @@ export default Component.extend({
   disabled: false,
   showExternalIds: false,
 
-  disabledOptionIds: computed('groups.{@each.optionIds.[],[]}', function () {
-    const groups = this.get('groups') || [];
-    return groups.reduce((arr, group) => ([ ...arr, ...group.optionIds ]), []);
+  disabledOptionIds: computed('choices.{@each.options,[]}', function () {
+    const choices = this.get('choices') || [];
+    return choices.reduce((arr, group) => ([ ...arr, ...(group.options ? [...group.options.map(o => o.id)] : []) ]), []);
   }),
 
   isAddGroupDisabled: computed('disabled', 'options.{@each.id,[]}', function() {
@@ -20,9 +20,9 @@ export default Component.extend({
     return !found;
   }),
 
-  index: computed('choices.{[],@each.optionIds.[]}', function () {
+  index: computed('choices.{[],@each.optionIds}', function () {
     const choices = this.get('choices') || [];
-    return choices.reduce((n, c) => c.optionIds ? n + 1 + c.optionIds.length : n + 1, 0);
+    return choices.reduce((n, c) => c.options ? n + 1 + c.options.length : n + 1, 0);
   }),
 
   init() {
@@ -33,10 +33,14 @@ export default Component.extend({
 
   actions: {
     add() {
-      this.options.pushObject({ label: '', index: this.get('index') });
+      this.choices.pushObject({
+        label: '',
+        index: this.get('index'),
+        __typename: 'SelectFieldOption',
+      });
     },
     addGroup() {
-      this.groups.pushObject({
+      this.choices.pushObject({
         label: '',
         index: this.get('index'),
         optionIds: [],

@@ -67,10 +67,19 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           multiple,
           required,
           active,
-          options,
           externalId,
-          groups,
+          choices,
         } = this.get('model');
+        const { options, groups } = choices.reduce((arrs, choice) => {
+          if (choice.__typename === 'SelectFieldOption') {
+            arrs.options.push(choice);
+          } else {
+            const options = choice.options || [];
+            arrs.groups.push({ ...choice, options});
+            options.forEach(option => arrs.options.push(option));
+          }
+          return arrs;
+        }, { options: [], groups: [] });
 
         const input = {
           id,
@@ -102,7 +111,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             id: group.id,
             index: group.index,
             label: group.label,
-            optionIds: group.optionIds,
+            optionIds: group.options.map(option => option.id),
           })),
         };
         if (!Object.keys(input.externalId).length) delete input.externalId;
