@@ -1,5 +1,5 @@
 <BsModal @show={{true}} @backdrop="static" @size="large" @onClose={{action "returnToList"}} as |modal|>
-  <form {{action this.onSubmit modal.actions.hide on="submit"}}>
+  <form {{action this.onSubmit on="submit"}}>
     <fieldset disabled={{this.isActionRunning}}>
       {{#modal.header}}
         <h2 class="modal-title">{{this.title}}</h2>
@@ -128,11 +128,21 @@
             All grouped options must have an external identifier to save.
           </span>
         {{/unless}}
-        <FormElements::SubmitButton
-          @class="btn btn-success"
-          @isSaving={{this.isActionRunning}}
-          @disabled={{this.isSubmitDisabled}}
-        />
+        <div class="btn-group dropup">
+
+          <FormElements::SubmitButton
+            @class="btn btn-success"
+            @isSaving={{this.isActionRunning}}
+            @disabled={{this.isSubmitDisabled}}
+          />
+
+          <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item" {{action this.onSubmit modal.actions.hide}}>Save &amp; Close</a>
+          </div>
+        </div>
       {{/modal.footer}}
     </fieldset>
   </form>
