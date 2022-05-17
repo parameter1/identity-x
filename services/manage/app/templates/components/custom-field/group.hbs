@@ -1,5 +1,10 @@
-<div class="mb-2 sortable-item border border-dashed rounded p-1" {{sortable-item groupName="choices" model=model}}>
+<div class="mb-4 p-3 sortable-item border-dashed rounded select-group" {{sortable-item groupName="choices" model=model}}>
   <div class="input-group mb-1">
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        Group
+      </span>
+    </div>
     <Input
       @value={{model.label}}
       @required={{true}}
@@ -41,7 +46,7 @@
   </div>
 
   {{#if showOptions}}
-    <div {{sortable-group groupName=groupName onChange=(action "reorder")}} class="px-1 pt-1">
+    <div {{sortable-group groupName=groupName onChange=(action "reorder")}} class="mt-4">
       {{#each selectedOptions as |option|}}
         <CustomField::Option
           @model={{find-by this.options "id" option.id}}

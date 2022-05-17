@@ -408,5 +408,18 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
 
 .border-dashed {
-  border-style: dashed !important;
+  border: $input-border-width dashed $input-border-color;
+}
+
+div#choices-target > div:last-child > div.select-group {
+  margin-bottom: 0 !important;
+}
+div#choices-target > div:last-child > div.select-option {
+  margin-bottom: 0.5rem !important;
+}
+
+.select-group .select-option {
+  margin-bottom: 0.5rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }

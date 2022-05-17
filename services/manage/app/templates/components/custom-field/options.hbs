@@ -1,7 +1,7 @@
 <FormElements::Label>Options / Answers</FormElements::Label>
 
 <div>
-  <div {{sortable-group groupName="choices" onChange=(action this.reorder)}}>
+  <div id="choices-target" class="border border-light rounded p-2 mb-2" {{sortable-group groupName="choices" onChange=(action this.reorder)}}>
     {{#each choices as |choice|}}
       {{#if (eq choice.__typename "SelectFieldOptionGroup")}}
         <CustomField::Group
