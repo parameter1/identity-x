@@ -18,6 +18,24 @@ const mutation = gql`
         namespace { provider tenant type }
         identifier { value }
       }
+      choices {
+        id
+        label
+        index
+        ... on SelectFieldOption {
+          externalIdentifier
+          canWriteIn
+        }
+        ... on SelectFieldOptionGroup {
+          options {
+            id
+            label
+            index
+            externalIdentifier
+            canWriteIn
+          }
+        }
+      }
       options {
         id
         index

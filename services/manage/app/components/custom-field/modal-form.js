@@ -48,18 +48,26 @@ export default Component.extend({
       let i = 0;
       ordered.forEach((item) => {
         set(item, 'index', i);
+        if (item.__typename === 'SelectFieldOptionGroup') {
+          const found = this.get('model.groups').findBy('id', item.id);
+          if (found) set(found, 'index', i);
+        } else {
+          const found = this.get('model.options').findBy('id', item.id);
+          if (found) set(found, 'index', i);
+        }
         i++;
         if (item.__typename === 'SelectFieldOptionGroup') {
           const optionIds = item.optionIds || [];
           optionIds.forEach((optionId) => {
-            const option = this.get('model.options').findBy('id', optionId);
-            if (option) {
-              set(option, 'index', i);
+            const found = this.get('model.options').findBy('id', optionId);
+            if (found) {
+              set(found, 'index', i);
               i++;
             }
           });
         }
       });
+      this.set('model.choices', ordered);
     },
 
     clearOptionExternalIds() {

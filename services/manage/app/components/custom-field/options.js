@@ -7,15 +7,6 @@ export default Component.extend({
   disabled: false,
   showExternalIds: false,
 
-  choices: computed('options.{@each.index,[]}', 'groups.{@each.index,@each.optionIds.[],[]}', function () {
-    const options = this.get('options') || [];
-    const groups = this.get('groups') || [];
-    return groups.reduce((arr, group) => ([
-      ...arr.filter((option) => !group.optionIds.includes(option.id)),
-      group,
-    ]), options).sort((a, b) => a.index - b.index);
-  }),
-
   disabledOptionIds: computed('groups.{@each.optionIds.[],[]}', function () {
     const groups = this.get('groups') || [];
     return groups.reduce((arr, group) => ([ ...arr, ...group.optionIds ]), []);

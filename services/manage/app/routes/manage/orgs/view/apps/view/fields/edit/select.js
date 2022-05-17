@@ -17,6 +17,24 @@ const query = gql`
         identifier { value }
         namespace { provider tenant type }
       }
+      choices {
+        id
+        label
+        index
+        ... on SelectFieldOption {
+          externalIdentifier
+          canWriteIn
+        }
+        ... on SelectFieldOptionGroup {
+          options {
+            id
+            label
+            index
+            externalIdentifier
+            canWriteIn
+          }
+        }
+      }
       options {
         id
         label
