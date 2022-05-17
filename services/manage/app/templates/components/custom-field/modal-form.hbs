@@ -123,7 +123,16 @@
       {{/modal.body}}
 
       {{#modal.footer}}
-        <FormElements::SubmitButton @class="btn btn-success" @isSaving={{this.isActionRunning}} />
+        {{#unless canSubmit}}
+          <span class="text-danger mr-3">
+            All grouped options must have an external identifier to save.
+          </span>
+        {{/unless}}
+        <FormElements::SubmitButton
+          @class="btn btn-success"
+          @isSaving={{this.isActionRunning}}
+          @disabled={{this.isSubmitDisabled}}
+        />
       {{/modal.footer}}
     </fieldset>
   </form>

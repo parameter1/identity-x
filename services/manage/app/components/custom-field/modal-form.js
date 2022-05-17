@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { set } from '@ember/object';
+import { set, computed } from '@ember/object';
 import { inject } from '@ember/service';
 
 export default Component.extend({
@@ -11,6 +11,15 @@ export default Component.extend({
   isActionRunning: false,
   isUpdating: false,
   optionExternalIdsEnabled: false,
+
+  canSubmit: computed('optionExternalIdsEnabled', 'model.options.@each.externalIdentifier', function() {
+    const optionExternalIdsEnabled = this.get('optionExternalIdsEnabled');
+    if (!optionExternalIdsEnabled) return true;
+    const options = this.get('model.options') || [];
+    return options.every((option) => option.externalIdentifier);
+  }),
+
+  isSubmitDisabled: computed.not('canSubmit'),
 
   init() {
     this._super(...arguments);
