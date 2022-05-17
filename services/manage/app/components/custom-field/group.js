@@ -51,11 +51,13 @@ export default Component.extend({
       this.set('model.optionIds', this.get('model.optionIds').filter((id) => id !== option.id));
     },
     reorder(options) {
-      let startIndex = false;
+      const startIndex = this.get('model.index') + 1;
       options.forEach((option, index) => {
-        if (startIndex === false) startIndex = option.index;
         set(option, 'index', startIndex + index);
+        const item = this.get('options').find((o) => o.id === option.id);
+        if (item) set(item, 'index', startIndex + index);
       });
+      this.set('model.optionIds', options.map((option) => option.id));
     },
     toggle() {
       this.set('showOptions', !this.get('showOptions'));
