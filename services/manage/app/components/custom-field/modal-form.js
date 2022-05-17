@@ -33,7 +33,12 @@ export default Component.extend({
     removeGroup(group) {
       // Find the item by ID, and remove it from the array
       const item = this.get('model.groups').findBy('id', group.id);
-      this.get('model.groups').removeObject(item);
+      const confirm = `Are you sure you want to remove group ${item.label}? All child options will be ungrouped.`;
+      if (this.isUpdating && item.id) {
+        if (window.confirm(confirm)) this.get('model.groups').removeObject(item);
+      } else {
+        this.get('model.groups').removeObject(item);
+      }
     },
 
     /**
