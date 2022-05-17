@@ -27,6 +27,13 @@ export default Component.extend({
     return options.filter((option) => !optionIds.includes(option.id) && !disabledOptionIds.includes(option.id) && option.id);
   }),
 
+  isEditDisabled: computed('model.optionIds.[]', 'disabled', function() {
+    const disabled = this.get('disabled');
+    if (disabled) return true;
+    const optionIds = this.get('model.optionIds');
+    return optionIds.length === 0;
+  }),
+
   groupName: computed('label', function() {
     return `group-${this.label}`;
   }),

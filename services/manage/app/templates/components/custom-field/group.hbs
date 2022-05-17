@@ -29,7 +29,7 @@
         title="Edit group options"
         @class={{editButtonClasses}}
         @click={{action "toggle"}}
-        @disabled={{this.disabled}}
+        @disabled={{this.isEditDisabled}}
       >
         <EntypoIcon @name="edit" />
       </FormElements::Button>
