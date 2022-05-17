@@ -39,7 +39,7 @@
   title="Add group"
   class="btn btn-outline-success"
   @click={{action "addGroup"}}
-  @disabled={{this.disabled}}
+  @disabled={{this.isAddGroupDisabled}}
 >
   <EntypoIcon @name="circle-with-plus" />
   Add Group

@@ -21,6 +21,14 @@ export default Component.extend({
     return groups.reduce((arr, group) => ([ ...arr, ...group.optionIds ]), []);
   }),
 
+  isAddGroupDisabled: computed('disabled', 'options.{@each.id,[]}', function() {
+    const disabled = this.get('disabled');
+    if (disabled) return true;
+    const options = this.get('options') || [];
+    const found = options.find(o => o.id);
+    return !found;
+  }),
+
   index: computed('choices.{[],@each.optionIds.[]}', function () {
     const choices = this.get('choices') || [];
     return choices.reduce((n, c) => c.optionIds ? n + 1 + c.optionIds.length : n + 1, 0);
