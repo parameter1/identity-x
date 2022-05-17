@@ -28,10 +28,14 @@ export default Component.extend({
    * selection highlighting is applied.
    */
   formattedOptions: computed('options.[]', 'answers.[]', function() {
-    return this.options.map((option) => {
-      const answer = this.answers.find((answer) => answer.id === option.id);
-      return answer || option;
-    });
+    const reducer = (arr, choice) => ([
+      ...arr,
+      choice.options ? {
+        groupName: choice.label,
+        options: choice.options.reduce(reducer, []),
+      } : this.answers.find(a => a.id === choice.id) || choice,
+    ]);
+    return this.options.reduce(reducer, []);
   }),
 
   init() {

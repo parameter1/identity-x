@@ -15,10 +15,19 @@ const query = gql`
           label
           multiple
           active
-          options {
+          choices {
             id
             label
-            canWriteIn
+            ... on SelectFieldOption {
+              canWriteIn
+            }
+            ... on SelectFieldOptionGroup {
+              options {
+                id
+                label
+                canWriteIn
+              }
+            }
           }
         }
         answers {
