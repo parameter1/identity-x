@@ -128,20 +128,16 @@
             All grouped options must have an external identifier to save.
           </span>
         {{/unless}}
-        <div class="btn-group dropup">
-
+        <div class="btn-group">
           <FormElements::SubmitButton
             @class="btn btn-success"
             @isSaving={{this.isActionRunning}}
             @disabled={{this.isSubmitDisabled}}
           />
 
-          <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropdown</span>
+          <button type="button" class="btn btn-success" {{action this.onSubmit modal.actions.hide}}>
+            Save &amp; Close
           </button>
-          <div class="dropdown-menu">
-            <a href="#" class="dropdown-item" {{action this.onSubmit modal.actions.hide}}>Save &amp; Close</a>
-          </div>
         </div>
       {{/modal.footer}}
     </fieldset>
