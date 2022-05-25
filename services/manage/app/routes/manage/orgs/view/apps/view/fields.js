@@ -20,6 +20,11 @@ const fields = gql`
               id
               label
             }
+            groups {
+              id
+              label
+              optionIds
+            }
             multiple
           }
         }
@@ -49,6 +54,11 @@ const matchFields = gql`
             options {
               id
               label
+            }
+            groups {
+              id
+              label
+              optionIds
             }
             multiple
           }

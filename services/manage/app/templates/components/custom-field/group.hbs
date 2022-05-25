@@ -1,0 +1,78 @@
+<div class="mb-4 p-3 sortable-item border-dashed rounded select-group" {{sortable-item groupName="choices" model=model}}>
+  <div class="input-group mb-1">
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        Group
+      </span>
+    </div>
+    <Input
+      @value={{model.label}}
+      @required={{true}}
+      @disabled={{this.disabled}}
+      class="form-control"
+      type="text"
+      placeholder="Enter group label"
+      aria-label="Enter group label"
+    />
+
+    <div class="input-group-append">
+      <button
+        type="button"
+        title="Drag to re-order group"
+        class="btn btn-outline-secondary handle"
+        {{sortable-handle}}
+      >
+        &varr;
+      </button>
+
+      <FormElements::Button
+        title="Edit group options"
+        @class={{editButtonClasses}}
+        @click={{action "toggle"}}
+        @disabled={{this.isEditDisabled}}
+      >
+        <EntypoIcon @name="edit" />
+      </FormElements::Button>
+
+      <FormElements::Button
+        title="Remove group"
+        class="btn btn-outline-danger"
+        @click={{action this.remove this.model}}
+        @disabled={{this.disabled}}
+      >
+        <EntypoIcon @name="circle-with-cross" />
+      </FormElements::Button>
+    </div>
+  </div>
+
+  {{#if showOptions}}
+    <div {{sortable-group groupName=groupName onChange=(action "reorder")}} class="mt-4">
+      {{#each model.options as |option|}}
+        <CustomField::Option
+          @model={{option}}
+          @showExternalIds={{this.showExternalIds}}
+          @disabled={{this.disabled}}
+          @remove={{action "removeOption"}}
+          @groupName={{groupName}}
+        />
+      {{/each}}
+    </div>
+  {{else}}
+    {{#power-select-multiple
+      selected=selectedOptions
+      class="form-control"
+      dropdownClass="in-modal-dropdown"
+      options=this.selectableOptions
+      onchange=(action "handleChange")
+      closeOnSelect=false
+      disabled=disabled
+      placeholder="Select options"
+      searchField="label"
+      searchEnabled=false
+      as |item|
+    }}
+      {{ item.label }}
+    {{/power-select-multiple}}
+  {{/if}}
+
+</div>

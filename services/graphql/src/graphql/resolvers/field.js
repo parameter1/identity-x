@@ -1,3 +1,4 @@
+const { get } = require('object-path');
 const { applicationService } = require('@identity-x/service-clients');
 const { UserInputError } = require('apollo-server-express');
 const typeProjection = require('../utils/type-projection');
@@ -74,6 +75,59 @@ module.exports = {
       if (a.index < b.index) return -1;
       return 0;
     }).map(option => ({ field, ...option })),
+
+    /**
+     *
+     */
+    groups: field => (isArray(field.groups) ? field.groups : []).sort((a, b) => {
+      if (a.index > b.index) return 1;
+      if (a.index < b.index) return -1;
+      return 0;
+    }).map(group => ({ field, ...group })),
+
+    /**
+     * Returns a sorted, formatted, combined set of options and groups.
+     */
+    choices: (parent) => {
+      const { groups, options } = parent;
+      return groups.reduce((arr, group) => ([
+        ...arr.filter(o => !group.optionIds.includes(o._id)),
+        // Pass the options through to the group
+        { ...group, options },
+      ]), options).sort((a, b) => a.index - b.index);
+    },
+  },
+
+  /**
+   *
+   */
+  SelectFieldOptionChoice: {
+    /**
+     *
+     */
+    __resolveType: doc => (Array.isArray(doc.optionIds) ? 'SelectFieldOptionGroup' : 'SelectFieldOption'),
+    /**
+     *
+     */
+    id: field => field._id,
+  },
+
+  /**
+   *
+   */
+  SelectFieldOptionGroup: {
+    /**
+     *
+     */
+    id: field => field._id,
+    /**
+     *
+     */
+    options: async (parent) => {
+      const optionIds = get(parent, 'optionIds') || [];
+      const options = get(parent, 'options') || get(parent, 'field.options') || [];
+      return options.filter(option => optionIds.includes(option._id));
+    },
   },
 
   /**
@@ -87,9 +141,7 @@ module.exports = {
     /**
      *
      */
-    externalIdentifier: ({ field, externalIdentifier }) => (
-      field.externalId ? externalIdentifier : null
-    ),
+    externalIdentifier: option => option.externalIdentifier,
   },
 
   /**
@@ -213,6 +265,7 @@ module.exports = {
         multiple,
         externalId,
         options,
+        groups,
       } = input;
       if (!options.length) throw new UserInputError('The select field options cannot be empty.');
       return applicationService.request('field.updateOne', {
@@ -227,6 +280,7 @@ module.exports = {
           multiple,
           externalId,
           options,
+          groups,
         },
       });
     },

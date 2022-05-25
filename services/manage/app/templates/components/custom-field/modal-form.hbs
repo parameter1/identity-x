@@ -1,5 +1,5 @@
 <BsModal @show={{true}} @backdrop="static" @size="large" @onClose={{action "returnToList"}} as |modal|>
-  <form {{action this.onSubmit modal.actions.hide on="submit"}}>
+  <form {{action this.onSubmit on="submit"}}>
     <fieldset disabled={{this.isActionRunning}}>
       {{#modal.header}}
         <h2 class="modal-title">{{this.title}}</h2>
@@ -56,11 +56,14 @@
               <div class="col">
                 <div class="form-group">
                   <CustomField::Options
+                    @choices={{this.model.choices}}
+                    @groups={{this.model.groups}}
                     @options={{this.model.options}}
                     @disabled={{this.isActionRunning}}
                     @showExternalIds={{this.optionExternalIdsEnabled}}
-                    @reorder={{action "reorderOptions"}}
-                    @remove={{action "removeOption"}}
+                    @reorder={{action "reorder"}}
+                    @removeOption={{action "removeOption"}}
+                    @removeGroup={{action "removeGroup"}}
                   />
                 </div>
               </div>
@@ -120,7 +123,22 @@
       {{/modal.body}}
 
       {{#modal.footer}}
-        <FormElements::SubmitButton @class="btn btn-success" @isSaving={{this.isActionRunning}} />
+        {{#unless canSubmit}}
+          <span class="text-danger mr-3">
+            All grouped options must have an external identifier to save.
+          </span>
+        {{/unless}}
+        <div class="btn-group">
+          <FormElements::SubmitButton
+            @class="btn btn-success"
+            @isSaving={{this.isActionRunning}}
+            @disabled={{this.isSubmitDisabled}}
+          />
+
+          <button type="button" class="btn btn-success" {{action this.onSubmit modal.actions.hide}}>
+            Save &amp; Close
+          </button>
+        </div>
       {{/modal.footer}}
     </fieldset>
   </form>

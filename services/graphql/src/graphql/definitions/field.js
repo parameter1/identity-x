@@ -60,6 +60,15 @@ interface FieldInterface {
   externalId: FieldInterfaceExternalEntityId @projection
 }
 
+interface SelectFieldOptionChoice {
+  "The option group ID."
+  id: String! @projection(localField: "_id")
+  "The option label."
+  label: String! @projection
+  "The option index number. Used for sorting."
+  index: Int! @projection
+}
+
 type FieldValue {
   type: FieldValueTypeEnum!
   value: String!
@@ -142,17 +151,37 @@ type SelectField implements FieldInterface {
   multiple: Boolean! @projection
   "The select options."
   options: [SelectFieldOption!]! @projection
+
+  "The select groups."
+  groups: [SelectFieldOptionGroup!]! @projection(needs: ["options"])
+
+  "Option group definitions to assign options to groups."
+  choices: [SelectFieldOptionChoice!]! @projection(needs: ["options", "groups"])
 }
 
-type SelectFieldOption {
+type SelectFieldOption implements SelectFieldOptionChoice {
   "The select option ID. Also used as the option value."
-  id: String!
+  id: String! @projection(localField: "_id")
   "The select option label. This is the value the user will see within the form control."
   label: String!
   "The external identifier value for this option. Only used when an external ID + namespace is associated with this field."
   externalIdentifier: String
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
+  "The order of the option. When rendered, options and groups will be sorted using this value."
+  index: Int!
+}
+
+type SelectFieldOptionGroup implements SelectFieldOptionChoice {
+  "The option group ID."
+  id: String! @projection(localField: "_id")
+  "The option group label. This is the value the user will see within the form control."
+  label: String!
+  "The order of the option group. When rendered, options and groups will be sorted using this value."
+  index: Int!
+  "The options in this group."
+  options: [SelectFieldOption!]! @projection
+  optionIds: [String!]!
 }
 
 input CreateBooleanFieldMutationInput {
@@ -290,6 +319,8 @@ input UpdateSelectFieldMutationInput {
   externalId: FieldInterfaceExternalIdMutationInput
   "The options for the select field. Options with IDs will be updated (where found). Options missing IDs will be treated as new."
   options: [UpdateSelectFieldOptionInput!]!
+  "The option groups for the select field. Option groups with IDs will be updated (where found). Option groups missing IDs will be treated as new."
+  groups: [UpdateSelectFieldOptionGroupInput!]!
 }
 
 input UpdateSelectFieldOptionInput {
@@ -301,6 +332,19 @@ input UpdateSelectFieldOptionInput {
   externalIdentifier: String
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
+  "The order of the option. When rendered, options and groups will be sorted using this value."
+  index: Int = 0
+}
+
+input UpdateSelectFieldOptionGroupInput {
+  "The option group ID. When present, the existing option group will be updated. When empty, a new option group will be created/assigned to the field."
+  id: String
+  "The option group label. This is the value the user will see within the form control."
+  label: String!
+  "The order of the option group. When rendered, options and groups will be sorted using this value."
+  index: Int = 0
+  "The options in this group."
+  optionIds: [String!]! = []
 }
 
 `;

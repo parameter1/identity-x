@@ -1,57 +1,27 @@
 <FormElements::Label>Options / Answers</FormElements::Label>
 
 <div>
-  <div {{sortable-group onChange=(action this.reorder)}}>
-    {{#each options as |option|}}
-      <div class="input-group mb-1" {{sortable-item model=option}}>
-        <Input
-          @value={{option.label}}
-          @required={{true}}
+  <div id="choices-target" class="border border-light rounded p-2 mb-2" {{sortable-group groupName="choices" onChange=(action this.reorder)}}>
+    {{#each choices as |choice|}}
+      {{#if (eq choice.__typename "SelectFieldOptionGroup")}}
+        <CustomField::Group
+          @model={{choice}}
+          @choices={{this.choices}}
+          @options={{this.options}}
           @disabled={{this.disabled}}
-          @class={{this.optionClass}}
-          type="text"
-          placeholder="Enter option label"
-          aria-label="Enter option label"
+          @remove={{action this.removeGroup}}
+          @showExternalIds={{this.showExternalIds}}
+          @disabledOptionIds={{this.disabledOptionIds}}
         />
-        <div class="input-group-append">
-          {{#if showExternalIds}}
-            <Input
-              @class="border-left border-right-0 rounded-0"
-              @required={{true}}
-              @value={{option.externalIdentifier}}
-              @disabled={{this.disabled}}
-              type="text"
-              class="form-control"
-              placeholder="External ID"
-              aria-label="External ID"
-            />
-          {{/if}}
-          <button
-            type="button"
-            title="Drag to re-order option"
-            class="btn btn-outline-secondary handle"
-            {{sortable-handle}}
-          >
-            &varr;
-          </button>
-
-          <div
-            class="d-flex border border-secondary border-left-0 border-right-0"
-            title="Allow write-in values"
-          >
-            <FormElements::ToggleButton @value={{option.canWriteIn}} @size="small" />
-          </div>
-
-          <FormElements::Button
-            title="Remove option"
-            class="btn btn-outline-danger"
-            @click={{action this.remove option}}
-            @disabled={{this.disabled}}
-          >
-            <EntypoIcon @name="circle-with-cross" />
-          </FormElements::Button>
-        </div>
-      </div>
+      {{else}}
+        <CustomField::Option
+          @model={{choice}}
+          @showExternalIds={{this.showExternalIds}}
+          @disabled={{this.disabled}}
+          @remove={{action this.removeOption}}
+          @groupName="choices"
+        />
+      {{/if}}
     {{/each}}
   </div>
 </div>
@@ -63,5 +33,15 @@
   @disabled={{this.disabled}}
 >
   <EntypoIcon @name="circle-with-plus" />
-  Add
+  Add Option
+</FormElements::Button>
+
+<FormElements::Button
+  title="Add group"
+  class="btn btn-outline-success"
+  @click={{action "addGroup"}}
+  @disabled={{this.isAddGroupDisabled}}
+>
+  <EntypoIcon @name="circle-with-plus" />
+  Add Group
 </FormElements::Button>

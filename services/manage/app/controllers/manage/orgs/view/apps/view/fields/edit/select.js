@@ -18,11 +18,36 @@ const mutation = gql`
         namespace { provider tenant type }
         identifier { value }
       }
+      choices {
+        id
+        label
+        index
+        ... on SelectFieldOption {
+          externalIdentifier
+          canWriteIn
+        }
+        ... on SelectFieldOptionGroup {
+          options {
+            id
+            label
+            index
+            externalIdentifier
+            canWriteIn
+          }
+        }
+      }
       options {
         id
+        index
         label
         externalIdentifier
         canWriteIn
+      }
+      groups {
+        id
+        index
+        label
+        optionIds
       }
     }
   }
@@ -42,9 +67,19 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           multiple,
           required,
           active,
-          options,
           externalId,
+          choices,
         } = this.get('model');
+        const { options, groups } = choices.reduce((arrs, choice) => {
+          if (choice.__typename === 'SelectFieldOption') {
+            arrs.options.push(choice);
+          } else {
+            const options = choice.options || [];
+            arrs.groups.push({ ...choice, options});
+            options.forEach(option => arrs.options.push(option));
+          }
+          return arrs;
+        }, { options: [], groups: [] });
 
         const input = {
           id,
@@ -67,15 +102,22 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           multiple,
           options: options.map((option) => ({
             id: option.id,
+            index: option.index,
             label: option.label,
             externalIdentifier: option.externalIdentifier,
             canWriteIn: option.canWriteIn,
+          })),
+          groups: groups.map((group) => ({
+            id: group.id,
+            index: group.index,
+            label: group.label,
+            optionIds: group.options.map(option => option.id),
           })),
         };
         if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateSelectField');
-        await closeModal();
+        if (closeModal) await closeModal();
       } catch (e) {
         this.errorNotifier.show(e);
       } finally {

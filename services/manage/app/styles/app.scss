@@ -406,3 +406,25 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+.border-dashed {
+  border: $input-border-width dashed $input-border-color;
+}
+
+div#choices-target > div:last-child > div.select-group {
+  margin-bottom: 0 !important;
+}
+div#choices-target > div:last-child > div.select-option {
+  margin-bottom: 0.5rem !important;
+}
+
+.select-group .select-option {
+  margin-bottom: 0.5rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.ember-power-select-placeholder {
+  margin-left: 0.3125rem;
+  margin-top: 0.3125rem;
+}

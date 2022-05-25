@@ -36,6 +36,33 @@ const optionSchema = new Schema({
   },
 });
 
+const groupSchema = new Schema({
+  /**
+   * The group label. This is value the user will see.
+   */
+  label: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
+  /**
+   * The option index number. Used for sorting.
+   */
+  index: {
+    type: Number,
+    default: 0,
+  },
+
+  /**
+   * The select options.
+   */
+  optionIds: {
+    type: [Schema.Types.ObjectId],
+    default: () => [],
+  },
+});
+
 const schema = new Schema({
   /**
    * Whether this select field supports multiple answers.
@@ -50,6 +77,14 @@ const schema = new Schema({
    */
   options: {
     type: [optionSchema],
+    default: () => [],
+  },
+
+  /**
+   * The select groups.
+   */
+  groups: {
+    type: [groupSchema],
     default: () => [],
   },
 });
