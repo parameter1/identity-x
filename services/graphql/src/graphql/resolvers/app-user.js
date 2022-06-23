@@ -275,6 +275,22 @@ module.exports = {
     /**
      *
      */
+    forceProfileReVerificationAppUser: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { id } = input;
+
+      return applicationService.request('user.updateOne', {
+        id,
+        applicationId,
+        payload: {
+          forceProfileReVerification: true,
+        },
+      });
+    },
+
+    /**
+     *
+     */
     exportAppUsers: (_, __, { app, user }) => {
       const applicationId = app.getId();
       const email = user.get('email');
