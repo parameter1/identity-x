@@ -159,6 +159,21 @@ module.exports = {
   /**
    *
    */
+  TextField: {
+    /**
+     *
+     */
+    id: field => field._id,
+
+    /**
+     *
+     */
+    type: field => field._type,
+  },
+
+  /**
+   *
+   */
   Mutation: {
     /**
      *
@@ -217,6 +232,28 @@ module.exports = {
     /**
      *
      */
+    createTextField: (_, { input }, { app }) => {
+      const {
+        name,
+        label,
+        required,
+        active,
+        externalId,
+      } = input;
+      const applicationId = app.getId();
+      return applicationService.request('field.create', {
+        type: 'text',
+        applicationId,
+        payload: {
+          name,
+          label,
+          required,
+          active,
+          externalId,
+        },
+      });
+    },
+
     /**
      *
      */
@@ -251,9 +288,6 @@ module.exports = {
     /**
      *
      */
-    /**
-     *
-     */
     updateSelectField: (_, { input }, { app }) => {
       const applicationId = app.getId();
       const {
@@ -281,6 +315,33 @@ module.exports = {
           externalId,
           options,
           groups,
+        },
+      });
+    },
+
+    /**
+     *
+     */
+    updateTextField: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const {
+        id,
+        name,
+        label,
+        required,
+        active,
+        externalId,
+      } = input;
+      return applicationService.request('field.updateOne', {
+        id,
+        type: 'text',
+        applicationId,
+        payload: {
+          name,
+          label,
+          required,
+          active,
+          externalId,
         },
       });
     },
@@ -345,6 +406,15 @@ module.exports = {
       const { id } = input;
       const fields = typeProjection(info);
       return applicationService.request('field.findById', { id, type: 'select', fields });
+    },
+
+    /**
+     *
+     */
+    textField: (_, { input }, ctx, info) => {
+      const { id } = input;
+      const fields = typeProjection(info);
+      return applicationService.request('field.findById', { id, type: 'text', fields });
     },
   },
 };
