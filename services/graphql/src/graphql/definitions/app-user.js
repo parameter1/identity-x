@@ -308,6 +308,8 @@ input SetAppUserBannedMutationInput {
 input ImpersonateAppUserMutationInput {
   "The user ID to impersonate."
   id: String!
+  "If the app user account should be verified."
+  verify: Boolean = false
 }
 
 input SetAppUserExternalIdMutationInput {

@@ -7,6 +7,7 @@ const { Application, AppUser, AppUserLogin } = require('../../mongodb/models');
 module.exports = async ({
   applicationId,
   orgUserId,
+  verify,
   id,
   ip,
   ua,
@@ -38,10 +39,12 @@ module.exports = async ({
   });
 
   // Update the user with last logged in date and verified flag
-  user.set({
-    verified: true,
-    lastLoggedIn: new Date(),
-  });
+  if (verify) {
+    user.set({
+      verified: true,
+      lastLoggedIn: new Date(),
+    });
+  }
   await user.save();
 
   return { user: user.toObject(), token: { id: payload.jti, value: authToken } };

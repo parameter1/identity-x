@@ -350,12 +350,13 @@ module.exports = {
       const authorized = await user.hasOrgRole(app.getOrgId(), ['Owner', 'Administrator']);
       if (!authorized) throw new AuthenticationError('The supplied user credentials cannot be used for impersonation.');
 
-      const { id } = input;
+      const { id, verify } = input;
       const ua = req.get('user-agent');
       return applicationService.request('user.impersonate', {
         applicationId,
         orgUserId,
         id,
+        verify,
         ip: req.ip,
         ua,
       });
