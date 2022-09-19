@@ -1,5 +1,5 @@
 const { applicationService, exportService, localeService } = require('@identity-x/service-clients');
-const { UserInputError } = require('apollo-server-express');
+const { UserInputError, AuthenticationError } = require('apollo-server-express');
 const newrelic = require('../../newrelic');
 const connectionProjection = require('../utils/connection-projection');
 const typeProjection = require('../utils/type-projection');
@@ -336,6 +336,28 @@ module.exports = {
       return applicationService.request('user.manageCreate', {
         applicationId,
         payload,
+      });
+    },
+
+    /**
+     *
+     */
+    impersonateAppUser: async (_, { input }, { req, app, user }) => {
+      const applicationId = app.getId();
+      const orgUserId = user.getId();
+
+      // re-verify request is authorized
+      const authorized = await user.hasOrgRole(app.getOrgId(), ['Owner', 'Administrator']);
+      if (!authorized) throw new AuthenticationError('The supplied user credentials cannot be used for impersonation.');
+
+      const { id } = input;
+      const ua = req.get('user-agent');
+      return applicationService.request('user.impersonate', {
+        applicationId,
+        orgUserId,
+        id,
+        ip: req.ip,
+        ua,
       });
     },
 

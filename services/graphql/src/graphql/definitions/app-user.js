@@ -26,6 +26,9 @@ extend type Mutation {
   setAppUserBanned(input: SetAppUserBannedMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   setAppUserRegionalConsent(input: SetAppUserRegionalConsentMutationInput!): AppUser! @requiresAuth(type: AppUser) # can only be set by self
 
+  "Allows login of an AppUser. Requires App admin credentials."
+  impersonateAppUser(input: ImpersonateAppUserMutationInput!): AppUserAuthentication! @requiresAppRole(roles: [Owner, Administrator])
+
   updateAppUserCustomBooleanAnswers(input: UpdateAppUserCustomBooleanAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   updateOwnAppUserCustomBooleanAnswers(input: UpdateOwnAppUserCustomBooleanAnswersMutationInput!): AppUser! @requiresAuth(type: AppUser)
   updateAppUserCustomSelectAnswers(input: UpdateAppUserCustomSelectAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
@@ -300,6 +303,11 @@ input SetAppUserBannedMutationInput {
   id: String!
   "Whether the user will be banned or not."
   value: Boolean!
+}
+
+input ImpersonateAppUserMutationInput {
+  "The user ID to impersonate."
+  id: String!
 }
 
 input SetAppUserExternalIdMutationInput {
