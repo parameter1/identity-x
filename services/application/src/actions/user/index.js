@@ -9,6 +9,7 @@ const { createRequiredParamError } = require('@base-cms/micro').service;
 const create = require('./create');
 const externalId = require('./external-id');
 const findByEmail = require('./find-by-email');
+const impersonate = require('./impersonate');
 const login = require('./login');
 const logout = require('./logout');
 const manageCreate = require('./manage-create');
@@ -28,6 +29,7 @@ module.exports = {
   findByEmail,
   findById: params => findById(AppUser, params),
   listForApp: params => listForApp(AppUser, params),
+  impersonate,
   login,
   logout,
   manageCreate,
