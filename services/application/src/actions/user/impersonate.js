@@ -19,7 +19,7 @@ module.exports = async ({
   const app = await Application.findById(applicationId, ['id']);
   if (!app) throw createError(404, `No application was found for '${applicationId}'`);
 
-  const user = await AppUser.findById(id, ['email']);
+  const user = await AppUser.findById(id);
   if (!user) throw createError(404, `No user was found for '${id}'`);
 
   // Create the authenticated token.
