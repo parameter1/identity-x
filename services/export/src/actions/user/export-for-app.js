@@ -20,6 +20,7 @@ module.exports = async ({
     'verified',
     'receiveEmail',
     'lastLoggedIn',
+    'profileLastVerified',
     'givenName',
     'familyName',
     'organization',
