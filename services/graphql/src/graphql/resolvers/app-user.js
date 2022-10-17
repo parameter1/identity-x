@@ -512,6 +512,7 @@ module.exports = {
         addressExtra,
         phoneNumber,
         forceProfileReVerification,
+        receiveEmail,
       } = payload;
 
       return applicationService.request('user.updateOne', {
@@ -533,6 +534,7 @@ module.exports = {
           addressExtra,
           phoneNumber,
           forceProfileReVerification,
+          receiveEmail,
         },
       });
     },

@@ -383,6 +383,7 @@ input UpdateAppUserPayloadInput {
   accessLevelIds: [String!] = []
   teamIds: [String!] = []
   forceProfileReVerification: Boolean = false
+  receiveEmail: Boolean
 }
 
 input UpdateAppUserMutationInput {
