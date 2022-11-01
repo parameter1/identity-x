@@ -66,7 +66,7 @@ const findFilesIn = (path, ext = 'csv', arr = []) => {
       default: 100,
     },
     {
-      type: 'boolean',
+      type: 'confirm',
       name: 'errorOnBadAnswer',
       message: 'Should record be skipped if a bad answer value is found?',
       default: true,
@@ -78,7 +78,7 @@ const findFilesIn = (path, ext = 'csv', arr = []) => {
     log(`Importing records from ${file} to ${appId}!`);
     const records = await parseCSV(file);
     const validated = await validate(records, appId, limit, errorOnBadAnswer);
-    await upsert(validated, appId);
+    await upsert(validated, appId, limit);
     log('Import complete!');
   } catch (e) {
     log('Encountered error!', e);

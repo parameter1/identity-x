@@ -114,11 +114,7 @@ const mapSelectAnswers = async (data, error = false) => {
       }
       return [...arr, answerMap.get(value)];
     }, []);
-    // if (values.length !== answers.length) {
-    //   log('v', values, answers);
-    //   process.exit(1);
-    // }
-    return { _id: k.id, answers, values };
+    return { _id: k.id, values };
   }).filter(v => v);
 };
 
@@ -177,11 +173,23 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
       const { countryName } = filtered;
       const countryCode = countryName ? await getCountryCode(countryName) : undefined;
       const validCC = ['US', 'MX', 'CA'].includes(countryCode);
+      const { _id } = filtered;
+      if (!isInternal) delete filtered._id;
+      const email = normalizeEmail(filtered.email);
+      const [, domain] = email.split('@');
+      const externalId = Buffer.from(_id).toString('base64');
       const normalized = {
         ...filtered,
-        ...(!isInternal && { _id: undefined, externalId: `backoffice.smg.member*${Buffer.from(filtered._id).toString('base64')}` }),
+        ...(!isInternal && {
+          externalId: {
+            // @todo Use util?
+            _id: `backoffice.smg.member*${externalId}~base64`,
+            identifier: { value: externalId, type: 'base64' },
+            namespace: { provider: 'backoffice', tenant: 'smg', type: 'member' },
+          },
+        }),
         email: normalizeEmail(filtered.email),
-        // domain:
+        domain,
         verified: false,
         receiveEmail: filtered.receiveEmail === 'TRUE',
         // country is valid/not typo'd
