@@ -41,9 +41,23 @@ const oldAnswerMap = new Map([
   ['Urgent Care', ['Urgent care']],
 
   // Field: Profession
+  ['Accessioner', []],
+  ['Association Professional', []],
+  ['Administrator', []],
+  ['Distributor', []],
+  ['Educator', []],
+  ['Engineer', []],
+  ['Equipment Service', []],
   ['Histotechnologist', ['histotechnologist']],
+  ['Lab Director/Manager', ['Lab director']],
   ['Lab Technician', ['Lab technician']],
+  ['Nursing', []],
   ['Pathologist', ['pathologist']],
+  ['Pathology Resident', []],
+  ['System Administrator', []],
+  ['Systems Analyst', []],
+  ['Student', []],
+  ['Vendor', []],
 
   // Field: Org Type
   ['Academic Institution', ['Academic institution']],
