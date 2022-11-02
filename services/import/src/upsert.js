@@ -3,7 +3,7 @@ const batch = require('./batch');
 const client = require('./mongodb');
 
 const { log } = console;
-const now = new Date();
+const now = new Date('2022-01-01');
 
 module.exports = async (records = [], appId, limit = 10) => {
   log('Upserting ', records.length, appId, limit);
@@ -29,6 +29,8 @@ module.exports = async (records = [], appId, limit = 10) => {
         const insertDefaults = {
           verified,
           customBooleanFieldAnswers,
+          createdAt: now,
+          updatedAt: now,
         };
         const filter = { applicationId, email, ...(_id && { _id }) };
         const $addToSet = {
@@ -42,8 +44,8 @@ module.exports = async (records = [], appId, limit = 10) => {
               filter,
               update: {
                 ...(Object.keys($addToSet).length && { $addToSet }),
-                $setOnInsert: { ...insertDefaults, ...filter, _importedAt: now },
-                $set: { ...payload, _updatedAt: now },
+                $setOnInsert: { ...insertDefaults, ...filter },
+                $set: { ...payload, _importedAt: now },
               },
               upsert: !_id,
             },
