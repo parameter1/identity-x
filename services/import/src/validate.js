@@ -44,7 +44,11 @@ const oldAnswerMap = new Map([
   ['Accessioner', []],
   ['Association Professional', []],
   ['Administrator', []],
+  ['CEO', ['Chief Executive Officer']], // IdX alt
+  ['CFO', ['Chief Financial Officer']], // IdX alt
   ['CMO', []],
+  ['chief marketing officer', ['Chief Marketing Officer']], // IdX alt
+  ['chief medical officer', ['Chief Medical Officer']], // IdX alt
   ['Distributor', []],
   ['Educator', []],
   ['Engineer', []],
@@ -54,7 +58,9 @@ const oldAnswerMap = new Map([
   ['Lab Director/Manager', ['Lab director']],
   ['Lab manager', []],
   ['Lab Technician', ['Lab technician']],
+  ['Laboratory director', ['Lab director']], // IdX alt
   ['Laboratory manager', []],
+  ['laboratory supervisor', ['Lab supervisor']], // IdX alt
   ['Nursing', []],
   ['Pathologist', ['pathologist']],
   ['Pathology Resident', []],
