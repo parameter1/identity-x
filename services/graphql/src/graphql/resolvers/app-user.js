@@ -405,6 +405,29 @@ module.exports = {
     /**
      *
      */
+    sendAppUserChangeEmailLink: (_, { input }, { app, user }) => {
+      const applicationId = app.getId();
+      const {
+        email,
+        source,
+        authUrl,
+        redirectTo,
+        appContextId,
+      } = input;
+      return applicationService.request('user.sendChangeEmailLink', {
+        applicationId,
+        appContextId,
+        authUrl,
+        redirectTo,
+        source,
+        newEmail: email,
+        email: user.user.email,
+      });
+    },
+
+    /**
+     *
+     */
     sendAppUserLoginLink: (_, { input }, { app }) => {
       const applicationId = app.getId();
       const {

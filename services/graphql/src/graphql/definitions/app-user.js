@@ -38,6 +38,9 @@ extend type Mutation {
   setAppUserUnverifiedData(input: SetAppUserUnverifiedDataMutationInput!): AppUser! @requiresApp # must be public
   "Adds an external identifier (with namespace) to an app user."
   addAppUserExternalId(input: SetAppUserExternalIdMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
+
+  "Sends a change email verification link to the user's new email address."
+  sendAppUserChangeEmailLink(input: SendAppUserChangeEmailLinkMutationInput!): String @requiresAuth(type: AppUser)
 }
 
 enum AppUserSortField {
@@ -285,6 +288,15 @@ input ManageCreateAppUserMutationInput {
   phoneNumber: String
   accessLevelIds: [String!] = []
   teamIds: [String!] = []
+}
+
+input SendAppUserChangeEmailLinkMutationInput {
+  email: String!
+  source: String
+  authUrl: String!
+  redirectTo: String
+  "If provided, will use the matched application context when sending the notification email."
+  appContextId: String
 }
 
 input SendAppUserLoginLinkMutationInput {
