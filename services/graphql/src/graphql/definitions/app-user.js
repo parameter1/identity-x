@@ -40,7 +40,7 @@ extend type Mutation {
   addAppUserExternalId(input: SetAppUserExternalIdMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
 
   "Sends a change email verification link to the user's new email address."
-  sendAppUserChangeEmailLink(input: SendAppUserChangeEmailLinkMutationInput!): String @requiresAuth(type: AppUser)
+  sendOwnAppUserChangeEmailLink(input: SendOwnAppUserChangeEmailLinkMutationInput!): String @requiresAuth(type: AppUser)
 }
 
 enum AppUserSortField {
@@ -290,7 +290,7 @@ input ManageCreateAppUserMutationInput {
   teamIds: [String!] = []
 }
 
-input SendAppUserChangeEmailLinkMutationInput {
+input SendOwnAppUserChangeEmailLinkMutationInput {
   email: String!
   source: String
   authUrl: String!

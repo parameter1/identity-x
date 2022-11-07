@@ -405,7 +405,7 @@ module.exports = {
     /**
      *
      */
-    sendAppUserChangeEmailLink: (_, { input }, { app, user }) => {
+    sendOwnAppUserChangeEmailLink: (_, { input }, { app, user }) => {
       const applicationId = app.getId();
       const {
         email,
