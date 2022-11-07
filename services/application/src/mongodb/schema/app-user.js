@@ -81,6 +81,11 @@ const schema = new Schema({
     set: normalizeEmail,
     validate: emailValidator,
   },
+  emails: {
+    type: [String],
+    trim: true,
+    lowercase: true,
+  },
   domain: {
     type: String,
     required: true,

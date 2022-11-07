@@ -41,6 +41,8 @@ extend type Mutation {
 
   "Sends a change email verification link to the user's new email address."
   sendOwnAppUserChangeEmailLink(input: SendOwnAppUserChangeEmailLinkMutationInput!): String @requiresAuth(type: AppUser)
+  "Verifies and logs in the app user using their new email address."
+  changeAppUserEmail(input: ChangeAppUserEmailMutationInput!): AppUserAuthentication! @requiresApp # must be public
 }
 
 enum AppUserSortField {
@@ -235,6 +237,10 @@ input MatchAppUsersQueryInput {
 input AppUserSortInput {
   field: AppUserSortField = id
   order: SortOrder = desc
+}
+
+input ChangeAppUserEmailMutationInput {
+  token: String!
 }
 
 input CheckContentAccessQueryInput {

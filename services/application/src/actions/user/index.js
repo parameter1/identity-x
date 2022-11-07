@@ -6,6 +6,7 @@ const {
   updateFieldWithApp,
 } = require('@identity-x/utils').actions;
 const { createRequiredParamError } = require('@base-cms/micro').service;
+const changeEmail = require('./change-email');
 const create = require('./create');
 const externalId = require('./external-id');
 const findByEmail = require('./find-by-email');
@@ -25,6 +26,7 @@ const verifyAuth = require('./verify-auth');
 const AppUser = require('../../mongodb/models/app-user');
 
 module.exports = {
+  changeEmail,
   create,
   externalId,
   findByEmail,

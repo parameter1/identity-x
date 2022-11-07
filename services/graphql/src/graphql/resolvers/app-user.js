@@ -236,6 +236,21 @@ module.exports = {
     /**
      *
      */
+    changeAppUserEmail: (_, { input }, { req, app }) => {
+      const applicationId = app.getId();
+      const { token } = input;
+      const ua = req.get('user-agent');
+      return applicationService.request('user.changeEmail', {
+        applicationId,
+        token,
+        ip: req.ip,
+        ua,
+      });
+    },
+
+    /**
+     *
+     */
     createAppUser: (_, { input }, { app }) => {
       const applicationId = app.getId();
       const {
