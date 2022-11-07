@@ -107,7 +107,7 @@ For additional information please contact ${appName} c/o ${addressValues.join(',
   `;
 
   await mailerService.request('send', {
-    to: user.email,
+    to: newEmail,
     from: `${appName} <noreply@${SENDING_DOMAIN}>`,
     subject: `Change your email address on ${appName}`,
     html,
