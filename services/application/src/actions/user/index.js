@@ -6,6 +6,7 @@ const {
   updateFieldWithApp,
 } = require('@identity-x/utils').actions;
 const { createRequiredParamError } = require('@base-cms/micro').service;
+const changeEmail = require('./change-email');
 const create = require('./create');
 const externalId = require('./external-id');
 const findByEmail = require('./find-by-email');
@@ -14,6 +15,7 @@ const login = require('./login');
 const logout = require('./logout');
 const manageCreate = require('./manage-create');
 const regionalConsentAnswer = require('./regional-constent-answer');
+const sendChangeEmailLink = require('./send-change-email-link');
 const sendLoginLink = require('./send-login-link');
 const setUnverifiedData = require('./set-unverified-data');
 const updateCustomBooleanAnswers = require('./update-custom-boolean-answers');
@@ -24,6 +26,7 @@ const verifyAuth = require('./verify-auth');
 const AppUser = require('../../mongodb/models/app-user');
 
 module.exports = {
+  changeEmail,
   create,
   externalId,
   findByEmail,
@@ -35,6 +38,7 @@ module.exports = {
   manageCreate,
   matchForApp: params => matchForApp(AppUser, params),
   regionalConsentAnswer,
+  sendChangeEmailLink,
   sendLoginLink,
   setUnverifiedData,
   updateField: params => updateField(AppUser, params),

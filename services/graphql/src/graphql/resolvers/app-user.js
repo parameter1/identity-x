@@ -236,6 +236,21 @@ module.exports = {
     /**
      *
      */
+    changeAppUserEmail: (_, { input }, { req, app }) => {
+      const applicationId = app.getId();
+      const { token } = input;
+      const ua = req.get('user-agent');
+      return applicationService.request('user.changeEmail', {
+        applicationId,
+        token,
+        ip: req.ip,
+        ua,
+      });
+    },
+
+    /**
+     *
+     */
     createAppUser: (_, { input }, { app }) => {
       const applicationId = app.getId();
       const {
@@ -399,6 +414,29 @@ module.exports = {
         applicationId,
         token,
         returnUser: true,
+      });
+    },
+
+    /**
+     *
+     */
+    sendOwnAppUserChangeEmailLink: (_, { input }, { app, user }) => {
+      const applicationId = app.getId();
+      const {
+        email,
+        source,
+        authUrl,
+        redirectTo,
+        appContextId,
+      } = input;
+      return applicationService.request('user.sendChangeEmailLink', {
+        applicationId,
+        appContextId,
+        authUrl,
+        redirectTo,
+        source,
+        newEmail: email,
+        email: user.user.email,
       });
     },
 
