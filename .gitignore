@@ -87,3 +87,7 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 .DS_Store
+
+services/import/data/**/*.csv
+dump
+scripts/download.sh

@@ -1,0 +1,34 @@
+{
+  "name": "@identity-x/import-service",
+  "version": "1.11.2",
+  "description": "The IdentityX import service.",
+  "main": "src/index.js",
+  "author": "Josh Worden <josh@parameter1.com>",
+  "repository": "https://github.com/base-cms/id-me/tree/master/services/import",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "gulp",
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "@base-cms/env": "^1.0.0",
+    "@base-cms/object-path": "^1.9.0",
+    "@identity-x/service-clients": "^1.2.0",
+    "@identity-x/utils": "^1.2.0",
+    "@parameter1/mongodb": "^1.6.0",
+    "async": "^3.2.4",
+    "csv2json": "^2.0.2",
+    "inquirer": "^7.3.3",
+    "validator": "^11.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "gulp": "^4.0.2",
+    "gulp-cached": "^1.1.1",
+    "gulp-eslint": "^5.0.0"
+  }
+}
