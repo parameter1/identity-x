@@ -149,10 +149,10 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
   const answers = await applicationService.request('field.listForApp', { id: applicationId, sort: { _id: 1 } });
   answers.edges.forEach(({ node }) => {
     // eslint-disable-next-line no-underscore-dangle
-    fieldMap.set(`Custom: ${node.name}`, { id: ObjectId(node._id), type: node._type });
+    fieldMap.set(`Custom: ${node.name}`, { id: new ObjectId(node._id), type: node._type });
     if (node.options) {
       node.options.forEach((option) => {
-        answerMap.set(option.label, ObjectId(option._id));
+        answerMap.set(option.label, new ObjectId(option._id));
       });
     }
   });
