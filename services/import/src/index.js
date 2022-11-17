@@ -5,6 +5,7 @@ const { applicationService } = require('@identity-x/service-clients');
 const parseCSV = require('./parse-csv');
 const validate = require('./validate');
 const upsert = require('./upsert');
+const fixObjectIds = require('./fix-object-ids');
 
 const { log } = console;
 
@@ -33,6 +34,7 @@ const findFilesIn = (path, ext = 'csv', arr = []) => {
     file,
     limit,
     errorOnBadAnswer,
+    fixObjectIdValues,
   } = await inquirer.prompt([
     {
       type: 'input',
@@ -49,6 +51,12 @@ const findFilesIn = (path, ext = 'csv', arr = []) => {
         return apps.map(app => ({ name: app.name, value: app._id }));
       },
       default: '629bac8439347cfce3861789', // Lab Pulse
+    },
+    {
+      type: 'confirm',
+      name: 'fixObjectIdValues',
+      message: 'Should existing question/answer values be converted to ObjectIds?',
+      default: false,
     },
     {
       type: 'list',
@@ -73,6 +81,12 @@ const findFilesIn = (path, ext = 'csv', arr = []) => {
     },
   ]);
 
+  if (fixObjectIdValues) {
+    log(`Fixing existing ObjectId values for ${appId}...`);
+    await fixObjectIds(appId, limit);
+    log('Done!');
+    process.exit(0);
+  }
 
   try {
     log(`Importing records from ${file} to ${appId}!`);
