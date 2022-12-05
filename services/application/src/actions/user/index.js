@@ -8,6 +8,7 @@ const {
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const changeEmail = require('./change-email');
 const create = require('./create');
+const createIdentityToken = require('./create-identity-token');
 const externalId = require('./external-id');
 const findByEmail = require('./find-by-email');
 const impersonate = require('./impersonate');
@@ -22,12 +23,14 @@ const updateCustomBooleanAnswers = require('./update-custom-boolean-answers');
 const updateCustomSelectAnswers = require('./update-custom-select-answers');
 const updateOne = require('./update-one');
 const verifyAuth = require('./verify-auth');
+const verifyIdentityToken = require('./verify-identity-token');
 
 const AppUser = require('../../mongodb/models/app-user');
 
 module.exports = {
   changeEmail,
   create,
+  createIdentityToken,
   externalId,
   findByEmail,
   findById: params => findById(AppUser, params),
@@ -47,6 +50,7 @@ module.exports = {
   updateCustomSelectAnswers,
   updateOne,
   verifyAuth,
+  verifyIdentityToken,
   setLastSeen: async ({ id }) => {
     if (!id) throw createRequiredParamError('id');
     const doc = await AppUser.findById(id);

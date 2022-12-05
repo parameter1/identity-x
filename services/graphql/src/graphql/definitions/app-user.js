@@ -13,6 +13,7 @@ extend type Query {
 
 extend type Mutation {
   createAppUser(input: CreateAppUserMutationInput!): AppUser! @requiresApp # must be public
+  createAppUserIdentityToken(input: CreateAppUserIdentityTokenMutationInput!): String! @requiresAppRole(roles: [Owner, Administrator, Member])
   forceProfileReVerificationAppUser(input: ForceProfileReVerificationAppUserMutationInput!): AppUser! @requiresApp # must be public
   exportAppUsers: String! @requiresAppRole
   manageCreateAppUser(input: ManageCreateAppUserMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
@@ -65,10 +66,22 @@ type AppContentAccess {
 type AppContext {
   application: Application!
   user: AppUser
+  identity: AppIdentity
   mergedAccessLevels: [AccessLevel]
   mergedTeams: [Team]
   hasTeams: Boolean!
   hasUser: Boolean!
+}
+
+"A sanitized representation of the AppUser"
+type AppIdentity {
+  id: String! @projection(localField: "_id")
+  "If the user must (re-)verify their information"
+  mustReVerifyProfile: Boolean! @projection(localField: "forceProfileReVerification", needs: ["profileLastVerifiedAt"])
+  "Lists all external IDs + namespaces associated with this user"
+  externalIds: [AppUserExternalEntityId!]! @projection
+  "If the referenced user has supplied answers to all boolean/select fields, and the supplied core fields"
+  hasAllFields(fields: [String!]!): Boolean! @projection(localField: "externalIds", needs: ["customBooleanFieldAnswers", "customSelectFieldAnswers"])
 }
 
 type AppUser {
@@ -246,6 +259,10 @@ input ChangeAppUserEmailMutationInput {
 input CheckContentAccessQueryInput {
   isEnabled: Boolean!
   requiredAccessLevelIds: [String]
+}
+
+input CreateAppUserIdentityTokenMutationInput {
+  id: String!
 }
 
 input CreateAppUserMutationInput {

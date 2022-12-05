@@ -6,9 +6,54 @@ const typeProjection = require('../utils/type-projection');
 
 const { isArray } = Array;
 
+const mustReVerifyProfile = ({ forceProfileReVerification, profileLastVerifiedAt }, _, { app }) => {
+  if (forceProfileReVerification) return true; // verify flag has been hard set.
+  const { appUserAllowedStaleDays } = app.org;
+  if (!appUserAllowedStaleDays) return false; // stale threshold not set
+  if (!profileLastVerifiedAt) return true; // profile never verified
+
+  const ms = appUserAllowedStaleDays * 24 * 60 * 60 * 1000;
+  const mustBeAtLeast = new Date(Date.now() - ms);
+  const lastVerified = new Date(profileLastVerifiedAt);
+  return lastVerified < mustBeAtLeast;
+};
+
 module.exports = {
   AppContext: {
     application: (_, __, { app }) => applicationService.request('findById', { id: app.getId() }),
+    identity: (_, __, { user }) => (user.type === 'AppIdentity' && user.identity ? user.identity : null),
+  },
+
+  AppIdentity: {
+    id: ({ _id }) => _id,
+    mustReVerifyProfile,
+    hasAllFields: async (identity, { fields }, { app }) => {
+      const { customBooleanFieldAnswers, customSelectFieldAnswers } = identity;
+      // Check all required booleans
+      const booleanFieldAnswers = await applicationService.request('field.userBooleanAnswers', {
+        applicationId: app.getId(),
+        customBooleanFieldAnswers,
+        onlyActive: true,
+      });
+      const hasAnsweredBools = booleanFieldAnswers.every(
+        a => a.field.required === false || (a.field.required && a.hasAnswered),
+      );
+      if (!hasAnsweredBools) return false;
+
+      // Check all required selects
+      const selectFieldAnswers = await applicationService.request('field.userSelectAnswers', {
+        applicationId: app.getId(),
+        customSelectFieldAnswers,
+        onlyActive: true,
+      });
+      const hasAnsweredSelects = selectFieldAnswers.every(
+        a => a.field.required === false || (a.field.required && a.hasAnswered),
+      );
+      if (!hasAnsweredSelects) return false;
+
+      // Make sure all fields that were requested are present.
+      return fields.every(field => identity[field]);
+    },
   },
 
   AppUserExternalEntityId: {
@@ -91,17 +136,7 @@ module.exports = {
       });
     },
 
-    mustReVerifyProfile: ({ forceProfileReVerification, profileLastVerifiedAt }, _, { app }) => {
-      if (forceProfileReVerification) return true; // verify flag has been hard set.
-      const { appUserAllowedStaleDays } = app.org;
-      if (!appUserAllowedStaleDays) return false; // stale threshold not set
-      if (!profileLastVerifiedAt) return true; // profile never verified
-
-      const ms = appUserAllowedStaleDays * 24 * 60 * 60 * 1000;
-      const mustBeAtLeast = new Date(Date.now() - ms);
-      const lastVerified = new Date(profileLastVerifiedAt);
-      return lastVerified < mustBeAtLeast;
-    },
+    mustReVerifyProfile,
   },
 
   AppUserCustomBooleanFieldAnswer: {
@@ -285,6 +320,15 @@ module.exports = {
         email,
         payload,
       });
+    },
+
+    /**
+     * Creates and returns an identity token for the supplied user id.
+     */
+    createAppUserIdentityToken: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { id } = input;
+      return applicationService.request('user.createIdentityToken', { applicationId, id });
     },
 
     /**

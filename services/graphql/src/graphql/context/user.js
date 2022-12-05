@@ -3,12 +3,13 @@ const { get } = require('object-path');
 const { membershipService, userService, applicationService } = require('@identity-x/service-clients');
 
 const { isArray } = Array;
-const allowedTypes = ['OrgUser', 'AppUser', 'OrgUserApiToken'];
+const allowedTypes = ['OrgUser', 'AppUser', 'OrgUserApiToken', 'AppIdentity'];
 
 class UserContext {
   constructor(authorization) {
     this.authorization = authorization;
     this.user = {};
+    this.identity = {};
     this.decoded = {};
   }
 
@@ -25,6 +26,8 @@ class UserContext {
           await this.loadForOrg(token);
         } else if (type === 'OrgUserApiToken') {
           await this.loadForOrgApiToken(token);
+        } else if (type === 'AppIdentity') {
+          await this.loadForAppIdentity(token);
         } else {
           await this.loadForApp(token);
         }
@@ -44,6 +47,12 @@ class UserContext {
     const { token: decoded, user } = await userService.request('verifyAuth', { token });
     this.decoded = decoded;
     this.user = user;
+  }
+
+  async loadForAppIdentity(token) {
+    const { token: decoded, user } = await applicationService.request('user.verifyIdentityToken', { token });
+    this.decoded = decoded;
+    this.identity = user;
   }
 
   async loadForApp(token) {
