@@ -180,6 +180,20 @@ module.exports = {
     },
 
     /**
+     *
+     */
+    appUserById: (_, { input }, { app }, info) => {
+      const { id } = input;
+      const applicationId = app.getId();
+      const fields = typeProjection(info);
+      return applicationService.request('user.findById', {
+        applicationId,
+        id,
+        fields,
+      });
+    },
+
+    /**
      * @todo This should be secured, otherwise anyone could guess by email
      */
     appUser: (_, { input }, { app }, info) => {

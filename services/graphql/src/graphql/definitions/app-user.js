@@ -5,6 +5,7 @@ module.exports = gql`
 extend type Query {
   appUsers(input: AppUsersQueryInput!): AppUserConnection! @requiresAppRole
   appUser(input: AppUserQueryInput = {}): AppUser @requiresApp # must be public
+  appUserById(input: AppUserByIdQueryInput!): AppUser @requiresAppRole
   activeAppUser: AppUser @requiresAuth(type: AppUser)
   activeAppContext: AppContext! @requiresApp # must be public
   checkContentAccess(input: CheckContentAccessQueryInput!): AppContentAccess! @requiresApp # must be public
@@ -218,6 +219,10 @@ input AppUserCustomSelectFieldAnswersInput {
 
 input AppUserQueryInput {
   email: String!
+}
+
+input AppUserByIdQueryInput {
+  id: String!
 }
 
 input AppUsersQueryInput {
