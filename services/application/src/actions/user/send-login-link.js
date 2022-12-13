@@ -73,7 +73,7 @@ module.exports = async ({
         <title>Your personal login link</title>
       </head>
       <body>
-        <p>You recently requested to login to <strong>${appName}</strong>. This link is good for one hour and will expire immediately after use.</p>
+        <p>You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour and will expire immediately after use.</p>
         <p><a href="${url}">Login to ${appName}</a></p>
         <p>If you didn't request this link, simply ignore this email${supportEmailHtml}.</p>
         <hr>
@@ -87,7 +87,7 @@ module.exports = async ({
   `;
 
   const text = `
-You recently requested to login to ${appName}. This link is good for one hour and will expire immediately after use.
+You recently requested to log in to ${appName}. This link is good for one hour and will expire immediately after use.
 
 Login to ${appName} by visiting this link:
 ${url}
