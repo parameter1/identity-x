@@ -1,6 +1,6 @@
 {
   "name": "@identity-x/membership-service",
-  "version": "1.7.1",
+  "version": "1.12.2",
   "description": "The IdentityX organization membership service.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@limit0.io>",
