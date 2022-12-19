@@ -20,7 +20,7 @@
     "@identity-x/utils": "^1.2.0",
     "micro": "^9.3.4",
     "mongoose": "^5.5.11",
-    "newrelic": "^6.4.0"
+    "newrelic": "^6.14.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
