@@ -422,14 +422,14 @@ input UpdateAppUserCustomAttributesMutationInput {
   "The user id to update."
   id: String!
   "The attributes to modify."
-  attributes: JSONObject! = {}
+  attributes: JSONObject!
 }
 
 input UpdateOwnAppUserCustomAttributesMutationInput {
   "The user id to update."
   id: String!
   "The attributes to modify."
-  attributes: JSONObject! = {}
+  attributes: JSONObject!
 }
 
 input UpdateAppUserCustomBooleanAnswersMutationInput {
