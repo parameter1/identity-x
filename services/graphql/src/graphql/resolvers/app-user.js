@@ -43,6 +43,8 @@ module.exports = {
       return regionalConsentAnswers.filter(answer => policyIds.includes(answer._id));
     },
 
+    customAttributes: ({ customAttributes }) => customAttributes || {},
+
     customBooleanFieldAnswers: async ({ customBooleanFieldAnswers }, { input }, { app }) => {
       const {
         fieldIds,
@@ -588,6 +590,33 @@ module.exports = {
           forceProfileReVerification,
           receiveEmail,
         },
+      });
+    },
+
+    /**
+     *
+     */
+    updateAppUserCustomAttributes: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { id, attributes } = input;
+      return applicationService.request('user.updateCustomAttributes', {
+        id,
+        applicationId,
+        attributes,
+      });
+    },
+
+    /**
+     *
+     */
+    updateOwnAppUserCustomAttributes: (_, { input }, { user }) => {
+      const id = user.getId();
+      const applicationId = user.getAppId();
+      const { attributes } = input;
+      return applicationService.request('user.updateCustomAttributes', {
+        id,
+        applicationId,
+        attributes,
       });
     },
 

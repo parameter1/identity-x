@@ -1,4 +1,4 @@
-const GraphQLJSON = require('graphql-type-json');
+const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
 const deepAssign = require('deep-assign');
 
 const accessLevel = require('./access-level');
@@ -31,6 +31,7 @@ module.exports = deepAssign(
     Date: DateType,
     ObjectID: ObjectIDType,
     JSON: GraphQLJSON,
+    JSONObject: GraphQLJSONObject,
 
     /**
      * Root queries.

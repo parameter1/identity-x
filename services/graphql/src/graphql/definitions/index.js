@@ -15,6 +15,7 @@ module.exports = gql`
 scalar Date
 scalar ObjectID
 scalar JSON
+scalar JSONObject
 
 directive @projectUsing(type: String!) on OBJECT
 directive @projection(localField: String, needs: [String] = []) on FIELD_DEFINITION

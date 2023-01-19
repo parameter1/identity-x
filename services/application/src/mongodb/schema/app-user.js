@@ -176,6 +176,10 @@ const schema = new Schema({
     type: [customSelectFieldAnswerSchema],
     default: () => [],
   },
+  customAttributes: {
+    type: Object,
+    default: () => ({}),
+  },
 }, { timestamps: true });
 
 schema.plugin(applicationPlugin, { collateWhen: ['email'] });
