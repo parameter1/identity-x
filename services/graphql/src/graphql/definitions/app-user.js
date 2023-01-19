@@ -108,7 +108,7 @@ type AppUser {
   "Shows all answers to custom select questions. By default this will include all questions, even if the user has not answered."
   customSelectFieldAnswers(input: AppUserCustomSelectFieldAnswersInput = {}): [AppUserCustomSelectFieldAnswer!]! @projection
   "Shows all custom attributes stored on the user."
-  customAttributes: JSON! @projection
+  customAttributes: JSONObject! @projection
   "Lists all external IDs + namespaces associated with this user."
   externalIds: [AppUserExternalEntityId!]! @projection
   createdAt: Date @projection
@@ -422,14 +422,14 @@ input UpdateAppUserCustomAttributesMutationInput {
   "The user id to update."
   id: String!
   "The attributes to modify."
-  attributes: JSON! = {}
+  attributes: JSONObject! = {}
 }
 
 input UpdateOwnAppUserCustomAttributesMutationInput {
   "The user id to update."
   id: String!
   "The attributes to modify."
-  attributes: JSON! = {}
+  attributes: JSONObject! = {}
 }
 
 input UpdateAppUserCustomBooleanAnswersMutationInput {
