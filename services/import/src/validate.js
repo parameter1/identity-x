@@ -4,6 +4,7 @@ const { applicationService, localeService } = require('@identity-x/service-clien
 const { normalizeEmail } = require('@identity-x/utils');
 // const { eachLimit } = require('async');
 const eachLimit = require('async/eachLimit');
+const { US } = require('../../../services/locale/src/regions');
 
 const { log } = console;
 const regionMap = new Map();
@@ -146,7 +147,7 @@ const mapSelectAnswers = async (data, error = false) => {
 
 module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswer = false) => {
   const valid = [];
-  const answers = await applicationService.request('field.listForApp', { id: applicationId, sort: { _id: 1 } });
+  const answers = await applicationService.request('field.listForApp', { id: applicationId, sort: { _id: 1 }, pagination: { limit: 20 } });
   answers.edges.forEach(({ node }) => {
     // eslint-disable-next-line no-underscore-dangle
     fieldMap.set(`Custom: ${node.name}`, { id: new ObjectId(node._id), type: node._type });
@@ -173,26 +174,115 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
         ...(record.countryName === 'Korea, Republic of' && { countryName: 'South Korea' }),
         ...(record.countryName === 'Macedonia' && { countryName: 'North Macedonia, Republic of' }),
         ...(record.countryName === 'Rwandese Republic' && { countryName: 'Rwanda' }),
+        ...(record.countryName === 'Palestinian Territory' && { countryName: 'Palestinian Territory, Occupied' }),
+        ...(record.countryName === 'Libyan Arab Jamahiriya' && { countryName: 'Libya' }),
+        ...(['Serbia and Montenegro', 'Yugoslavia'].includes(record.countryName) && { countryName: 'Serbia' }),
+        ...(record.countryName === 'Irish Republic' && { countryName: 'Ireland' }),
+        ...(record.countryName === 'Syria' && { countryName: 'Syrian Arab Republic' }),
+        ...(record.countryName === 'Republic of Maldova' && { countryName: 'Moldova, Republic of' }),
+        ...(record.countryName === 'Tanzania' && { countryName: 'Tanzania, United Republic of' }),
+        ...(record.countryName === 'US Virgin Islands' && { countryName: 'Virgin Islands, U.S.' }),
+        ...(record.countryName === 'Zimbabwe ' && { countryName: 'Zimbabwe' }),
+        ...(record.countryName === 'Micronesia' && { countryName: 'Micronesia, Federated States of' }),
+        ...(record.countryName === 'St. Vincent' && { countryName: 'Saint Vincent and the Grenadines' }),
+        ...(record.countryName === 'Brunei Darusalaam' && { countryName: 'Brunei Darussalam' }),
         // Regions
         ...(record.regionName === 'Toscana' && { countryName: 'Italy' }),
         ...(record.regionName === 'Mexico City' && { regionName: undefined }),
-        ...(record.regionName === 'DC' && { regionName: 'District of Columbia' }),
-        // Canada, eh
+        // This covers all US shortcodes
+        ...(US[record.regionName] && { regionName: US[record.regionName].name }),
+        ...(record.regionName === 'Nuevo Leon' && { regionName: 'Nuevo León' }),
+        ...(record.regionName === 'NUEVO LEON' && { regionName: 'Nuevo León' }),
+        // Garza García NL, NL = Nuevo León
+        ...(record.regionName === 'Garza García NL' && { regionName: 'Nuevo León' }),
+        ...(['Mexico', 'Estado de Mexico'].includes(record.regionName) && { regionName: 'México' }),
+        ...(['Ciudad de Mexico', 'CIUDAD DE MEXICO'].includes(record.regionName) && { regionName: 'Ciudad de México' }),
+        ...(record.regionName === 'Wyoming  ' && { regionName: 'Wyoming' }),
+        ...(['Michoacan', 'Michoacan de Ocampo'].includes(record.regionName) && { regionName: 'Michoacán de Ocampo' }),
+        ...(record.regionName === 'Queretaro de Arteaga' && { regionName: 'Querétaro' }),
+        ...(record.regionName === 'Yucatan' && { regionName: 'Yucatán' }),
+        ...(record.regionName === 'Veracruz-Llave' && { regionName: 'Veracruz de Ignacio de la Llave' }),
+        ...(['jalisco', 'JALISCO'].includes(record.regionName) && { regionName: 'Jalisco' }),
+        ...(record.regionName === 'SONORA' && { regionName: 'Sonora' }),
+        ...(record.regionName === 'chihuahua' && { regionName: 'Chihuahua' }),
+        ...(record.regionName === 'Tamaulipas ' && { regionName: 'Tamaulipas' }),
+        ...(record.regionName === 'San Luis Potosi' && { regionName: 'San Luis Potosí' }),
+        ...(record.regionName === 'CHIAPAS' && { regionName: 'Chiapas' }),
+        // San Andres Cholula is in Puebla Mexio which is the state
+        ...(record.regionName === 'sn andres cholula' && { regionName: 'Puebla' }),
+        // Mexicalu B.C. Mexico B.C. is Baja California
+        ...(record.regionName === 'Mexicalu B.C. Mexico' && { regionName: 'Baja California' }),
+        ...(record.regionName === 'Coahuila' && { regionName: 'Coahuila de Zaragoza' }),
+        ...(record.regionName === 'COAHUILA' && { regionName: 'Coahuila de Zaragoza' }),
+        // Occassionally the Canadians don't see to want to put they're from Canada
+        ...(record.regionName === 'Alberta' && { countryName: 'Canada' }),
+        ...(record.regionName === 'NL' && { regionName: 'Newfoundland and Labrador', countryName: 'Canada' }),
+        ...(record.regionName === 'Ontario' && { countryName: 'Canada' }),
+
+        // Canada, eh?
         ...(record.countryName === 'Canada' && {
           ...(record.regionName === 'AB' && { regionName: 'Alberta' }),
+          ...(record.regionName === 'ab' && { regionName: 'Alberta' }),
+          ...(record.regionName === 'alberta' && { regionName: 'Alberta' }),
           ...(record.regionName === 'BC' && { regionName: 'British Columbia' }),
+          ...(record.regionName === 'bc' && { regionName: 'British Columbia' }),
+          ...(record.regionName === 'BC - British Columbia' && { regionName: 'British Columbia' }),
+          ...(record.regionName === 'B.C.' && { regionName: 'British Columbia' }),
+          ...(record.regionName === 'b.c.' && { regionName: 'British Columbia' }),
           ...(record.regionName === 'manitoba' && { regionName: 'Manitoba' }),
           ...(record.regionName === 'NS' && { regionName: 'Nova Scotia' }),
           ...(record.regionName === 'Qc' && { regionName: 'Quebec' }),
+          ...(record.regionName === 'qc' && { regionName: 'Quebec' }),
+          ...(record.regionName === 'quebec' && { regionName: 'Quebec' }),
+          ...(record.regionName === 'quebec' && { regionName: 'Québec' }),
           ...(record.regionName === 'Newfoundland' && { regionName: 'Newfoundland and Labrador' }),
+          ...(record.regionName === 'NL' && { regionName: 'Newfoundland and Labrador' }),
           ...(record.regionName === 'ONTARIO' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'ontario' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'Ontario' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'on' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'ON' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'ont' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'Ont' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'otario' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'On' && { regionName: 'Ontario' }),
+          ...(record.regionName === 'Yukon Territory', { regionName: 'Yukon' }),
+          ...(record.regionName === 'sk', { regionName: 'Saskatchewan' }),
+          ...(record.regionName === 'New-Brunswick' && { regionName: 'New Brunswick' }),
         }),
 
         // Bad data
-        ...(['AF5B5252903A4', 'CD79C0974D719', 'Choose One'].includes(record.countryName) && {
+        ...([
+          'AF5B5252903A4',
+          'CD79C0974D719',
+          '318A46E89ABC3',
+          '759194E4E8096',
+          'E8C7BDA5E5AD8',
+          'F8E618435CD4D',
+          'Choose One',
+          'NULL',
+          '\'null\'',
+          'Europe',
+          'Anonymous Proxy',
+          'Asia/Pacific Region',
+          'Satellite Provider',
+          // Dissolved in 2010
+          'Netherlands Antilles',
+        ].includes(record.countryName) && {
           countryName: undefined,
         }),
-        ...(['AF5B5252903A4', 'CD79C0974D719', 'Choose One'].includes(record.regionName) && {
+        ...([
+          'AF5B5252903A4',
+          'CD79C0974D719',
+          'Choose One',
+          'NULL',
+          '\'null\'',
+          'null',
+          'Distrito Federal',
+          'Mb',
+          'Armed Forces Europe, Midd',
+          'Armed Forces Europe, Middle East, & Canada',
+        ].includes(record.regionName) && {
           regionName: undefined,
         }),
       }), {});
