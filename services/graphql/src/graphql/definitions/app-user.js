@@ -30,6 +30,8 @@ extend type Mutation {
   "Allows login of an AppUser. Requires App admin credentials."
   impersonateAppUser(input: ImpersonateAppUserMutationInput!): AppUserAuthentication! @requiresAppRole(roles: [Owner, Administrator])
 
+  updateAppUserCustomAttributes(input: UpdateAppUserCustomAttributesMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
+  updateOwnAppUserCustomAttributes(input: UpdateOwnAppUserCustomAttributesMutationInput!): AppUser! @requiresAuth(type: AppUser)
   updateAppUserCustomBooleanAnswers(input: UpdateAppUserCustomBooleanAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   updateOwnAppUserCustomBooleanAnswers(input: UpdateOwnAppUserCustomBooleanAnswersMutationInput!): AppUser! @requiresAuth(type: AppUser)
   updateAppUserCustomSelectAnswers(input: UpdateAppUserCustomSelectAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
@@ -105,6 +107,8 @@ type AppUser {
   customBooleanFieldAnswers(input: AppUserCustomBooleanFieldAnswersInput = {}): [AppUserCustomBooleanFieldAnswer!]! @projection
   "Shows all answers to custom select questions. By default this will include all questions, even if the user has not answered."
   customSelectFieldAnswers(input: AppUserCustomSelectFieldAnswersInput = {}): [AppUserCustomSelectFieldAnswer!]! @projection
+  "Shows all custom attributes stored on the user."
+  customAttributes: JSON! @projection
   "Lists all external IDs + namespaces associated with this user."
   externalIds: [AppUserExternalEntityId!]! @projection
   createdAt: Date @projection
@@ -412,6 +416,20 @@ input UpdateAppUserPayloadInput {
 input UpdateAppUserMutationInput {
   id: String!
   payload: UpdateAppUserPayloadInput!
+}
+
+input UpdateAppUserCustomAttributesMutationInput {
+  "The user id to update."
+  id: String!
+  "The attributes to modify."
+  attributes: JSON! = {}
+}
+
+input UpdateOwnAppUserCustomAttributesMutationInput {
+  "The user id to update."
+  id: String!
+  "The attributes to modify."
+  attributes: JSON! = {}
 }
 
 input UpdateAppUserCustomBooleanAnswersMutationInput {
