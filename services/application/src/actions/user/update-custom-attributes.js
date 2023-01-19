@@ -16,10 +16,15 @@ module.exports = async ({
   if (!user) throw createError(404, `No user was found for '${id}'`);
 
   Object.keys(attributes).forEach((k) => {
-    console.log('ca.', k, attributes[k]);
-    user.set(`customAttributes.${k}`, attributes[k]);
+    let v = attributes[k];
+    if (typeof v === 'string') {
+      // Trim strings
+      v = `${v}`.trim();
+      // Unset if sent an empty value
+      if (v === '') v = null;
+    }
+    user.set(`customAttributes.${k}`, v === null ? undefined : v);
   });
-  console.log(attributes, user.customAttributes);
 
   try {
     await user.save();
