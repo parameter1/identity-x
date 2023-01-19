@@ -11,6 +11,8 @@ extend type Query {
   selectField(input: SelectFieldQueryInput!): SelectField
   "Finds a single boolean field by ID."
   booleanField(input: BooleanFieldQueryInput!): BooleanField
+  "Finds a single text field by ID."
+  textField(input: TextFieldQueryInput!): TextField
 }
 
 extend type Mutation {
@@ -22,6 +24,10 @@ extend type Mutation {
   createSelectField(input: CreateSelectFieldMutationInput!): SelectField! @requiresAppRole(roles: [Owner, Administrator, Member])
   "Updates an existing select field with the provided input."
   updateSelectField(input: UpdateSelectFieldMutationInput!): SelectField! @requiresAppRole(roles: [Owner, Administrator, Member])
+  "Creates a new text field for the current application context."
+  createTextField(input: CreateTextFieldMutationInput!): TextField! @requiresAppRole(roles: [Owner, Administrator, Member])
+  "Updates an existing text field with the provided input."
+  updateTextField(input: UpdateTextFieldMutationInput!): TextField! @requiresAppRole(roles: [Owner, Administrator, Member])
 }
 
 enum FieldValueTypeEnum {
@@ -184,6 +190,27 @@ type SelectFieldOptionGroup implements SelectFieldOptionChoice {
   optionIds: [String!]!
 }
 
+type TextField implements FieldInterface {
+  "The internal field ID."
+  id: String! @projection(localField: "_id")
+  "The field type."
+  type: String! @projection(localField: "_type")
+  "The internal name of the field."
+  name: String! @projection
+  "The user-facing field label. This is what will appear on a form."
+  label: String! @projection
+  "Whether the field is globally required."
+  required: Boolean! @projection
+  "Whether the field is currently active."
+  active: Boolean! @projection
+  "The date the field was created."
+  createdAt: Date! @projection
+  "The date the field was updated."
+  updatedAt: Date! @projection
+  "An external ID + namespaces associated with this custom field."
+  externalId: FieldInterfaceExternalEntityId @projection
+}
+
 input CreateBooleanFieldMutationInput {
   "The internal name of the field."
   name: String!
@@ -223,6 +250,19 @@ input CreateSelectFieldOptionInput {
   canWriteIn: Boolean = false
 }
 
+input CreateTextFieldMutationInput {
+  "The internal name of the field."
+  name: String!
+  "The user-facing field label. This is what will appear on a form."
+  label: String!
+  "Whether the field is globally required."
+  required: Boolean = false
+  "Whether the field is currently active."
+  active: Boolean = true
+  "The external namespace + ID for this field."
+  externalId: FieldInterfaceExternalIdMutationInput
+}
+
 input FieldInterfaceSortInput {
   field: FieldInterfaceSortField = id
   order: SortOrder = desc
@@ -247,6 +287,10 @@ input BooleanFieldQueryInput {
 }
 
 input SelectFieldQueryInput {
+  id: String!
+}
+
+input TextFieldQueryInput {
   id: String!
 }
 
@@ -345,6 +389,21 @@ input UpdateSelectFieldOptionGroupInput {
   index: Int = 0
   "The options in this group."
   optionIds: [String!]! = []
+}
+
+input UpdateTextFieldMutationInput {
+  "The select field identifier to update."
+  id: String!
+  "The internal name of the field."
+  name: String!
+  "The user-facing field label. This is what will appear on a form."
+  label: String!
+  "Whether the field is globally required."
+  required: Boolean = false
+  "Whether the field is currently active."
+  active: Boolean = true
+  "The external namespace + ID for this field."
+  externalId: FieldInterfaceExternalIdMutationInput
 }
 
 `;

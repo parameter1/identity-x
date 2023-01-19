@@ -22,6 +22,15 @@ const mutations = {
         }
       }`,
     fieldType: 'createBooleanField',
+  },
+  text: {
+    mutation: gql`
+      mutation AppTextFieldCreate($input: CreateTextFieldMutationInput!) {
+        createTextField(input: $input) {
+          id
+        }
+      }`,
+    fieldType: 'createTextField',
   }
 };
 
