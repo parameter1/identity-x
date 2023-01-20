@@ -165,7 +165,8 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
     try {
       const filtered = Object.keys(record).reduce((obj, key) => ({
         ...obj,
-        ...(record[key] && /^Custom:/.test(key) === false && { [key]: record[key] }),
+        ...(record[key] && /^Custom:/.test(key) === false && !['countryName', 'regionName'].includes(key) && { [key]: record[key] }),
+        ...(record[key] && /^Custom:/.test(key) === false && ['countryName', 'regionName'].includes(key) && { [key]: record[key].trim() }),
         // Fix bad data
         ...(record.countryName === 'United States' && { countryName: 'United States of America' }),
         ...(record.countryName === 'Russia' && { countryName: 'Russian Federation' }),
@@ -182,7 +183,6 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
         ...(record.countryName === 'Republic of Maldova' && { countryName: 'Moldova, Republic of' }),
         ...(record.countryName === 'Tanzania' && { countryName: 'Tanzania, United Republic of' }),
         ...(record.countryName === 'US Virgin Islands' && { countryName: 'Virgin Islands, U.S.' }),
-        ...(record.countryName === 'Zimbabwe ' && { countryName: 'Zimbabwe' }),
         ...(record.countryName === 'Micronesia' && { countryName: 'Micronesia, Federated States of' }),
         ...(record.countryName === 'St. Vincent' && { countryName: 'Saint Vincent and the Grenadines' }),
         ...(record.countryName === 'Brunei Darusalaam' && { countryName: 'Brunei Darussalam' }),
@@ -197,7 +197,6 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
         ...(record.regionName === 'Garza García NL' && { regionName: 'Nuevo León' }),
         ...(['Mexico', 'Estado de Mexico'].includes(record.regionName) && { regionName: 'México' }),
         ...(['Ciudad de Mexico', 'CIUDAD DE MEXICO'].includes(record.regionName) && { regionName: 'Ciudad de México' }),
-        ...(record.regionName === 'Wyoming  ' && { regionName: 'Wyoming' }),
         ...(['Michoacan', 'Michoacan de Ocampo'].includes(record.regionName) && { regionName: 'Michoacán de Ocampo' }),
         ...(record.regionName === 'Queretaro de Arteaga' && { regionName: 'Querétaro' }),
         ...(record.regionName === 'Yucatan' && { regionName: 'Yucatán' }),
@@ -205,7 +204,6 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
         ...(['jalisco', 'JALISCO'].includes(record.regionName) && { regionName: 'Jalisco' }),
         ...(record.regionName === 'SONORA' && { regionName: 'Sonora' }),
         ...(record.regionName === 'chihuahua' && { regionName: 'Chihuahua' }),
-        ...(record.regionName === 'Tamaulipas ' && { regionName: 'Tamaulipas' }),
         ...(record.regionName === 'San Luis Potosi' && { regionName: 'San Luis Potosí' }),
         ...(record.regionName === 'CHIAPAS' && { regionName: 'Chiapas' }),
         // San Andres Cholula is in Puebla Mexio which is the state
@@ -249,7 +247,8 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
           ...(record.regionName === 'Yukon Territory', { regionName: 'Yukon' }),
           ...(record.regionName === 'sk', { regionName: 'Saskatchewan' }),
           ...(record.regionName === 'New-Brunswick' && { regionName: 'New Brunswick' }),
-        }),
+        }
+        ),
 
         // Bad data
         ...([
