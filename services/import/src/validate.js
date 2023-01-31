@@ -78,7 +78,7 @@ const oldAnswerMap = new Map([
   // ['Student', []],
   ['Vendor', []],
   ['NULL', []],
-  ['Oral', []],
+  ['Oral', ['Oral & Maxillofacial Surgeon']],
 
   // Field: Org Type
   ['Academic Institution', ['Academic institution']],
