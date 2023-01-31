@@ -23,6 +23,11 @@ const oldAnswerMap = new Map([
   ['Microscopy & Imaging', ['Pathology and Histology']],
   ['Molecular Diagnostics', ['Molecular Diagnostics', 'Sequencing', 'Liquid Biopsy', 'Genomics']], // re-route unchanged @todo
   ['Sequencing', ['Molecular Diagnostics', 'Sequencing', 'Liquid Biopsy', 'Genomics']], // re-route unchanged @todo
+  ['Regeneration/remineralization', ['Remineralization']],
+  ['SDF', ['Fluoride/SDF']],
+  ['Digital Imaging Systems', ['Digital Imaging systems']],
+  ['Root canal', []],
+  ['Practice Management Software', []],
 
   // Field: Specialities
   ['Autoimmune Testing', ['Autoimmune']],
@@ -71,6 +76,8 @@ const oldAnswerMap = new Map([
   ['Systems Analyst', []],
   ['Student', []],
   ['Vendor', []],
+  ['NULL', []],
+  ['Oral', []],
 
   // Field: Org Type
   ['Academic Institution', ['Academic institution']],
