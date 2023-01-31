@@ -12,6 +12,7 @@ const countryMap = new Map();
 const fieldMap = new Map();
 const answerMap = new Map();
 const oldAnswerMap = new Map([
+  ['', []], // remove empty values
   // Field: Technologies
   ['Analyzers & Reagents', ['Molecular Diagnostics', 'Immunoassay', 'Clinical Chemistry']],
   ['Chromatography', ['Emerging Technologies']],
