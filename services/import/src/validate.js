@@ -28,7 +28,7 @@ const oldAnswerMap = new Map([
   ['SDF', ['Fluoride/SDF']],
   ['Digital Imaging Systems', ['Digital Imaging systems']],
   ['Root canal', []],
-  ['Practice Management Software', []],
+  ['Practice Management Software', ['Practice management software']],
 
   // Field: Specialities
   ['Autoimmune Testing', ['Autoimmune']],
@@ -58,7 +58,7 @@ const oldAnswerMap = new Map([
   ['chief marketing officer', ['Chief Marketing Officer']], // IdX alt
   ['chief medical officer', ['Chief Medical Officer']], // IdX alt
   ['Distributor', []],
-  ['Educator', []],
+  // ['Educator', []],
   ['Engineer', []],
   ['Equipment Service', []],
   ['Histotechnologist', ['histotechnologist']],
@@ -75,10 +75,10 @@ const oldAnswerMap = new Map([
   ['Phlebotomist', []],
   ['System Administrator', []],
   ['Systems Analyst', []],
-  ['Student', []],
+  // ['Student', []],
   ['Vendor', []],
   ['NULL', []],
-  ['Oral', []],
+  ['Oral', ['Oral & Maxillofacial Surgeon']],
 
   // Field: Org Type
   ['Academic Institution', ['Academic institution']],
