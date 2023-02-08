@@ -63,7 +63,32 @@ module.exports = async ({
   const supportEmailHtml = supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : '';
   const supportEmailText = supportEmail ? ` or contact our support staff at ${supportEmail}` : '';
 
-  const html = `
+  const alternativeHtml = {
+    '5e28a4c858e67b86c955ae4d': `
+      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+      <html lang="es">
+        <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+          <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+          <title>Su enlace de inicio de sesión personal </title>
+        </head>
+        <body>
+          <p>Recientemente hizo su registro para acceder a <strong>${appName}</strong>. Este link estará habilitado por una hora y expirará inmediatamente despues de su uso.</p>
+          <p><a href="${url}">Inicie sesion en ${appName}</a></p>
+          <p>Si no solicitó este link, simplemente ignore este correo${supportEmail ? ` o <a href="mailto:${supportEmail}">contact our support staff</a>>` : ''}.</p>
+          <hr>
+          <small style="font-color: #ccc;">
+            <p>Por favor agregue <em>${SENDING_DOMAIN}</em> a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros futuros correos electrónicos </p>
+            <p>Usted esta recibiendo este correo porque una solicitud fue hecha a ${appName}.</p>
+            <p>Para informacion adicional por favor contacte ${appName} o ${addressValues.join(', ')}.</p>
+          </small>
+        </body>
+      </html>
+    `,
+  };
+
+  const html = alternativeHtml[applicationId] ? alternativeHtml[applicationId] : `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     <html lang="en">
       <head>
