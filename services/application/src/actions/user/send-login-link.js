@@ -129,18 +129,18 @@ module.exports = async ({
   `;
 
   const text = alternativesByAppId[applicationId] && alternativesByAppId[applicationId].text ? alternativesByAppId[applicationId].text : `
-  You recently requested to log in to ${appName}. This link is good for one hour and will expire immediately after use.
+    You recently requested to log in to ${appName}. This link is good for one hour and will expire immediately after use.
 
-  Login to ${appName} by visiting this link:
-  ${url}
+    Login to ${appName} by visiting this link:
+    ${url}
 
-  If you didn't request this link, simply ignore this email${supportEmailText}.
+    If you didn't request this link, simply ignore this email${supportEmailText}.
 
-  -------------------------
+    -------------------------
 
-  Please add ${SENDING_DOMAIN} to your address book or safe sender list to ensure you receive future emails from us.
-  You are receiving this email because a login request was made on ${appName}.
-  For additional information please contact ${appName} c/o ${addressValues.join(', ')}.
+    Please add ${SENDING_DOMAIN} to your address book or safe sender list to ensure you receive future emails from us.
+    You are receiving this email because a login request was made on ${appName}.
+    For additional information please contact ${appName} c/o ${addressValues.join(', ')}.
   `;
 
   const subject = alternativesByAppId[applicationId] && alternativesByAppId[applicationId].subject ? alternativesByAppId[applicationId].subject : 'Your personal login link';
