@@ -63,15 +63,16 @@ module.exports = async ({
   const supportEmailHtml = supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : '';
   const supportEmailText = supportEmail ? ` or contact our support staff at ${supportEmail}` : '';
 
-  const alternativeHtml = {
-    '5e28a4c858e67b86c955ae4d': `
+  const alternativesByAppId = {
+    '5e28a4c858e67b86c955ae4d': {
+      html: `
       <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
       <html lang="es">
         <head>
           <meta charset="UTF-8">
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
           <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
-          <title>Su enlace de inicio de sesión personal </title>
+          <title>Su enlace de inicio de sesión personal</title>
         </head>
         <body>
           <p>Recientemente hizo su registro para acceder a <strong>${appName}</strong>. Este link estará habilitado por una hora y expirará inmediatamente despues de su uso.</p>
@@ -79,16 +80,32 @@ module.exports = async ({
           <p>Si no solicitó este link, simplemente ignore este correo${supportEmail ? ` o <a href="mailto:${supportEmail}">contacte nuestro personal de soporte</a>>` : ''}.</p>
           <hr>
           <small style="font-color: #ccc;">
-            <p>Por favor agregue <em>${SENDING_DOMAIN}</em> a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros futuros correos electrónicos </p>
+            <p>Por favor agregue <em>${SENDING_DOMAIN}</em> a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros futuros correos electrónicos</p>
             <p>Usted esta recibiendo este correo porque una solicitud fue hecha a ${appName}.</p>
             <p>Para informacion adicional por favor contacte ${appName} o ${addressValues.join(', ')}.</p>
           </small>
         </body>
       </html>
     `,
+      text: `
+      Recientemente hizo su registro para acceder a ${appName}. Este link estará habilitado por una hora y expirará inmediatamente despues de su uso.
+
+      Inicie sesion en ${appName}:
+      ${url}
+
+      Si no solicitó este link, simplemente ignore este correo ${supportEmail ? ` o contacte nuestro personal de soporte a ${supportEmail}` : ''}
+
+      -------------------------
+
+      Por favor agregue ${SENDING_DOMAIN} a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros futuros correos electrónicos
+      Usted esta recibiendo este correo porque una solicitud fue hecha a ${appName}.
+      Para informacion adicional por favor contacte ${appName} o ${addressValues.join(', ')}.
+    `,
+      subject: 'Su enlace de inicio de sesión personal',
+    },
   };
 
-  const html = alternativeHtml[applicationId] ? alternativeHtml[applicationId] : `
+  const html = alternativesByAppId[applicationId] && alternativesByAppId[applicationId].html ? alternativesByAppId[applicationId].html : `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     <html lang="en">
       <head>
@@ -111,25 +128,27 @@ module.exports = async ({
     </html>
   `;
 
-  const text = `
-You recently requested to log in to ${appName}. This link is good for one hour and will expire immediately after use.
+  const text = alternativesByAppId[applicationId] && alternativesByAppId[applicationId].text ? alternativesByAppId[applicationId].text : `
+    You recently requested to log in to ${appName}. This link is good for one hour and will expire immediately after use.
 
-Login to ${appName} by visiting this link:
-${url}
+    Login to ${appName} by visiting this link:
+    ${url}
 
-If you didn't request this link, simply ignore this email${supportEmailText}.
+    If you didn't request this link, simply ignore this email${supportEmailText}.
 
--------------------------
+    -------------------------
 
-Please add ${SENDING_DOMAIN} to your address book or safe sender list to ensure you receive future emails from us.
-You are receiving this email because a login request was made on ${appName}.
-For additional information please contact ${appName} c/o ${addressValues.join(', ')}.
+    Please add ${SENDING_DOMAIN} to your address book or safe sender list to ensure you receive future emails from us.
+    You are receiving this email because a login request was made on ${appName}.
+    For additional information please contact ${appName} c/o ${addressValues.join(', ')}.
   `;
+
+  const subject = alternativesByAppId[applicationId] && alternativesByAppId[applicationId].subject ? alternativesByAppId[applicationId].subject : 'Your personal login link';
 
   await mailerService.request('send', {
     to: user.email,
     from: `${appName} <noreply@${SENDING_DOMAIN}>`,
-    subject: 'Your personal login link',
+    subject,
     html,
     text,
   });
