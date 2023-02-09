@@ -93,7 +93,7 @@ module.exports = async ({
       Inicie sesion en ${appName}:
       ${url}
 
-      Si no solicitó este link, simplemente ignore este correo ${supportEmail ? ` o contacte nuestro personal de soporte a ${supportEmail}` : ''}
+      Si no solicitó este link, simplemente ignore este correo${supportEmail ? ` o contacte nuestro personal de soporte a ${supportEmail}` : ''}
 
       -------------------------
 
