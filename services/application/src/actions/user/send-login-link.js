@@ -77,7 +77,7 @@ module.exports = async ({
         <body>
           <p>Recientemente hizo su registro para acceder a <strong>${appName}</strong>. Este link estará habilitado por una hora y expirará inmediatamente despues de su uso.</p>
           <p><a href="${url}">Inicie sesion en ${appName}</a></p>
-          <p>Si no solicitó este link, simplemente ignore este correo${supportEmail ? ` o <a href="mailto:${supportEmail}">contacte nuestro personal de soporte</a>>` : ''}.</p>
+          <p>Si no solicitó este link, simplemente ignore este correo${supportEmail ? ` o <a href="mailto:${supportEmail}">contacte nuestro personal de soporte</a>` : ''}.</p>
           <hr>
           <small style="font-color: #ccc;">
             <p>Por favor agregue <em>${SENDING_DOMAIN}</em> a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros futuros correos electrónicos</p>
