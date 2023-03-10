@@ -329,7 +329,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
       // log(normalized);
       valid.push(normalized);
     } catch (e) {
-      log('record failed', e);
+      log('record failed', record.email, e);
       // throw e;
     }
   });
