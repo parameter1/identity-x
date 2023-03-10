@@ -52,7 +52,7 @@ module.exports = async ({
         multiple: 1,
         options: 1,
       },
-      pagination: { limit: 0, sort: { field: 'name', order: 1 } },
+      pagination: { limit: 500, sort: { field: 'name', order: 1 } },
     }),
   ]);
   const customSelectFields = customFieldConnection.edges.map(edge => edge.node);
@@ -70,6 +70,7 @@ module.exports = async ({
         client: applicationService,
         action: 'user.listForApp',
         fields,
+        limit: 10000,
         regionalConsentPolicies: getAsArray(org, 'regionalConsentPolicies'),
         customSelectFields,
         params: {

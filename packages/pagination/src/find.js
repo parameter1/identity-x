@@ -24,7 +24,7 @@ module.exports = async (Model, {
   collate = false,
   additionalData,
 }) => {
-  const $limit = new Limit({ value: limit });
+  const $limit = new Limit({ value: limit, options: { max: 10000 } });
   const $sort = new Sort(sort);
   const $projection = projection && typeof projection === 'object' ? {
     ...projection,
