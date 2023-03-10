@@ -1,6 +1,6 @@
 {
   "name": "@identity-x/user-service",
-  "version": "1.12.2",
+  "version": "1.13.2",
   "description": "The IdentityX user service.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@limit0.io>",
@@ -15,7 +15,7 @@
   "dependencies": {
     "@base-cms/env": "^1.0.0",
     "@base-cms/micro": "^1.21.5",
-    "@identity-x/mongoose-plugins": "^1.6.0",
+    "@identity-x/mongoose-plugins": "^1.13.2",
     "@identity-x/service-clients": "^1.2.0",
     "@identity-x/utils": "^1.2.0",
     "micro": "^9.3.4",
