@@ -75,31 +75,31 @@ module.exports = async ({
           <title>Su enlace de inicio de sesión personal</title>
         </head>
         <body>
-          <p>Recientemente hizo su registro para acceder a <strong>${appName}</strong>. Este link estará habilitado por una hora y expirará inmediatamente despues de su uso.</p>
-          <p><a href="${url}">Inicie sesion en ${appName}</a></p>
-          <p>Si no solicitó este link, simplemente ignore este correo${supportEmail ? ` o <a href="mailto:${supportEmail}">contacte nuestro personal de soporte</a>` : ''}.</p>
+          <p>Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.</p>
+          <p><a href="${url}">Iniciar sesión en ${appName}</a></p>
+          <p>Si no solicitó este enlace, simplemente ignore este correo electrónico${supportEmail ? ` o <a href="mailto:${supportEmail}">comuníquese con nuestro personal de soporte</a>` : ''}.</p>
           <hr>
           <small style="font-color: #ccc;">
-            <p>Por favor agregue <em>${SENDING_DOMAIN}</em> a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros futuros correos electrónicos</p>
-            <p>Usted esta recibiendo este correo porque una solicitud fue hecha a ${appName}.</p>
-            <p>Para informacion adicional por favor contacte ${appName} o ${addressValues.join(', ')}.</p>
+            <p>Agregue <em>${SENDING_DOMAIN}</em> a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros correos electrónicos en el futuro</p>
+            <p>Está recibiendo este correo electrónico porque se realizó una solicitud de inicio de sesión en ${appName}.</p>
+            <p>Para obtener información adicional, comuníquese con ${appName} ${addressValues.join(', ')}.</p>
           </small>
         </body>
       </html>
     `,
       text: `
-      Recientemente hizo su registro para acceder a ${appName}. Este link estará habilitado por una hora y expirará inmediatamente despues de su uso.
+      Recientemente solicitó iniciar sesión en ${appName}. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.
 
-      Inicie sesion en ${appName}:
+      Iniciar sesión en ${appName}:
       ${url}
 
-      Si no solicitó este link, simplemente ignore este correo${supportEmail ? ` o contacte nuestro personal de soporte a ${supportEmail}` : ''}
+      Si no solicitó este enlace, simplemente ignore este correo electrónico${supportEmail ? ` o comuníquese con nuestro personal de soporte a ${supportEmail}` : ''}
 
       -------------------------
 
-      Por favor agregue ${SENDING_DOMAIN} a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros futuros correos electrónicos
+      Agregue ${SENDING_DOMAIN} a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros correos electrónicos en el futuro
       Usted esta recibiendo este correo porque una solicitud fue hecha a ${appName}.
-      Para informacion adicional por favor contacte ${appName} o ${addressValues.join(', ')}.
+      Para obtener información adicional, comuníquese con ${appName} ${addressValues.join(', ')}.
     `,
       subject: 'Su enlace de inicio de sesión personal',
     },
