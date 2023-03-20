@@ -13,7 +13,7 @@ const html = url => `
   <body>
     <h1>Your export is available.</h1>
     <p>You recently requested an export of IdentityX data. Your report can be accessed by visiting the following URL.</p>
-    <p><a href="${url}">Download report</a></p>
+    <p><a clicktracking=off href="${url}">Download report</a></p>
     <p>If you didn't request this export, simply ignore this email or <a href="mailto:${SUPPORT_EMAIL}">contact our support staff</a>.</p>
     <hr>
     <small style="font-color: #ccc;">
