@@ -5,8 +5,7 @@ const { getAsArray } = require('@base-cms/object-path');
 const { AsyncParser } = require('json2csv');
 const newrelic = require('../../newrelic');
 const { sendFailure, sendSuccess, streamResults } = require('../../utils');
-const { upload } = require('../../s3');
-const { AWS_S3_BUCKET_NAME } = require('../../env');
+const { upload, sign } = require('../../s3');
 
 const { createRequiredParamError } = service;
 
@@ -83,8 +82,7 @@ module.exports = async ({
 
     const filename = `app-user-export-${applicationId}-${Date.now()}.csv`;
     await upload({ filename, contents });
-
-    const url = `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${filename}`;
+    const url = await sign({ filename });
     await sendSuccess({ email, url });
     return 'ok';
   } catch (e) {
