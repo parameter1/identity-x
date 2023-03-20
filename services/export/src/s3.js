@@ -13,6 +13,11 @@ const client = new AWS.S3({
 
 module.exports = {
   client,
+  sign: async ({ filename }) => client.getSignedUrlPromise('getObject', {
+    Bucket: AWS_S3_BUCKET_NAME,
+    Key: filename,
+    Expires: 60 * 60 * 24 * 7, // Maximum duration is 1 week
+  }),
   upload: ({ filename, contents }) => new Promise((resolve, reject) => client.putObject({
     ACL: 'public-read',
     Body: contents,
