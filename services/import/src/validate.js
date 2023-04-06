@@ -146,7 +146,7 @@ const mapBooleanAnswers = async (data) => {
     .filter(key => fieldMap.get(key).type === 'boolean');
   return keys.map((key) => {
     const k = fieldMap.get(key);
-    const value = data[key] === 'TRUE';
+    const value = data[key] === '1';
     return { _id: k.id, value };
   }).filter(v => v);
 };
