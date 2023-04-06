@@ -143,10 +143,10 @@ const getCountryCode = async (name) => {
 const mapBooleanAnswers = async (data) => {
   const keys = Object.keys(data)
     .filter(key => /^Custom:/i.test(key))
-    .filter(key => fieldMap.get(key).type === 'boolean');
+    .filter(key => fieldMap.has(key) && fieldMap.get(key).type === 'boolean');
   return keys.map((key) => {
     const k = fieldMap.get(key);
-    const value = data[key] === '1';
+    const value = ['TRUE', '1'].includes(data[key]);
     return { _id: k.id, value };
   }).filter(v => v);
 };
@@ -155,7 +155,7 @@ const mapSelectAnswers = async (data, error = false) => {
   const keys = Object.keys(data)
     .filter(key => /^Custom:/i.test(key))
     .filter(key => data[key])
-    .filter(key => fieldMap.get(key).type === 'select');
+    .filter(key => fieldMap.has(key) && fieldMap.get(key).type === 'select');
   return keys.map((key) => {
     const k = fieldMap.get(key);
     const answers = `${data[key]}`.split('|');
@@ -165,9 +165,10 @@ const mapSelectAnswers = async (data, error = false) => {
         return [...arr, ...oldAnswerMap.get(value).map(a => answerMap.get(a))];
       }
       if (!answerMap.has(value)) {
-        badAnswers[key] = badAnswers[key] || new Set();
-        badAnswers[key].add(value);
-        if (error) throw new Error(`Unable to find mapped answer for "${value}"!`);
+        badAnswers[key] = badAnswers[key] || new Map();
+        const bc = badAnswers[key].has(value) ? badAnswers[key].get(value) : 0;
+        badAnswers[key].set(value, bc + 1);
+        if (error) throw new Error(`Unable to find mapped answer "${value}" for "${key}"!`);
         return arr;
       }
       return [...arr, answerMap.get(value)];
@@ -591,13 +592,18 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
       const { countryName } = filtered;
       const countryCode = countryName ? await getCountryCode(countryName) : undefined;
       const validCC = ['US', 'MX', 'CA'].includes(countryCode);
+      if (!filtered._id) throw new Error('Missing `_id` column, verify CSV!');
       const { _id } = filtered;
       if (!isInternal) delete filtered._id;
       const email = normalizeEmail(filtered.email);
       const [, domain] = email.split('@');
       const externalId = Buffer.from(_id).toString('base64');
       const normalized = {
-        ...filtered,
+        // Null out nullish values
+        ...(Object.keys(filtered).reduce((obj, key) => {
+          const v = filtered[key];
+          return { ...obj, [key]: ['null', 'NULL', '\''].includes(v) ? null : v };
+        }, {})),
         ...(!isInternal && {
           externalId: {
             // @todo Use util?
@@ -621,10 +627,43 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
         customSelectFieldAnswers: await mapSelectAnswers(record, errorOnBadAnswer),
       };
       if (!validator.isEmail(normalized.email)) throw new Error(`${normalized.email} is not a valid email address.`);
-      // log(normalized);
+
+      // Manually remove extra data
+      delete normalized.last_email_opened;
+      delete normalized.date_of_last_session;
+
+      const allowedFields = [
+        'email',
+        'domain',
+        'verified',
+        'receiveEmail',
+        'givenName',
+        'familyName',
+        'organization',
+        'organizationTitle',
+        'city',
+        'regionCode',
+        'regionName',
+        'postalCode',
+        'phone',
+        'countryName',
+        'countryCode',
+        'customSelectFieldAnswers',
+        'customBooleanFieldAnswers',
+        'externalId',
+        ...fieldMap.keys(),
+      ];
+
+      const extraFields = Object.keys(normalized).reduce((arr, key) => ([
+        ...arr,
+        ...(allowedFields.includes(key) ? [] : [key]),
+      ]), []);
+
+      if (extraFields.length) throw new Error(`Unexpected extra fields: ${extraFields}`);
+
       valid.push(normalized);
     } catch (e) {
-      log('record failed', e);
+      log('record failed', record.email, e);
       // throw e;
     }
   });
