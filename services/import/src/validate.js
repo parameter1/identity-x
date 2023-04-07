@@ -194,6 +194,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
 
   await eachLimit(records, limit, async (record) => {
     const isInternal = /[a-f0-9]{24,}/i.test(record._id);
+    const regionNameTrimmed = record.regionName.trim();
     try {
       const filtered = Object.keys(record).reduce((obj, key) => ({
         ...obj,
@@ -248,21 +249,21 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
 
 
         // Regions
-        ...(record.regionName === 'Toscana' && { countryName: 'Italy' }),
-        ...(record.regionName === 'Distrito Federal' && {
+        ...(regionNameTrimmed === 'Toscana' && { countryName: 'Italy' }),
+        ...(regionNameTrimmed === 'Distrito Federal' && {
           countryName: 'Mexico',
           regionName: 'Ciudad de México',
         }),
-        ...(record.regionName === 'Quebec' && { countryName: 'Canada', regionName: 'Quebec' }),
-        ...(record.regionName === 'London, City of' && { regionName: undefined }),
-        ...(record.regionName === 'Mexico City' && record.countryName !== 'Mexico' && {
+        ...(regionNameTrimmed === 'Quebec' && { countryName: 'Canada', regionName: 'Quebec' }),
+        ...(regionNameTrimmed === 'London, City of' && { regionName: undefined }),
+        ...(regionNameTrimmed === 'Mexico City' && record.countryName !== 'Mexico' && {
           regionName: undefined,
         }),
-        ...(record.regionName === 'dc' && { regionName: 'District of Columbia' }),
+        ...(regionNameTrimmed === 'dc' && { regionName: 'District of Columbia' }),
         // This covers all US shortcodes
-        ...(US[record.regionName] && { regionName: US[record.regionName].name }),
-        ...(record.regionName === 'west virginia' && { regionName: 'West Virginia' }),
-        ...(record.regionName === 'new york' && { regionName: 'New York' }),
+        ...(US[regionNameTrimmed] && { regionName: US[regionNameTrimmed].name }),
+        ...(regionNameTrimmed === 'west virginia' && { regionName: 'West Virginia' }),
+        ...(regionNameTrimmed === 'new york' && { regionName: 'New York' }),
 
         ...(record.countryName === 'Mexico' && {
           ...([
@@ -278,7 +279,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'MONTERREY',
             'monterrey',
             'San nicolas de los garza',
-          ].includes(record.regionName) && { regionName: 'Nuevo León' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Nuevo León' }),
           ...([
             'Mexico',
             'Estado de Mexico',
@@ -299,7 +300,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'Zumpango',
             'toluca',
             'TOLUCA',
-          ].includes(record.regionName) && { regionName: 'México' }),
+          ].includes(regionNameTrimmed) && { regionName: 'México' }),
           // Apparently in 2016 this got changed to Ciudad de México from Distrito Federal
           ...([
             'Ciudad de mexico',
@@ -340,7 +341,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'M�xico D.F.',
             'D.F',
             'Federal District of Mexico',
-          ].includes(record.regionName) && { regionName: 'Ciudad de México' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Ciudad de México' }),
           ...([
             'Michoacan',
             'Michoacan de Ocampo',
@@ -350,14 +351,14 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'Mich',
             'michoacán',
             'Mi hoacan',
-          ].includes(record.regionName) && { regionName: 'Michoacán de Ocampo' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Michoacán de Ocampo' }),
           ...([
             'Queretaro de Arteaga',
             'Queretaro',
             'Quer�taro',
             'QUERETARO',
             'Juriquilla',
-          ].includes(record.regionName) && { regionName: 'Querétaro' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Querétaro' }),
           ...([
             'Yucatan',
             'Merida',
@@ -365,7 +366,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'Merida, yucatan',
             'MERIDA, YUCATAN',
             'Cancún',
-          ].includes(record.regionName) && { regionName: 'Yucatán' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Yucatán' }),
           ...([
             'Veracruz-Llave',
             'Veracruz',
@@ -373,7 +374,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'VERACRUZ',
             'Ver.',
             'BOCA DEL RIO',
-          ].includes(record.regionName) && { regionName: 'Veracruz de Ignacio de la Llave' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Veracruz de Ignacio de la Llave' }),
           ...([
             'jalisco',
             'JALISCO',
@@ -381,38 +382,38 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'guadalajara',
             'ZAPOPAN',
             'Guadalajara',
-          ].includes(record.regionName) && { regionName: 'Jalisco' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Jalisco' }),
           ...([
             'SONORA',
             'HERMOSILLO',
             'SON',
             'Hermosillo',
-          ].includes(record.regionName) && { regionName: 'Sonora' }),
-          ...(record.regionName === 'chihuahua' && { regionName: 'Chihuahua' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Sonora' }),
+          ...(regionNameTrimmed === 'chihuahua' && { regionName: 'Chihuahua' }),
           ...([
             'San Luis Potosi',
             'san luis potosi',
             'sanluispotosi',
             'SAN LUIS POTOSI',
-          ].includes(record.regionName) && { regionName: 'San Luis Potosí' }),
+          ].includes(regionNameTrimmed) && { regionName: 'San Luis Potosí' }),
           ...([
             'CHIAPAS',
             'HUIXTLA CHIAPAS MEXICO.',
-          ].includes(record.regionName) && { regionName: 'Chiapas' }),
-          ...(record.regionName === 'OAXACA' && { regionName: 'Oaxaca' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Chiapas' }),
+          ...(regionNameTrimmed === 'OAXACA' && { regionName: 'Oaxaca' }),
           ...([
             'guanajuato',
             'gto',
             'Gto',
-          ].includes(record.regionName) && { regionName: 'Guanajuato' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Guanajuato' }),
           ...([
             'GUERRERO',
             'Acapulco',
             'Gro.',
-          ].includes(record.regionName) && { regionName: 'Guerrero' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Guerrero' }),
           // Appears this is the capital of the Hidalgo state in Mexico
-          ...(record.regionName === 'Pachuca' && { regionName: 'Hidalgo' }),
-          ...(['CULIACAN', 'SI'].includes(record.regionName) && { regionName: 'Sinaloa' }),
+          ...(regionNameTrimmed === 'Pachuca' && { regionName: 'Hidalgo' }),
+          ...(['CULIACAN', 'SI'].includes(regionNameTrimmed) && { regionName: 'Sinaloa' }),
           // Common practice to refer to the city based on who it was named after
           // Juarez is in the state of Chihuahua
           ...([
@@ -420,13 +421,13 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'benito juarez',
             'Benito Juárez',
             'CD. JUAREZ',
-          ].includes(record.regionName) && { regionName: 'Chihuahua' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Chihuahua' }),
           // San Andres Cholula is in Puebla Mexio which is the state
           ...([
             'sn andres cholula',
             'PUEBLA',
             'ZacatlánPue.',
-          ].includes(record.regionName) && { regionName: 'Puebla' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Puebla' }),
           // Mexicalu B.C. Mexico B.C. is Baja California
           ...([
             'Mexicalu B.C. Mexico',
@@ -439,7 +440,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'Baja Calif',
             'BC',
             'BAJA CALIFORNIA SUR',
-          ].includes(record.regionName) && { regionName: 'Baja California' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Baja California' }),
           ...([
             'Coahuila',
             'coahuila',
@@ -448,51 +449,51 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'COahuila',
             'Torreon',
             'Monclova',
-          ].includes(record.regionName) && { regionName: 'Coahuila de Zaragoza' }),
-          ...(record.regionName === 'QUINTANA ROO' && { regionName: 'Quintana Roo' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Coahuila de Zaragoza' }),
+          ...(regionNameTrimmed === 'QUINTANA ROO' && { regionName: 'Quintana Roo' }),
           ...([
             'tams',
             'tam',
             'Tam',
             'matamoros',
             'TAMPICO',
-          ].includes(record.regionName) && { regionName: 'Tamaulipas' }),
+          ].includes(regionNameTrimmed) && { regionName: 'Tamaulipas' }),
         }),
         // Occassionally the Canadians don't see to want to put they're from Canada
-        ...(record.regionName === 'Alberta' && { countryName: 'Canada' }),
-        ...(record.regionName === 'NL' && { regionName: 'Newfoundland and Labrador', countryName: 'Canada' }),
-        ...(record.regionName === 'Ontario' && { countryName: 'Canada' }),
+        ...(regionNameTrimmed === 'Alberta' && { countryName: 'Canada' }),
+        ...(regionNameTrimmed === 'NL' && { regionName: 'Newfoundland and Labrador', countryName: 'Canada' }),
+        ...(regionNameTrimmed === 'Ontario' && { countryName: 'Canada' }),
 
         // Canada, eh?
         ...(record.countryName === 'Canada' && {
-          ...(record.regionName === 'AB' && { regionName: 'Alberta' }),
-          ...(record.regionName === 'ab' && { regionName: 'Alberta' }),
-          ...(record.regionName === 'alberta' && { regionName: 'Alberta' }),
-          ...(record.regionName === 'BC' && { regionName: 'British Columbia' }),
-          ...(record.regionName === 'bc' && { regionName: 'British Columbia' }),
-          ...(record.regionName === 'BC - British Columbia' && { regionName: 'British Columbia' }),
-          ...(record.regionName === 'B.C.' && { regionName: 'British Columbia' }),
-          ...(record.regionName === 'b.c.' && { regionName: 'British Columbia' }),
-          ...(record.regionName === 'manitoba' && { regionName: 'Manitoba' }),
-          ...(record.regionName === 'NS' && { regionName: 'Nova Scotia' }),
-          ...(record.regionName === 'Qc' && { regionName: 'Quebec' }),
-          ...(record.regionName === 'qc' && { regionName: 'Quebec' }),
-          ...(record.regionName === 'quebec' && { regionName: 'Quebec' }),
-          ...(record.regionName === 'quebec' && { regionName: 'Québec' }),
-          ...(record.regionName === 'Newfoundland' && { regionName: 'Newfoundland and Labrador' }),
-          ...(record.regionName === 'NL' && { regionName: 'Newfoundland and Labrador' }),
-          ...(record.regionName === 'ONTARIO' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'ontario' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'Ontario' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'on' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'ON' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'ont' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'Ont' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'otario' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'On' && { regionName: 'Ontario' }),
-          ...(record.regionName === 'Yukon Territory', { regionName: 'Yukon' }),
-          ...(record.regionName === 'sk', { regionName: 'Saskatchewan' }),
-          ...(record.regionName === 'New-Brunswick' && { regionName: 'New Brunswick' }),
+          ...(regionNameTrimmed === 'AB' && { regionName: 'Alberta' }),
+          ...(regionNameTrimmed === 'ab' && { regionName: 'Alberta' }),
+          ...(regionNameTrimmed === 'alberta' && { regionName: 'Alberta' }),
+          ...(regionNameTrimmed === 'BC' && { regionName: 'British Columbia' }),
+          ...(regionNameTrimmed === 'bc' && { regionName: 'British Columbia' }),
+          ...(regionNameTrimmed === 'BC - British Columbia' && { regionName: 'British Columbia' }),
+          ...(regionNameTrimmed === 'B.C.' && { regionName: 'British Columbia' }),
+          ...(regionNameTrimmed === 'b.c.' && { regionName: 'British Columbia' }),
+          ...(regionNameTrimmed === 'manitoba' && { regionName: 'Manitoba' }),
+          ...(regionNameTrimmed === 'NS' && { regionName: 'Nova Scotia' }),
+          ...(regionNameTrimmed === 'Qc' && { regionName: 'Quebec' }),
+          ...(regionNameTrimmed === 'qc' && { regionName: 'Quebec' }),
+          ...(regionNameTrimmed === 'quebec' && { regionName: 'Quebec' }),
+          ...(regionNameTrimmed === 'quebec' && { regionName: 'Québec' }),
+          ...(regionNameTrimmed === 'Newfoundland' && { regionName: 'Newfoundland and Labrador' }),
+          ...(regionNameTrimmed === 'NL' && { regionName: 'Newfoundland and Labrador' }),
+          ...(regionNameTrimmed === 'ONTARIO' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'ontario' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'Ontario' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'on' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'ON' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'ont' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'Ont' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'otario' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'On' && { regionName: 'Ontario' }),
+          ...(regionNameTrimmed === 'Yukon Territory', { regionName: 'Yukon' }),
+          ...(regionNameTrimmed === 'sk', { regionName: 'Saskatchewan' }),
+          ...(regionNameTrimmed === 'New-Brunswick' && { regionName: 'New Brunswick' }),
         }
         ),
 
@@ -585,7 +586,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
           'i',
           'no',
           'T\'ai-wan',
-        ].includes(record.regionName) && {
+        ].includes(regionNameTrimmed) && {
           regionName: undefined,
         }),
       }), {});
