@@ -596,7 +596,8 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
       if (!filtered._id) throw new Error('Missing `_id` column, verify CSV!');
       const { _id } = filtered;
       if (!isInternal) delete filtered._id;
-      const email = normalizeEmail(filtered.email);
+      // Strip trailing periods if applicable
+      const email = normalizeEmail(filtered.email).replace(/\.+$/, '');
       const [, domain] = email.split('@');
       const externalId = Buffer.from(_id).toString('base64');
       const normalized = {
@@ -613,7 +614,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             namespace: { provider: 'backoffice', tenant: 'smg', type: 'member' },
           },
         }),
-        email: normalizeEmail(filtered.email),
+        email,
         domain,
         verified: false,
         receiveEmail: filtered.receiveEmail === 'TRUE',
