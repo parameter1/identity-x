@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const { createError } = require('micro');
 const { service } = require('@base-cms/micro');
 const Token = require('../mongodb/models/token');
+const invalidate = require('./invalidate');
 const { TOKEN_SECRET } = require('../env');
 
 const { createRequiredParamError } = service;
@@ -16,6 +17,7 @@ const { createRequiredParamError } = service;
 module.exports = async ({ token, sub }) => {
   if (!token) throw createRequiredParamError('token');
   if (!sub) throw createRequiredParamError('sub');
+  const now = Math.floor((new Date()).valueOf() / 1000);
 
   try {
     // Verify the token signature.
@@ -25,6 +27,10 @@ module.exports = async ({ token, sub }) => {
     const doc = await Token.findById(jti);
     if (!doc) throw createError(404, 'No token was found for the provided token identifier.');
     if (sub !== doc.sub) throw createError(400, 'The token subject does not match.');
+    if (doc.payload.exp && doc.payload.exp <= now) {
+      await invalidate({ jti, ttl: 0 });
+      throw createError(401, 'jwt expired');
+    }
     return verified;
   } catch (e) {
     const { message } = e;
