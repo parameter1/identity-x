@@ -13,7 +13,7 @@ module.exports = async ({
 } = {}) => {
   if (!token) throw createRequiredParamError('token');
 
-  const { aud: email, jti } = await tokenService.request('verify', { sub: 'user-login-link', token });
+  const { aud: email } = await tokenService.request('verify', { sub: 'user-login-link', token });
   if (!email) throw createError(400, 'No email address was provided in the token payload');
 
   const user = await findByEmail({ email, fields });
