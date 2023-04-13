@@ -2,7 +2,7 @@ const {
   updateField,
   listForApp,
   matchForApp,
-  findById,
+  findByIdForApp,
   updateFieldWithApp,
 } = require('@identity-x/utils').actions;
 const { createRequiredParamError } = require('@base-cms/micro').service;
@@ -31,7 +31,7 @@ module.exports = {
   create,
   externalId,
   findByEmail,
-  findById: params => findById(AppUser, params),
+  findById: params => findByIdForApp(AppUser, params),
   listForApp: params => listForApp(AppUser, params),
   impersonate,
   login,
