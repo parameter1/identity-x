@@ -20,6 +20,11 @@ const contextSchema = new Schema({
     type: String,
     trim: true,
   },
+  language: {
+    type: String,
+    default: 'en-us',
+    enum: ['en-us', 'es-mx'],
+  },
 });
 
 const schema = new Schema({
@@ -38,6 +43,11 @@ const schema = new Schema({
   description: {
     type: String,
     trim: true,
+  },
+  language: {
+    type: String,
+    default: 'en-us',
+    enum: ['en-us', 'es-mx'],
   },
   contexts: {
     type: [contextSchema],
