@@ -10,6 +10,7 @@ const mutation = gql`
       id
       name
       description
+      language
     }
   }
 `;
@@ -21,8 +22,8 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
     async create(closeModal) {
       try {
         this.startAction();
-        const { name, description, email } = this.get('model');
-        const input = { name, description, email };
+        const { name, description, email, language } = this.get('model');
+        const input = { name, description, email, language };
         const variables = { input };
         const refetchQueries = ['Org', 'OrgApps'];
         await this.mutate({ mutation, variables, refetchQueries }, 'createApplication');
