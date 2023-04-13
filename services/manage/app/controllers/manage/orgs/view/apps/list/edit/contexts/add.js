@@ -13,6 +13,7 @@ const mutation = gql`
         name
         email
         description
+        language
       }
     }
   }
@@ -28,9 +29,10 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
         const {
           name,
           description,
-          email
+          email,
+          language
         } = this.get('model');
-        const payload = { name, description, email };
+        const payload = { name, description, email, language };
         const variables = { applicationId: this.application.id, payload };
         await this.mutate({ mutation, variables }, 'addApplicationContext');
         await this.transitionToRoute('manage.orgs.view.apps.list.edit.contexts.index');
