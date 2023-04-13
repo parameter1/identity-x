@@ -11,6 +11,7 @@ const mutation = gql`
       name
       email
       description
+      language
     }
   }
 `;
@@ -26,9 +27,10 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
           id,
           name,
           description,
-          email
+          email,
+          language
         } = this.get('model');
-        const payload = { name, description, email };
+        const payload = { name, description, email, language };
         const input = { id, payload };
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateApplication');

@@ -29,6 +29,7 @@ type Application {
   name: String! @projection
   email: String @projection
   description: String @projection
+  language: String! @projection
   organization: Organization! @projection(localField: "organizationId")
   contexts: [ApplicationContext!]! @projection
 }
@@ -38,6 +39,7 @@ type ApplicationContext {
   name: String!
   email: String
   description: String
+  language: String!
 }
 
 input AddApplicationContextMutationInput {
@@ -50,6 +52,7 @@ input ApplicationContextPayloadInput {
   name: String!
   email: String!
   description: String
+  language: String!
 }
 
 input ApplicationQueryInput {
@@ -60,6 +63,7 @@ input CreateApplicationMutationInput {
   name: String!
   email: String!
   description: String
+  language: String!
 }
 
 input RemoveApplicationContextMutationInput {
@@ -86,6 +90,7 @@ input UpdateApplicationPayloadInput {
   name: String!
   email: String!
   description: String
+  language: String!
 }
 
 input UpdateApplicationMutationInput {

@@ -5,10 +5,12 @@ module.exports = {
     id: app => app._id,
     organization: app => organizationService.request('findById', { id: app.organizationId }),
     contexts: app => app.contexts,
+    language: app => app.language || 'en-us',
   },
 
   ApplicationContext: {
     id: context => context._id,
+    language: context => context.language || 'en-us',
   },
 
   Query: {

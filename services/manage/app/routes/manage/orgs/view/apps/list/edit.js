@@ -9,6 +9,7 @@ const query = gql`
       name
       email
       description
+      language
       contexts {
         id
         name

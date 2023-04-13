@@ -22,3 +22,14 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col">
+    <div class="form-group mb-0">
+      <FormElements::Label @for="app.language">Language</FormElements::Label>
+      <FormElements::Select @id="app.language" @required={{true}} @value={{model.language}} @on-change={{action "setLanguage"}} @class="custom-select" as |select|>
+        <select.option @value="en-us">English</select.option>
+        <select.option @value="es-mx">Spanish</select.option>
+      </FormElements::Select>
+    </div>
+  </div>
+</div>
