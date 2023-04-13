@@ -4,11 +4,10 @@ const { tokenService, mailerService, organizationService } = require('@identity-
 const { getAsObject } = require('@base-cms/object-path');
 const { stripLines } = require('@identity-x/utils');
 const { Application } = require('../../mongodb/models');
-const { SENDING_DOMAIN } = require('../../env');
+const { SENDING_DOMAIN: sendingDomain } = require('../../env');
 const findByEmail = require('./find-by-email');
 const { isBurnerDomain } = require('../../utils/burner-email');
-const englishTemplate = require('../../email-templates/login-link/en-us');
-const spanishTemplate = require('../../email-templates/login-link/es-mx');
+const templates = require('../../email-templates/login-link');
 
 const createLoginToken = ({
   email,
@@ -63,31 +62,23 @@ module.exports = async ({
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
-  const templateByLanguage = {
-    'en-us': englishTemplate({
-      sendingDomain: SENDING_DOMAIN,
-      supportEmail,
-      url,
-      appName,
-      addressValues,
-    }),
-    'es-mx': spanishTemplate({
-      sendingDomain: SENDING_DOMAIN,
-      supportEmail,
-      url,
-      appName,
-      addressValues,
-    }),
-  };
-
-  const templateForLanguage = templateByLanguage[language];
-  if (!templateForLanguage) throw createError(404, `No template available for language: ${language}!`);
-  const { subject, html, text } = templateForLanguage;
-
+  const { subject, html, text } = templates[language] ? templates[language]({
+    sendingDomain,
+    supportEmail,
+    url,
+    appName,
+    addressValues,
+  }) : templates['en-us']({
+    sendingDomain,
+    supportEmail,
+    url,
+    appName,
+    addressValues,
+  });
 
   await mailerService.request('send', {
     to: user.email,
-    from: `${appName} <noreply@${SENDING_DOMAIN}>`,
+    from: `${appName} <noreply@${sendingDomain}>`,
     subject,
     html,
     text,
