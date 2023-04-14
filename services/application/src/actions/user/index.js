@@ -2,6 +2,7 @@ const {
   updateField,
   listForApp,
   matchForApp,
+  findById,
   findByIdForApp,
   updateFieldWithApp,
 } = require('@identity-x/utils').actions;
@@ -31,7 +32,8 @@ module.exports = {
   create,
   externalId,
   findByEmail,
-  findById: params => findByIdForApp(AppUser, params),
+  findById: params => findById(AppUser, params),
+  findByIdForApp: params => findByIdForApp(AppUser, params),
   listForApp: params => listForApp(AppUser, params),
   impersonate,
   login,
