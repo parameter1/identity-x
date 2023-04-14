@@ -188,7 +188,7 @@ module.exports = {
       const { id } = input;
       const applicationId = app.getId();
       const fields = typeProjection(info);
-      return applicationService.request('user.findById', {
+      return applicationService.request('user.findByIdForApp', {
         applicationId,
         id,
         fields,
