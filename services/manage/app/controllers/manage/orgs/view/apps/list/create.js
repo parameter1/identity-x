@@ -22,7 +22,12 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
     async create(closeModal) {
       try {
         this.startAction();
-        const { name, description, email, language } = this.get('model');
+        const {
+          name,
+          description,
+          email,
+          language = 'en-us',
+        } = this.get('model');
         const input = { name, description, email, language };
         const variables = { input };
         const refetchQueries = ['Org', 'OrgApps'];
