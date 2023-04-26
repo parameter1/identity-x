@@ -30,7 +30,7 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
           name,
           description,
           email,
-          language
+          language = 'en-us',
         } = this.get('model');
         const payload = { name, description, email, language };
         const variables = { applicationId: this.application.id, payload };
