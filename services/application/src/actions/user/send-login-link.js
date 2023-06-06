@@ -27,6 +27,7 @@ module.exports = async ({
   applicationId,
   appContextId,
   source,
+  sourceType,
   email,
 } = {}) => {
   if (!authUrl) throw createRequiredParamError('authUrl');
@@ -58,7 +59,15 @@ module.exports = async ({
   const language = context.language || app.language || 'en-us';
   if (supportEmail) addressValues.push(supportEmail);
 
-  const { token } = await createLoginToken({ applicationId, email: user.email, data: { source } });
+  const { token } = await createLoginToken({
+    applicationId,
+    email: user.email,
+    data: {
+      source,
+      sourceType,
+    },
+  });
+
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 

@@ -58,5 +58,10 @@ module.exports = async ({
   });
   await user.save();
 
-  return { user: user.toObject(), token: { id: payload.jti, value: authToken }, loginSource: get(data, 'source') };
+  return {
+    user: user.toObject(),
+    token: { id: payload.jti, value: authToken },
+    loginSource: get(data, 'source'),
+    loginSourceType: get(data, 'sourceType'),
+  };
 };

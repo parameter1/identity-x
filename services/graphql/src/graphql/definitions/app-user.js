@@ -192,6 +192,7 @@ type AppUserAuthentication {
   user: AppUser!
   token: AppUserAuthToken!
   loginSource: String
+  loginSourceType: String
 }
 
 type AppUserAuthToken {
@@ -317,6 +318,7 @@ input SendOwnAppUserChangeEmailLinkMutationInput {
 input SendAppUserLoginLinkMutationInput {
   email: String!
   source: String
+  sourceType: String
   authUrl: String!
   redirectTo: String
   "If provided, will use the matched application context when sending the login email."
