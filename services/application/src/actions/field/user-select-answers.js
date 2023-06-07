@@ -37,6 +37,10 @@ module.exports = async ({
       ? fieldAnswer.values
         .map((value) => {
           const option = field.options.find(o => `${o._id}` === `${value}`);
+          if (!option) {
+            // Don't return deleted/missing options
+            return false;
+          }
           const writeInValue = fieldAnswer.writeInValues.find(v => `${v._id}` === `${value}`);
           return {
             ...option,
