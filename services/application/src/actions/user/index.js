@@ -9,6 +9,7 @@ const {
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const changeEmail = require('./change-email');
 const create = require('./create');
+const deleteForOrg = require('./delete-for-org');
 const externalId = require('./external-id');
 const findByEmail = require('./find-by-email');
 const impersonate = require('./impersonate');
@@ -30,6 +31,7 @@ const AppUser = require('../../mongodb/models/app-user');
 module.exports = {
   changeEmail,
   create,
+  deleteForOrg,
   externalId,
   findByEmail,
   findById: params => findById(AppUser, params),
