@@ -46,6 +46,8 @@ extend type Mutation {
   sendOwnAppUserChangeEmailLink(input: SendOwnAppUserChangeEmailLinkMutationInput!): String @requiresAuth(type: AppUser)
   "Verifies and logs in the app user using their new email address."
   changeAppUserEmail(input: ChangeAppUserEmailMutationInput!): AppUserAuthentication! @requiresApp # must be public
+
+  deleteAppUserForCurrentOrg(input: DeleteAppUserForCurrentOrgInput!): Boolean! @requiresOrgRole(roles: [Owner, Administrator])
 }
 
 enum AppUserSortField {
@@ -270,6 +272,10 @@ input CreateAppUserMutationInput {
   street: String
   addressExtra: String
   phoneNumber: String
+}
+
+input DeleteAppUserForCurrentOrgInput {
+  email: String!
 }
 
 input ForceProfileReVerificationAppUserMutationInput {

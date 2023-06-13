@@ -303,6 +303,15 @@ module.exports = {
       });
     },
 
+    deleteAppUserForCurrentOrg: (_, { input }, { org }) => {
+      const organizationId = org.getId();
+      const { email } = input;
+      return applicationService.request('user.deleteForOrg', {
+        organizationId,
+        email,
+      });
+    },
+
     /**
      *
      */

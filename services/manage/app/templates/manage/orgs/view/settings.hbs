@@ -103,7 +103,9 @@
       </div>
     </form>
 
-    <Organization::RegionalConsentPolicies @policies={{this.model.regionalConsentPolicies}} />
+    <Organization::RegionalConsentPolicies @class="mb-3" @policies={{this.model.regionalConsentPolicies}} />
+
+    <Organization::DeleteUserFromOrg />
   </div>
 </div>
 
