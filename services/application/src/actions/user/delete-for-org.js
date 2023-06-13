@@ -29,7 +29,6 @@ module.exports = async ({
             $match: {
               $expr: {
                 $and: [
-                  // enter target user email here
                   { $eq: ['$email', email.toLowerCase()] },
                   { $in: ['$applicationId', '$$appIds'] },
                 ],
@@ -51,7 +50,6 @@ module.exports = async ({
             $match: {
               $expr: {
                 $and: [
-                  // enter target user email here
                   { $eq: ['$appUserId', '$$appUserId'] },
                   { $in: ['$applicationId', '$$appIds'] },
                 ],
@@ -88,16 +86,7 @@ module.exports = async ({
         let: { email: '$appUser.email' },
         as: 'tokens',
         pipeline: [
-          {
-            $match: {
-              $expr: {
-                $and: [
-                  // enter target user email here
-                  { $eq: ['$payload.aud', '$$email'] },
-                ],
-              },
-            },
-          },
+          { $match: { $expr: { $eq: ['$payload.aud', '$$email'] } } },
           { $project: { _id: 1, iss: 1 } },
         ],
       },
