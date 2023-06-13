@@ -1,0 +1,38 @@
+<form class="card" {{action "delete" on="submit"}}>
+  <div class="card-header">
+    <EntypoIcon @name="remove-user" /> Delete User From All Applications
+  </div>
+  <div class="card-body">
+    <div class="form-group">
+      <FormElements::Label @for="app-user.email">Email Address</FormElements::Label>
+      <Input
+        @id="app-user.email"
+        @type="email"
+        @class="form-control"
+        @value={{this.email}}
+        @required={{true}}
+      />
+    </div>
+
+    {{#if (eq this.result true)}}
+      <div class="alert-info mt-3 mb-0 alert" role="alert">
+        The user {{ this.resultEmail }} was successfully deleted for all applications.
+      </div>
+    {{/if}}
+    {{#if (eq this.result false)}}
+      <div class="alert-warning mt-3 mb-0 alert" role="alert">
+        The user {{ this.resultEmail }} was not found.
+      </div>
+    {{/if}}
+  </div>
+  <div class="card-footer">
+    <FormElements::SubmitButton
+      @class="btn btn-danger"
+      @label="Delete"
+      @onSavingLabel="Deleting..."
+      @icon="circle-with-cross"
+      @disabled={{this.isActionRunning}}
+      @isSaving={{this.isActionRunning}}
+    />
+  </div>
+</form>
