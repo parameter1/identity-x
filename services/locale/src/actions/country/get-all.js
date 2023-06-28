@@ -6,7 +6,7 @@ const { isArray } = Array;
 
 module.exports = ({
   lang = 'en',
-  prioritize = ['US', 'CA'],
+  prioritize = ['US', 'CA', 'MX'],
   withFlag = true,
 }) => {
   // Must clone this data, otherwise deleting keys will remain sticky.
