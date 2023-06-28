@@ -54,9 +54,14 @@ module.exports = async ({
   // Update the user with last logged in date and verified flag
   user.set({
     verified: true,
+    verifiedCount: user.verifiedCount + 1,
     lastLoggedIn: new Date(),
   });
   await user.save();
 
-  return { user: user.toObject(), token: { id: payload.jti, value: authToken }, loginSource: get(data, 'source') };
+  return {
+    user: user.toObject(),
+    token: { id: payload.jti, value: authToken },
+    loginSource: get(data, 'source'),
+  };
 };

@@ -42,10 +42,14 @@ module.exports = async ({
   if (verify) {
     user.set({
       verified: true,
+      verifiedCount: user.verifiedCount + 1,
       lastLoggedIn: new Date(),
     });
   }
   await user.save();
 
-  return { user: user.toObject(), token: { id: payload.jti, value: authToken } };
+  return {
+    user: user.toObject(),
+    token: { id: payload.jti, value: authToken },
+  };
 };

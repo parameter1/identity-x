@@ -109,6 +109,10 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
+  verifiedCount: {
+    type: Number,
+    default: 0,
+  },
   banned: {
     type: Boolean,
     default: false,
