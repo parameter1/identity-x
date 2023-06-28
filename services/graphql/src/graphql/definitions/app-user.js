@@ -98,7 +98,10 @@ type AppUser {
   accessLevels: [AccessLevel] @projection(localField: "accessLevelIds")
   teams: [Team]  @projection(localField: "teamIds")
   lastLoggedIn: Date @projection
+
   verified: Boolean @projection
+  firstVerifiedAt: Date @projection
+  isFirstTimeVerifying: Boolean @projection
   mustReVerifyProfile: Boolean! @projection(localField: "forceProfileReVerification", needs: ["profileLastVerifiedAt"])
   forceProfileReVerification: Boolean
   profileLastVerifiedAt: Date @projection
