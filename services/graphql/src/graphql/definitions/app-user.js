@@ -100,8 +100,7 @@ type AppUser {
   lastLoggedIn: Date @projection
 
   verified: Boolean @projection
-  firstVerifiedAt: Date @projection
-  isFirstTimeVerifying: Boolean @projection
+  verifiedCount: Int @projection
   mustReVerifyProfile: Boolean! @projection(localField: "forceProfileReVerification", needs: ["profileLastVerifiedAt"])
   forceProfileReVerification: Boolean
   profileLastVerifiedAt: Date @projection

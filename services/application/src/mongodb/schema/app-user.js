@@ -109,15 +109,9 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
-  /**
-   * The first time the _user_ has the verified field set to true via login/impersonate
-   */
-  firstVerifiedAt: {
-    type: Date,
-  },
-  isFirstTimeVerifying: {
-    type: Boolean,
-    default: false,
+  verifiedCount: {
+    type: Schema.Types.Int,
+    default: 0,
   },
   banned: {
     type: Boolean,

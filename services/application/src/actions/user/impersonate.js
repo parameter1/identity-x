@@ -38,15 +38,11 @@ module.exports = async ({
     ua,
   });
 
-  const isFirstTimeVerifying = !user.firstVerifiedAt;
-
-
   // Update the user with last logged in date and verified flag
   if (verify) {
     user.set({
       verified: true,
-      ...(isFirstTimeVerifying && { firstVerifiedAt: new Date() }),
-      isFirstTimeVerifying: false,
+      verifiedCount: user.verifiedCount + 1,
       lastLoggedIn: new Date(),
     });
   }
@@ -55,6 +51,5 @@ module.exports = async ({
   return {
     user: user.toObject(),
     token: { id: payload.jti, value: authToken },
-    isFirstTimeVerifying,
   };
 };
