@@ -110,7 +110,7 @@ const schema = new Schema({
     default: false,
   },
   verifiedCount: {
-    type: Schema.Types.Int,
+    type: Number,
     default: 0,
   },
   banned: {
