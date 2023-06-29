@@ -65,7 +65,7 @@ input LocaleCountriesQueryInput {
   "The language to return."
   lang: String = "en"
   "A list of country codes to prioritize. These countries will be listed first in the response."
-  prioritize: [String!]! = ["US", "CA"]
+  prioritize: [String!]! = ["US", "CA", "MX"]
   "Whether to include the country flag emoji."
   withFlag: Boolean = true
 }
