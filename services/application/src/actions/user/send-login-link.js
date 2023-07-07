@@ -1,7 +1,7 @@
 const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { tokenService, mailerService, organizationService } = require('@identity-x/service-clients');
-const { getAsObject } = require('@base-cms/object-path');
+const { get, getAsObject } = require('@base-cms/object-path');
 const { stripLines } = require('@identity-x/utils');
 const { Application } = require('../../mongodb/models');
 const { SENDING_DOMAIN: sendingDomain } = require('../../env');
@@ -62,19 +62,32 @@ module.exports = async ({
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
-  const { subject, html, text } = templates[language] ? templates[language]({
-    sendingDomain,
-    supportEmail,
-    url,
-    appName,
-    addressValues,
-  }) : templates['en-us']({
-    sendingDomain,
-    supportEmail,
-    url,
-    appName,
-    addressValues,
-  });
+  const defaultTemplate = templates[language]
+    ? templates[language]({
+      sendingDomain,
+      supportEmail,
+      url,
+      appName,
+      addressValues,
+    }) : templates['en-us']({
+      sendingDomain,
+      supportEmail,
+      url,
+      appName,
+      addressValues,
+    });
+  const template = get(templates, `${appContextId}.${language}`)
+    ? templates[appContextId][language]({
+      sendingDomain,
+      supportEmail,
+      url,
+      appName,
+      addressValues,
+    })
+    : defaultTemplate;
+
+  console.warn(appContextId);
+  const { subject, html, text } = template;
 
   await mailerService.request('send', {
     to: user.email,
