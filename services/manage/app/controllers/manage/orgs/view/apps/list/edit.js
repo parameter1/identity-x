@@ -10,6 +10,11 @@ const mutation = gql`
       id
       name
       email
+      loginLinkTemplate {
+        subjectLine
+        unverifiedVerbiage
+        verifiedVerbiage
+      }
       description
       language
     }
@@ -27,10 +32,17 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
           id,
           name,
           description,
+          loginLinkTemplate,
           email,
           language,
         } = this.get('model');
-        const payload = { name, description, email, language };
+        const payload = {
+          name,
+          description,
+          loginLinkTemplate: this.validateLoginLinkTemplateObj(loginLinkTemplate),
+          email,
+          language,
+        };
         const input = { id, payload };
         const variables = { input };
         const refetchQueries = ['OrgApps'];

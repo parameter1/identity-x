@@ -8,6 +8,11 @@ const query = gql`
       id
       name
       description
+      loginLinkTemplate {
+        subjectLine
+        unverifiedVerbiage
+        verifiedVerbiage
+      }
     }
   }
 `;

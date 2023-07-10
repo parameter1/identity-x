@@ -26,6 +26,14 @@ export default Mixin.create(LoadingMixin, {
     this.hideLoading();
   },
 
+  validateLoginLinkTemplateObj(loginLinkTemplate = {}){
+    return {
+      ...(loginLinkTemplate.subjectLine && { subjectLine: loginLinkTemplate.subjectLine }),
+      ...(loginLinkTemplate.unverifiedVerbiage && { unverifiedVerbiage: loginLinkTemplate.unverifiedVerbiage }),
+      ...(loginLinkTemplate.verifiedVerbiage && { verifiedVerbiage: loginLinkTemplate.verifiedVerbiage }),
+    };
+  },
+
   sendEventAction(name, ...args) {
     const fn = this.get(name);
     if (typeof fn === 'function') return fn(...args);
