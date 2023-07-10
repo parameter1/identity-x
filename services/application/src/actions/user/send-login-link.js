@@ -1,7 +1,7 @@
 const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { tokenService, mailerService, organizationService } = require('@identity-x/service-clients');
-const { get, getAsObject } = require('@base-cms/object-path');
+const { getAsObject } = require('@base-cms/object-path');
 const { stripLines } = require('@identity-x/utils');
 const { Application } = require('../../mongodb/models');
 const { SENDING_DOMAIN: sendingDomain } = require('../../env');
@@ -65,13 +65,16 @@ module.exports = async ({
 
   const appTemp = app.loginLinkTemplate || {};
   const contextTemp = context.loginLinkTemplate || {};
-  const subjectLine = contextTemp.subjectLine || appTemp.subjectLine;
-  const unverifiedVerbiage = contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage;
-  const verifiedVerbiage = contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage;
   const loginLinkTemplate = {
-    ...(subjectLine && { subjectLine }),
-    ...(unverifiedVerbiage && { unverifiedVerbiage }),
-    ...(verifiedVerbiage && { verifiedVerbiage }),
+    ...((contextTemp.subjectLine || appTemp.subjectLine)
+      && { subjectLine: contextTemp.subjectLine || appTemp.subjectLine }
+    ),
+    ...((contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage)
+      && { unverifiedVerbiage: contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage }
+    ),
+    ...((contextTemp.verifiedVerbiage || appTemp.verifiedVerbiage)
+      && { verifiedVerbiage: contextTemp.verifiedVerbiage || appTemp.verifiedVerbiage }
+    ),
   };
 
   const { subject, html, text } = templates[language] ? templates[language]({
