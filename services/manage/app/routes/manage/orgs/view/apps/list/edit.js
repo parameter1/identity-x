@@ -25,6 +25,7 @@ const query = gql`
           unverifiedVerbiage
           verifiedVerbiage
         }
+        language
       }
     }
   }
