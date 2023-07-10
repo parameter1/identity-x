@@ -1,7 +1,7 @@
 const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { tokenService, mailerService, organizationService } = require('@identity-x/service-clients');
-const { getAsObject } = require('@base-cms/object-path');
+const { get, getAsObject } = require('@base-cms/object-path');
 const { stripLines } = require('@identity-x/utils');
 const { Application } = require('../../mongodb/models');
 const { SENDING_DOMAIN: sendingDomain } = require('../../env');
@@ -34,8 +34,8 @@ module.exports = async ({
   if (!email) throw createRequiredParamError('email');
 
   const [app, user] = await Promise.all([
-    Application.findById(applicationId, ['id', 'name', 'email', 'language', 'organizationId', 'contexts']),
-    findByEmail({ applicationId, email, fields: ['id', 'email', 'domain'] }),
+    Application.findById(applicationId, ['id', 'name', 'email', 'loginLinkTemplate', 'language', 'organizationId', 'contexts']),
+    findByEmail({ applicationId, email, fields: ['id', 'email', 'verified', 'domain'] }),
   ]);
 
   if (!app) throw createError(404, `No application was found for '${applicationId}'`);
@@ -56,11 +56,23 @@ module.exports = async ({
   const addressValues = addressFields.map(field => company[field]).filter(v => v).map(stripLines);
   const supportEmail = context.email || app.email || company.supportEmail;
   const language = context.language || app.language || 'en-us';
+
   if (supportEmail) addressValues.push(supportEmail);
 
   const { token } = await createLoginToken({ applicationId, email: user.email, data: { source } });
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
+
+  const appTemp = app.loginLinkTemplate || {};
+  const contextTemp = context.loginLinkTemplate || {};
+  const subjectLine = contextTemp.subjectLine || appTemp.subjectLine;
+  const unverifiedVerbiage = contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage;
+  const verifiedVerbiage = contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage;
+  const loginLinkTemplate = {
+    ...(subjectLine && { subjectLine }),
+    ...(unverifiedVerbiage && { unverifiedVerbiage }),
+    ...(verifiedVerbiage && { verifiedVerbiage }),
+  };
 
   const { subject, html, text } = templates[language] ? templates[language]({
     sendingDomain,
@@ -68,12 +80,16 @@ module.exports = async ({
     url,
     appName,
     addressValues,
+    loginLinkTemplate,
+    user,
   }) : templates['en-us']({
     sendingDomain,
     supportEmail,
     url,
     appName,
     addressValues,
+    loginLinkTemplate,
+    user,
   });
 
   await mailerService.request('send', {
