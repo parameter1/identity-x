@@ -1,7 +1,37 @@
 const { Schema } = require('mongoose');
+const stripTags = require('striptags');
 const { organizationPlugin } = require('@identity-x/mongoose-plugins');
 const { normalizeEmail } = require('@identity-x/utils');
 const { emailValidator } = require('@identity-x/mongoose-plugins');
+
+const stripHtml = (v) => {
+  if (!v) return null;
+  return stripTags(v, ['em', 'i', 'b']);
+};
+
+const loginLinkTemplate = new Schema({
+  subjectLine: {
+    type: String,
+    set: (v) => {
+      if (!v) return null;
+      return stripHtml(v);
+    },
+  },
+  unverifiedVerbiage: {
+    type: String,
+    set: (v) => {
+      if (!v) return null;
+      return stripHtml(v);
+    },
+  },
+  verifiedVerbiage: {
+    type: String,
+    set: (v) => {
+      if (!v) return null;
+      return stripHtml(v);
+    },
+  },
+});
 
 const contextSchema = new Schema({
   name: {
@@ -20,6 +50,7 @@ const contextSchema = new Schema({
     type: String,
     trim: true,
   },
+  loginLinkTemplate: { type: loginLinkTemplate },
   language: {
     type: String,
     default: 'en-us',
@@ -44,6 +75,7 @@ const schema = new Schema({
     type: String,
     trim: true,
   },
+  loginLinkTemplate: { type: loginLinkTemplate },
   language: {
     type: String,
     default: 'en-us',

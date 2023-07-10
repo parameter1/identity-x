@@ -42,8 +42,18 @@ module.exports = {
      *
      */
     createApplication: (_, { input }, { org }) => {
-      const { name, description, email } = input;
-      const payload = { name, description, email };
+      const {
+        name,
+        description,
+        loginLinkTemplate,
+        email,
+      } = input;
+      const payload = {
+        name,
+        description,
+        loginLinkTemplate,
+        email,
+      };
       const organizationId = org.getId();
       return applicationService.request('create', {
         organizationId,

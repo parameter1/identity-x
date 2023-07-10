@@ -29,6 +29,7 @@ type Application {
   name: String! @projection
   email: String @projection
   description: String @projection
+  loginLinkTemplate: LoginLinkTemplate @projection
   language: String! @projection
   organization: Organization! @projection(localField: "organizationId")
   contexts: [ApplicationContext!]! @projection
@@ -39,7 +40,20 @@ type ApplicationContext {
   name: String!
   email: String
   description: String
+  loginLinkTemplate: LoginLinkTemplate
   language: String!
+}
+
+type LoginLinkTemplate {
+  subjectLine: String
+  unverifiedVerbiage: String
+  verifiedVerbiage: String
+}
+
+input LoginLinkTemplatePayloadInput {
+  subjectLine: String
+  unverifiedVerbiage: String
+  verifiedVerbiage: String
 }
 
 input AddApplicationContextMutationInput {
@@ -52,6 +66,7 @@ input ApplicationContextPayloadInput {
   name: String!
   email: String!
   description: String
+  loginLinkTemplate: LoginLinkTemplatePayloadInput
   language: String!
 }
 
@@ -63,6 +78,7 @@ input CreateApplicationMutationInput {
   name: String!
   email: String!
   description: String
+  loginLinkTemplate: LoginLinkTemplatePayloadInput
   language: String!
 }
 
@@ -90,6 +106,7 @@ input UpdateApplicationPayloadInput {
   name: String!
   email: String!
   description: String
+  loginLinkTemplate: LoginLinkTemplatePayloadInput
   language: String!
 }
 
