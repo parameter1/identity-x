@@ -21,7 +21,6 @@ module.exports = async ({
   const {
     aud: email,
     iss,
-    jti,
     data,
   } = await tokenService.request('verify', { sub: 'app-user-login-link', token });
 
@@ -38,9 +37,6 @@ module.exports = async ({
     iss: applicationId,
     payload: { aud: user.email },
   });
-
-  // Invalidate the login link token (but do not await)
-  tokenService.request('invalidate', { jti });
 
   // Save the login with the auth token ID (but do not await)
   AppUserLogin.create({
