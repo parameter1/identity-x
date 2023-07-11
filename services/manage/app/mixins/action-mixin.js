@@ -28,7 +28,7 @@ export default Mixin.create(LoadingMixin, {
 
   validateLoginLinkTemplateObj(loginLinkTemplate = {}){
     return {
-      ...(loginLinkTemplate.subjectLine && { subjectLine: loginLinkTemplate.subjectLine }),
+      ...(loginLinkTemplate.subject && { subject: loginLinkTemplate.subject }),
       ...(loginLinkTemplate.unverifiedVerbiage && { unverifiedVerbiage: loginLinkTemplate.unverifiedVerbiage }),
       ...(loginLinkTemplate.verifiedVerbiage && { verifiedVerbiage: loginLinkTemplate.verifiedVerbiage }),
     };

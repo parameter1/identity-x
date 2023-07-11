@@ -10,7 +10,7 @@ module.exports = ({
   user,
 } = {}) => {
   const { verified } = user;
-  const subject = loginLinkTemplate.subjectLine ? loginLinkTemplate.subjectLine : 'Your personal login link';
+  const subject = loginLinkTemplate.subject ? loginLinkTemplate.subject : 'Your personal login link';
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage ? loginLinkTemplate.unverifiedVerbiage : `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage ? loginLinkTemplate.verifiedVerbiage : `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
@@ -51,6 +51,6 @@ module.exports = ({
   You are receiving this email because a login request was made on ${appName}.
   For additional information please contact ${appName} c/o ${addressValues.join(', ')}.
     `,
-    subject: stripTags(subject, []),
+    subject,
   });
 };

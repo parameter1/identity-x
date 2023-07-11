@@ -9,7 +9,7 @@ const query = gql`
       name
       description
       loginLinkTemplate {
-        subjectLine
+        subject
         unverifiedVerbiage
         verifiedVerbiage
       }

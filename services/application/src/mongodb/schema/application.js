@@ -10,7 +10,7 @@ const stripHtml = (v) => {
 };
 
 const loginLinkTemplate = new Schema({
-  subjectLine: {
+  subject: {
     type: String,
     set: (v) => {
       if (!v) return null;

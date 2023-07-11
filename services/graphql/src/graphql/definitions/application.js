@@ -45,13 +45,13 @@ type ApplicationContext {
 }
 
 type LoginLinkTemplate {
-  subjectLine: String
+  subject: String
   unverifiedVerbiage: String
   verifiedVerbiage: String
 }
 
 input LoginLinkTemplatePayloadInput {
-  subjectLine: String
+  subject: String
   unverifiedVerbiage: String
   verifiedVerbiage: String
 }

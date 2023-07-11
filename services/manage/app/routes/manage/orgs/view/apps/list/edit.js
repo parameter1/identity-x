@@ -10,7 +10,7 @@ const query = gql`
       email
       description
       loginLinkTemplate {
-        subjectLine
+        subject
         unverifiedVerbiage
         verifiedVerbiage
       }
@@ -21,7 +21,7 @@ const query = gql`
         email
         description
         loginLinkTemplate {
-          subjectLine
+          subject
           unverifiedVerbiage
           verifiedVerbiage
         }

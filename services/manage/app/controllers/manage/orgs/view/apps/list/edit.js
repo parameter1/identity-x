@@ -11,7 +11,7 @@ const mutation = gql`
       name
       email
       loginLinkTemplate {
-        subjectLine
+        subject
         unverifiedVerbiage
         verifiedVerbiage
       }
