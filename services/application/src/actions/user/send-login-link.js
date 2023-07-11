@@ -63,18 +63,9 @@ module.exports = async ({
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
-  const appTemp = app.loginLinkTemplate || {};
-  const contextTemp = context.loginLinkTemplate || {};
   const loginLinkTemplate = {
-    ...((contextTemp.subjectLine || appTemp.subjectLine)
-      && { subjectLine: contextTemp.subjectLine || appTemp.subjectLine }
-    ),
-    ...((contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage)
-      && { unverifiedVerbiage: contextTemp.unverifiedVerbiage || appTemp.unverifiedVerbiage }
-    ),
-    ...((contextTemp.verifiedVerbiage || appTemp.verifiedVerbiage)
-      && { verifiedVerbiage: contextTemp.verifiedVerbiage || appTemp.verifiedVerbiage }
-    ),
+    ...app.loginLinkTemplate.toObject(),
+    ...context.loginLinkTemplate.toObject(),
   };
 
   const { subject, html, text } = templates[language] ? templates[language]({

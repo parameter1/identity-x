@@ -50,7 +50,7 @@ const contextSchema = new Schema({
     type: String,
     trim: true,
   },
-  loginLinkTemplate: { type: loginLinkTemplate },
+  loginLinkTemplate: { type: loginLinkTemplate, get: v => (v || {}) },
   language: {
     type: String,
     default: 'en-us',
@@ -75,7 +75,7 @@ const schema = new Schema({
     type: String,
     trim: true,
   },
-  loginLinkTemplate: { type: loginLinkTemplate },
+  loginLinkTemplate: { type: loginLinkTemplate, get: v => (v || {}) },
   language: {
     type: String,
     default: 'en-us',
