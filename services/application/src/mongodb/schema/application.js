@@ -12,14 +12,17 @@ const stripHtml = (v) => {
 const loginLinkTemplate = new Schema({
   subject: {
     type: String,
+    trim: true,
     set: stripHtml,
   },
   unverifiedVerbiage: {
     type: String,
+    trim: true,
     set: stripHtml,
   },
   verifiedVerbiage: {
     type: String,
+    trim: true,
     set: stripHtml,
   },
 });
