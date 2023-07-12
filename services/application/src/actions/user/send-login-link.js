@@ -48,8 +48,8 @@ module.exports = async ({
   if (!org) throw createError(404, `No organization was found for '${app.organizationId}'`);
   const company = getAsObject(org, 'company');
 
-  // Load the active context
-  const context = app.contexts.id(appContextId) || {};
+  // Load the active context & ensure fallback object has toObject function like mongoose object
+  const context = app.contexts.id(appContextId) || { toObject: () => ({}) };
   const appName = context.name || app.name;
 
   const addressFields = ['name', 'streetAddress', 'city', 'regionName', 'postalCode'];
