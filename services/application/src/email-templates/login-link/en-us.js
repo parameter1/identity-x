@@ -10,9 +10,9 @@ module.exports = ({
   user,
 } = {}) => {
   const { verified } = user;
-  const subject = loginLinkTemplate.subject ? loginLinkTemplate.subject : 'Your personal login link';
-  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage ? loginLinkTemplate.unverifiedVerbiage : `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
-  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage ? loginLinkTemplate.verifiedVerbiage : `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
+  const subject = loginLinkTemplate.subject || 'Your personal login link';
+  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
+  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
   return ({
     html: `
@@ -38,18 +38,18 @@ module.exports = ({
     </html>
     `,
     text: `
-  ${stripTags(verbiage, [])}
+${stripTags(verbiage, [])}
 
-  Login to ${appName} by visiting this link:
-  ${url}
+Login to ${appName} by visiting this link:
+${url}
 
-  If you didn't request this link, simply ignore this email or contact our support staff at ${supportEmail}.
+If you didn't request this link, simply ignore this email or contact our support staff at ${supportEmail}.
 
-  -------------------------
+-------------------------
 
-  Please add ${sendingDomain} to your address book or safe sender list to ensure you receive future emails from us.
-  You are receiving this email because a login request was made on ${appName}.
-  For additional information please contact ${appName} c/o ${addressValues.join(', ')}.
+Please add ${sendingDomain} to your address book or safe sender list to ensure you receive future emails from us.
+You are receiving this email because a login request was made on ${appName}.
+For additional information please contact ${appName} c/o ${addressValues.join(', ')}.
     `,
     subject,
   });

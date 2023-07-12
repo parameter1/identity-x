@@ -10,9 +10,9 @@ module.exports = ({
   user,
 } = {}) => {
   const { verified } = user;
-  const subject = loginLinkTemplate.subject ? loginLinkTemplate.subject : 'Su enlace de inicio de sesión personal';
-  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage ? loginLinkTemplate.unverifiedVerbiage : `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
-  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage ? loginLinkTemplate.verifiedVerbiage : `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
+  const subject = loginLinkTemplate.subject || 'Su enlace de inicio de sesión personal';
+  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
+  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
   return ({
     html: `
