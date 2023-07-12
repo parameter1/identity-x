@@ -9,12 +9,23 @@ const query = gql`
       name
       email
       description
+      loginLinkTemplate {
+        subject
+        unverifiedVerbiage
+        verifiedVerbiage
+      }
       language
       contexts {
         id
         name
         email
         description
+        loginLinkTemplate {
+          subject
+          unverifiedVerbiage
+          verifiedVerbiage
+        }
+        language
       }
     }
   }

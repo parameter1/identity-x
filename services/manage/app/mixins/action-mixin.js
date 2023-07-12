@@ -26,6 +26,14 @@ export default Mixin.create(LoadingMixin, {
     this.hideLoading();
   },
 
+  formatLoginLinkTemplateInput({ subject, unverifiedVerbiage, verifiedVerbiage } = {}){
+    return {
+      subject,
+      unverifiedVerbiage,
+      verifiedVerbiage,
+    };
+  },
+
   sendEventAction(name, ...args) {
     const fn = this.get(name);
     if (typeof fn === 'function') return fn(...args);
