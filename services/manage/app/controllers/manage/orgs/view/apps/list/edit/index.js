@@ -32,14 +32,14 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
           id,
           name,
           description,
-          loginLinkTemplate = {},
+          loginLinkTemplate,
           email,
           language
         } = this.get('model');
         const payload = {
           name,
           description,
-          loginLinkTemplate: this.validateLoginLinkTemplateObj(loginLinkTemplate),
+          loginLinkTemplate: this.formatLoginLinkTemplateInput(loginLinkTemplate),
           email,
           language,
         };

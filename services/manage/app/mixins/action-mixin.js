@@ -26,11 +26,11 @@ export default Mixin.create(LoadingMixin, {
     this.hideLoading();
   },
 
-  validateLoginLinkTemplateObj(loginLinkTemplate = {}){
+  formatLoginLinkTemplateInput({ subject, unverifiedVerbiage, verifiedVerbiage } = {}){
     return {
-      ...(loginLinkTemplate.subject && { subject: loginLinkTemplate.subject }),
-      ...(loginLinkTemplate.unverifiedVerbiage && { unverifiedVerbiage: loginLinkTemplate.unverifiedVerbiage }),
-      ...(loginLinkTemplate.verifiedVerbiage && { verifiedVerbiage: loginLinkTemplate.verifiedVerbiage }),
+      subject,
+      unverifiedVerbiage,
+      verifiedVerbiage,
     };
   },
 

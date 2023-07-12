@@ -42,7 +42,7 @@ export default Controller.extend(ActionMixin, OrgQueryMixin, {
         const payload = {
           name,
           description,
-          loginLinkTemplate: this.validateLoginLinkTemplateObj(loginLinkTemplate),
+          loginLinkTemplate: this.formatLoginLinkTemplateInput(loginLinkTemplate),
           email,
           language,
         };
