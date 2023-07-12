@@ -49,7 +49,7 @@ module.exports = async ({
   const company = getAsObject(org, 'company');
 
   // Load the active context & ensure fallback object has toObject function like mongoose object
-  const context = app.contexts.id(appContextId) || { toObject: () => ({}) };
+  const context = app.contexts.id(appContextId) || {};
   const appName = context.name || app.name;
 
   const addressFields = ['name', 'streetAddress', 'city', 'regionName', 'postalCode'];
@@ -63,10 +63,13 @@ module.exports = async ({
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
-  const loginLinkTemplate = {
-    ...app.loginLinkTemplate.toObject(),
-    ...context.loginLinkTemplate.toObject(),
-  };
+  const loginLinkTemplate = ['subject', 'unverifiedVerbiage', 'verifiedVerbiage'].reduce((o, key) => {
+    const contextValue = context.loginLinkTemplate ? context.loginLinkTemplate[key] : null;
+    return {
+      ...o,
+      [key]: contextValue || app.loginLinkTemplate[key],
+    };
+  }, {});
 
   const { subject, html, text } = templates[language] ? templates[language]({
     sendingDomain,
