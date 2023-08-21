@@ -2,6 +2,7 @@ const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { handleError } = require('@identity-x/utils').mongoose;
 const { isObject } = require('@base-cms/utils');
+const cheerio = require('cheerio');
 
 const createStream = require('../comment-stream/create');
 
@@ -40,12 +41,20 @@ module.exports = async ({
   const [streamData] = await Promise.all(promises);
   if (streamData.archived) throw createError(400, 'This comment stream has been archived and no longer accepts posts.');
 
+  const $ = cheerio.load(body);
+
+  const approved = !$('a, link').length;
+  $('a, link').each(function fn() {
+    this.attribs.rel = 'nofollow ugc';
+  });
+  const processedBody = $.html();
+
   const comment = new Comment({
     applicationId: application._id,
     streamId: streamData._id,
     appUserId: user._id,
-    body,
-    approved: true, // @todo determine when this should be auto-approved.
+    body: processedBody,
+    approved, // @todo determine when this should be auto-approved.
     banned: user.banned,
     ipAddress: req.headers['x-forward-for'] || req.connection.remoteAddress,
   });
