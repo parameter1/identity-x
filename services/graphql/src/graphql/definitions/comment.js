@@ -41,9 +41,9 @@ type Comment {
   approved: Boolean! @projection
   "Whether this comment has been banned. This is automatically set based on the banned status of the posting user."
   banned: Boolean! @projection
-  "Whether this comment has been deleted."
-  flagged: Boolean! @projection
   "Whether this comment has been flagged by a user."
+  flagged: Boolean! @projection
+  "Whether this comment has been deleted."
   deleted: Boolean! @projection
   "The IP address at the time of posting."
   ipAddress: String @projection
