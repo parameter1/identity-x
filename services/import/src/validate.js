@@ -341,6 +341,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'M�xico D.F.',
             'D.F',
             'Federal District of Mexico',
+            'Colonia Doctores',
           ].includes(regionNameTrimmed) && { regionName: 'Ciudad de México' }),
           ...([
             'Michoacan',
@@ -382,12 +383,15 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'guadalajara',
             'ZAPOPAN',
             'Guadalajara',
+            'Ouest',
           ].includes(regionNameTrimmed) && { regionName: 'Jalisco' }),
           ...([
             'SONORA',
             'HERMOSILLO',
             'SON',
             'Hermosillo',
+            'Ciudad Obregón',
+            'OBREGON',
           ].includes(regionNameTrimmed) && { regionName: 'Sonora' }),
           ...(regionNameTrimmed === 'chihuahua' && { regionName: 'Chihuahua' }),
           ...([
