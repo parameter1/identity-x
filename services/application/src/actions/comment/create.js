@@ -43,7 +43,7 @@ module.exports = async ({
 
   const $ = cheerio.load(body);
 
-  const approved = !$('a, link').length;
+  const approved = !$('a, link').length && !body.match(/http(s?):\/\//);
   $('a, link').each(function fn() {
     this.attribs.rel = 'nofollow ugc';
   });
