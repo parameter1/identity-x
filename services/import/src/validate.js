@@ -246,6 +246,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
         ...(record.countryName === 'Hong Kong SAR China' && { countryName: 'Hong Kong' }),
         ...(record.countryName === 'Falkland Islands' && { countryName: 'Falkland Islands (Malvinas)' }),
         ...(record.countryName === 'Western Samoa' && { countryName: 'Samoa' }),
+        ...(record.countryName === 'Republic of San Marino' && { countryName: 'San Marino' }),
 
 
         // Regions
@@ -444,6 +445,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
             'Baja Calif',
             'BC',
             'BAJA CALIFORNIA SUR',
+            'bc',
           ].includes(regionNameTrimmed) && { regionName: 'Baja California' }),
           ...([
             'Coahuila',
@@ -521,6 +523,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
           'French Antilles',
           // Someone's name is in the wrong field
           'Diego Garcia',
+          '87-100',
         ].includes(record.countryName) && {
           countryName: undefined,
         }),
@@ -590,6 +593,7 @@ module.exports = async (records = [], applicationId, limit = 10, errorOnBadAnswe
           'i',
           'no',
           'T\'ai-wan',
+          'I am not in the U.S. or CANADA',
         ].includes(regionNameTrimmed) && {
           regionName: undefined,
         }),
