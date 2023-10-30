@@ -196,6 +196,21 @@ module.exports = {
     },
 
     /**
+     *
+     */
+    appUserByExternalId: (_, { input }, { app }, info) => {
+      const { identifier, namespace } = input;
+      const applicationId = app.getId();
+      const fields = typeProjection(info);
+      return applicationService.request('user.findByExternalIdForApp', {
+        applicationId,
+        identifier,
+        namespace,
+        fields,
+      });
+    },
+
+    /**
      * @todo This should be secured, otherwise anyone could guess by email
      */
     appUser: (_, { input }, { app }, info) => {

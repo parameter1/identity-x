@@ -12,6 +12,7 @@ const create = require('./create');
 const deleteForOrg = require('./delete-for-org');
 const externalId = require('./external-id');
 const findByEmail = require('./find-by-email');
+const findByExternalIdForApp = require('./find-by-external-id');
 const impersonate = require('./impersonate');
 const login = require('./login');
 const logout = require('./logout');
@@ -36,6 +37,7 @@ module.exports = {
   findByEmail,
   findById: params => findById(AppUser, params),
   findByIdForApp: params => findByIdForApp(AppUser, params),
+  findByExternalIdForApp,
   listForApp: params => listForApp(AppUser, params),
   impersonate,
   login,
