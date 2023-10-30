@@ -6,6 +6,7 @@ extend type Query {
   appUsers(input: AppUsersQueryInput!): AppUserConnection! @requiresAppRole
   appUser(input: AppUserQueryInput = {}): AppUser @requiresApp # must be public
   appUserById(input: AppUserByIdQueryInput!): AppUser @requiresAppRole
+  appUserByExternalId(input: AppUserByExternalIdQueryInput!): AppUser @requiresAppRole
   activeAppUser: AppUser @requiresAuth(type: AppUser)
   activeAppContext: AppContext! @requiresApp # must be public
   checkContentAccess(input: CheckContentAccessQueryInput!): AppContentAccess! @requiresApp # must be public
@@ -231,6 +232,13 @@ input AppUserQueryInput {
 
 input AppUserByIdQueryInput {
   id: String!
+}
+
+input AppUserByExternalIdQueryInput {
+  "The external identifier input."
+  identifier: AppUserExternalIdentifierInput!
+  "The external namespace input."
+  namespace: AppUserExternalNamespaceInput!
 }
 
 input AppUsersQueryInput {
