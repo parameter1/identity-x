@@ -1,0 +1,14 @@
+<ListCard>
+  <div class="card-body">
+    <h2 class="card-title">{{cohort.name}}</h2>
+    {{#if cohort.description}}
+      <p class="card-text">{{cohort.description}}</p>
+    {{/if}}
+    <Team::Status @value={{cohort.active}} />
+  </div>
+  <div class="card-footer">
+    {{#link-to "manage.orgs.view.apps.view.cohorts.edit" cohort.id class="btn btn-primary" role="button"}}
+      {{entypo-icon "edit" class="mr-1"}} Modify
+    {{/link-to}}
+  </div>
+</ListCard>
