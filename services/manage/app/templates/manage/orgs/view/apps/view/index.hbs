@@ -13,22 +13,22 @@
   </ListCard>
 
   <ListCard>
-    {{#link-to "manage.orgs.view.apps.view.teams"}}
+    {{#link-to "manage.orgs.view.apps.view.cohorts"}}
       <div class="card-body">
-        <h2 class="card-title"><Team::Icon /> Teams</h2>
+        <h2 class="card-title"><Cohort::Icon /> Cohorts</h2>
         <p class="card-text">
-          Manage your app's teams. Teams allow access for users based on direct membership, email address domain, or an accessing IP address.
+          Manage your app's cohorts. Cohorts define user segments based on responses to custom questions and answers.
         </p>
       </div>
     {{/link-to}}
   </ListCard>
 
   <ListCard>
-    {{#link-to "manage.orgs.view.apps.view.users"}}
+    {{#link-to "manage.orgs.view.apps.view.comments"}}
       <div class="card-body">
-        <h2 class="card-title"><AppUser::Icon /> Users</h2>
+        <h2 class="card-title"><Comment::Icon /> Comments</h2>
         <p class="card-text">
-          Manage your app's users. Create new users or modify an existing user's teams and/or access levels.
+          Manage your app's comments. Moderate posts, manage comment streams and control user shadow-ban settings.
         </p>
       </div>
     {{/link-to}}
@@ -46,11 +46,22 @@
   </ListCard>
 
   <ListCard>
-    {{#link-to "manage.orgs.view.apps.view.comments"}}
+    {{#link-to "manage.orgs.view.apps.view.teams"}}
       <div class="card-body">
-        <h2 class="card-title"><Comment::Icon /> Comments</h2>
+        <h2 class="card-title"><Team::Icon /> Teams</h2>
         <p class="card-text">
-          Manage your app's comments. Moderate posts, manage comment streams and control user shadow-ban settings.
+          Manage your app's teams. Teams allow access for users based on direct membership, email address domain, or an accessing IP address.
+        </p>
+      </div>
+    {{/link-to}}
+  </ListCard>
+
+  <ListCard>
+    {{#link-to "manage.orgs.view.apps.view.users"}}
+      <div class="card-body">
+        <h2 class="card-title"><AppUser::Icon /> Users</h2>
+        <p class="card-text">
+          Manage your app's users. Create new users or modify an existing user's teams and/or access levels.
         </p>
       </div>
     {{/link-to}}

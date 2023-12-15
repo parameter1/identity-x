@@ -46,6 +46,10 @@ Router.map(function() {
               this.route('create');
               this.route('edit', { path: ':access_level_id' });
             });
+            this.route('cohorts', function() {
+              this.route('create');
+              this.route('edit', { path: ':cohort_id' });
+            });
             this.route('teams', function() {
               this.route('create');
               this.route('edit', { path: ':team_id' });
