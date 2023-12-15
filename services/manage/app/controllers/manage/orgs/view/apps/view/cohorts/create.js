@@ -23,11 +23,13 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           name,
           active,
           description,
+          rules,
         } = this.get('model');
         const input = {
           name,
           active,
           description,
+          rules,
         };
         const variables = { input };
         const refetchQueries = ['AppCohorts'];
