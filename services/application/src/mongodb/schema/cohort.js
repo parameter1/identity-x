@@ -2,11 +2,7 @@ const { Schema } = require('mongoose');
 const { applicationPlugin } = require('@identity-x/mongoose-plugins');
 
 const conditionSchema = new Schema({
-  description: {
-    type: String,
-    trim: true,
-  },
-  question: {
+  field: {
     type: Schema.Types.ObjectId,
     required: true,
   },

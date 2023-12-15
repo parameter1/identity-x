@@ -6,5 +6,19 @@ export default gql`
     name
     active
     description
+    rules {
+      id
+      conditions {
+        id
+        field {
+          id
+          name
+        }
+        answer {
+          id
+          label
+        }
+      }
+    }
   }
 `;

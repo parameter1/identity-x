@@ -34,7 +34,12 @@ type Cohort {
 
 type CohortRule {
   id: String! @projection(localField: "_id")
-  question: SelectField!
+  conditions: [CohortRuleCondition!]!
+}
+
+type CohortRuleCondition {
+  id: String! @projection(localField: "_id")
+  field: SelectField!
   answer: SelectFieldOption!
 }
 
