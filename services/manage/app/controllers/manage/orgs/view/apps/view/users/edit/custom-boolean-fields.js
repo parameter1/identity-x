@@ -26,10 +26,10 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
         const id = this.get('model.id');
         const input = {
           id,
-          answers: this.get('model.customBooleanFieldAnswers').map((answer) => {
+          answers: this.get('model.customBooleanFieldAnswers').reduce((array, answer) => {
             const { value, field } = answer;
-            return { fieldId: field.id, value };
-          })
+            return typeof value === 'boolean' ? [...array, { fieldId: field.id, value  }] : array;
+          }, [])
         };
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateAppUserCustomBooleanAnswers');
