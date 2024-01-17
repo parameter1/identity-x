@@ -28,7 +28,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           id,
           answers: this.get('model.customBooleanFieldAnswers').reduce((array, answer) => {
             const { value, field } = answer;
-            return typeof value === 'boolean' ? [...array, { fieldId: field.id, value  }] : array;
+            return typeof value === 'boolean' ? [...array, { fieldId: field.id, value }] : array;
           }, [])
         };
         const variables = { input };
