@@ -90,7 +90,7 @@ module.exports = {
      */
     choices: (parent) => {
       const { groups, options } = parent;
-      return groups.reduce((arr, group) => ([
+      return (groups || []).reduce((arr, group) => ([
         ...arr.filter(o => !group.optionIds.includes(o._id)),
         // Pass the options through to the group
         { ...group, options },

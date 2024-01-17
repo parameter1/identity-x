@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  fragment CohortListFragment on Cohort {
+  fragment SegmentListFragment on Segment {
     id
     name
     active

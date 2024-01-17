@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 import { inject } from '@ember/service';
 
 const mutation = gql`
-  mutation AppCohortCreate($input: CreateCohortMutationInput!) {
-    createCohort(input: $input) {
+  mutation AppSegmentCreate($input: CreateSegmentMutationInput!) {
+    createSegment(input: $input) {
       id
     }
   }
@@ -32,8 +32,8 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
           rules,
         };
         const variables = { input };
-        const refetchQueries = ['AppCohorts'];
-        await this.mutate({ mutation, variables, refetchQueries }, 'createCohort');
+        const refetchQueries = ['AppSegments'];
+        await this.mutate({ mutation, variables, refetchQueries }, 'createSegment');
         await closeModal();
       } catch (e) {
         this.errorNotifier.show(e);

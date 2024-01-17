@@ -5,20 +5,20 @@ const typeProjection = require('../utils/type-projection');
 const { isArray } = Array;
 
 module.exports = {
-  Cohort: {
-    id: cohort => cohort._id,
+  Segment: {
+    id: segment => segment._id,
     rules: ({ rules }) => {
       if (!isArray(rules) || !rules.length) return [];
       return rules;
     },
   },
 
-  CohortRule: {
+  SegmentRule: {
     id: rule => rule._id,
     conditions: async ({ conditions }) => {
       if (!isArray(conditions) || !conditions.length) return [];
       const ids = [...new Set(conditions.map(c => c.field))];
-      const found = await applicationService.request('cohort.fieldsByIds', { ids });
+      const found = await applicationService.request('segment.fieldsByIds', { ids });
       const fieldMap = found.reduce((map, field) => {
         map.set(field._id, field);
         return map;
@@ -39,11 +39,11 @@ module.exports = {
     /**
      *
      */
-    cohorts: (_, { input }, { app }, info) => {
+    segments: (_, { input }, { app }, info) => {
       const id = app.getId();
       const { sort, pagination } = input;
       const fields = connectionProjection(info);
-      return applicationService.request('cohort.listForApp', {
+      return applicationService.request('segment.listForApp', {
         id,
         sort,
         pagination,
@@ -51,7 +51,7 @@ module.exports = {
       });
     },
 
-    matchCohorts: (_, { input }, { app }, info) => {
+    matchSegments: (_, { input }, { app }, info) => {
       const applicationId = app.getId();
 
       const fields = connectionProjection(info);
@@ -64,7 +64,7 @@ module.exports = {
         excludeIds,
       } = input;
 
-      return applicationService.request('cohort.matchForApp', {
+      return applicationService.request('segment.matchForApp', {
         applicationId,
         field,
         phrase,
@@ -76,10 +76,10 @@ module.exports = {
       });
     },
 
-    cohort: (_, { input }, ctx, info) => {
+    segment: (_, { input }, ctx, info) => {
       const { id } = input;
       const fields = typeProjection(info);
-      return applicationService.request('cohort.findById', { id, fields });
+      return applicationService.request('segment.findById', { id, fields });
     },
   },
 
@@ -87,10 +87,10 @@ module.exports = {
     /**
      *
      */
-    createCohort: (_, { input }, { app }) => {
+    createSegment: (_, { input }, { app }) => {
       const applicationId = app.getId();
       // const { rules } = input;
-      return applicationService.request('cohort.create', {
+      return applicationService.request('segment.create', {
         applicationId,
         payload: {
           ...input,
@@ -102,11 +102,11 @@ module.exports = {
     /**
      *
      */
-    updateCohort: (_, { input }, { app }) => {
+    updateSegment: (_, { input }, { app }) => {
       const applicationId = app.getId();
       const { id, payload } = input;
       // const { rules } = payload;
-      return applicationService.request('cohort.updateOne', {
+      return applicationService.request('segment.updateOne', {
         id,
         applicationId,
         payload: {

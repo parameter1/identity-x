@@ -1,5 +1,5 @@
 <h1 class="mb-4">
-  <Cohort::Icon /> Cohorts
+  <Segment::Icon /> Segments
   <span class="text-muted">({{format-number this.model.totalCount "0,0"}})</span>
 </h1>
 
@@ -26,9 +26,9 @@
     as |fetch|
   >
     {{#each fetch.nodes as |node|}}
-      <Cohort::Card @cohort={{node}} />
+      <Segment::Card @segment={{node}} />
     {{else}}
-      <p class="col">No cohorts were found.</p>
+      <p class="col">No segments were found.</p>
     {{/each}}
 
     {{#if fetch.hasNextPage}}
@@ -42,7 +42,7 @@
 </div>
 
 <aside class="footer-controls left">
-  <Button::Create @routeName="manage.orgs.view.apps.view.cohorts.create" @title="Create New Cohort" />
+  <Button::Create @routeName="manage.orgs.view.apps.view.segments.create" @title="Create New Segment" />
 </aside>
 
 {{outlet}}

@@ -3,12 +3,12 @@ import ActionMixin from '@identity-x/manage/mixins/action-mixin';
 import AppQueryMixin from '@identity-x/manage/mixins/app-query';
 import gql from 'graphql-tag';
 import { inject } from '@ember/service';
-import fragment from '@identity-x/manage/graphql/fragments/cohort-list';
+import fragment from '@identity-x/manage/graphql/fragments/segment-list';
 
 const mutation = gql`
-  mutation AppCohortEdit($input: UpdateCohortMutationInput!) {
-    updateCohort(input: $input) {
-      ...CohortListFragment
+  mutation AppSegmentEdit($input: UpdateSegmentMutationInput!) {
+    updateSegment(input: $input) {
+      ...SegmentListFragment
     }
   }
   ${fragment}
@@ -37,7 +37,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
         };
         const input = { id, payload };
         const variables = { input };
-        await this.mutate({ mutation, variables }, 'updateCohort');
+        await this.mutate({ mutation, variables }, 'updateSegment');
         await closeModal();
       } catch (e) {
         this.errorNotifier.show(e);

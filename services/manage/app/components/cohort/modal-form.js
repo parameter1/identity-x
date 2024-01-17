@@ -19,7 +19,7 @@ export default Component.extend({
 
   actions: {
     returnToList() {
-      return this.router.transitionTo('manage.orgs.view.apps.view.cohorts');
+      return this.router.transitionTo('manage.orgs.view.apps.view.segments');
     },
   },
 });

@@ -1,0 +1,14 @@
+<ListCard>
+  <div class="card-body">
+    <h2 class="card-title">{{segment.name}}</h2>
+    {{#if segment.description}}
+      <p class="card-text">{{segment.description}}</p>
+    {{/if}}
+    <Team::Status @value={{segment.active}} />
+  </div>
+  <div class="card-footer">
+    {{#link-to "manage.orgs.view.apps.view.segments.edit" segment.id class="btn btn-primary" role="button"}}
+      {{entypo-icon "edit" class="mr-1"}} Modify
+    {{/link-to}}
+  </div>
+</ListCard>

@@ -2,7 +2,7 @@ const gql = require('graphql-tag');
 const accessLevel = require('./access-level');
 const appUser = require('./app-user');
 const application = require('./application');
-const cohort = require('./cohort');
+const segment = require('./segment');
 const comment = require('./comment');
 const commentStream = require('./comment-stream');
 const field = require('./field');
@@ -71,7 +71,7 @@ input PaginationInput {
 ${accessLevel}
 ${appUser}
 ${application}
-${cohort}
+${segment}
 ${comment}
 ${commentStream}
 ${field}

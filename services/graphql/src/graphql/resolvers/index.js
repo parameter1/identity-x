@@ -4,7 +4,7 @@ const deepAssign = require('deep-assign');
 const accessLevel = require('./access-level');
 const appUser = require('./app-user');
 const application = require('./application');
-const cohort = require('./cohort');
+const segment = require('./segment');
 const comment = require('./comment');
 const commentStream = require('./comment-stream');
 const field = require('./field');
@@ -18,7 +18,7 @@ module.exports = deepAssign(
   accessLevel,
   appUser,
   application,
-  cohort,
+  segment,
   comment,
   commentStream,
   field,

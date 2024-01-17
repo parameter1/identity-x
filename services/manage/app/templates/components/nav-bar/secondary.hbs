@@ -8,11 +8,6 @@
       {{/link-to}}
     </li>
     <li class="nav-item">
-      {{#link-to "manage.orgs.view.apps.view.cohorts" context.appId class="nav-link"}}
-        <NavBar::Item @icon="users">Cohorts</NavBar::Item>
-      {{/link-to}}
-    </li>
-    <li class="nav-item">
       {{#link-to "manage.orgs.view.apps.view.comments" context.appId class="nav-link"}}
         <NavBar::Item @icon="message">Comments</NavBar::Item>
       {{/link-to}}
@@ -30,6 +25,11 @@
     <li class="nav-item">
       {{#link-to "manage.orgs.view.apps.view.users" context.appId class="nav-link"}}
         <NavBar::Item @icon="man">Users</NavBar::Item>
+      {{/link-to}}
+    </li>
+    <li class="nav-item">
+      {{#link-to "manage.orgs.view.apps.view.segments" context.appId class="nav-link"}}
+        <NavBar::Item @icon="users">User Segments</NavBar::Item>
       {{/link-to}}
     </li>
   {{/if}}

@@ -4,5 +4,5 @@ import { computed } from '@ember/object';
 export default Component.extend({
   tagName: '',
 
-  rules: computed.mapBy('cohort.rules', 'name'),
+  rules: computed.mapBy('segment.rules', 'name'),
 });

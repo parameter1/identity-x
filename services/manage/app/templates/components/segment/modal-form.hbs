@@ -17,16 +17,16 @@
       <div class="row">
         <div class="col">
           <div class="form-group">
-            <FormElements::Label @for="cohort.name" @required={{true}}>Name</FormElements::Label>
-            <Input @id="cohort.name" @type="text" @required={{true}} @autofocus={{true}} @class="form-control" @value={{this.model.name}} />
+            <FormElements::Label @for="segment.name" @required={{true}}>Name</FormElements::Label>
+            <Input @id="segment.name" @type="text" @required={{true}} @autofocus={{true}} @class="form-control" @value={{this.model.name}} />
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <div class="form-group">
-            <FormElements::Label @for="cohort.description">Description</FormElements::Label>
-            <Textarea @id="cohort.description" @class="form-control" @value={{this.model.description}} @rows={{3}} />
+            <FormElements::Label @for="segment.description">Description</FormElements::Label>
+            <Textarea @id="segment.description" @class="form-control" @value={{this.model.description}} @rows={{3}} />
           </div>
         </div>
       </div>

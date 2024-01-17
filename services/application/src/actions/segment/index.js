@@ -7,15 +7,15 @@ const {
 const create = require('./create');
 const fieldsByIds = require('./fields-by-ids');
 const updateOne = require('./update-one');
-const Cohort = require('../../mongodb/models/cohort');
+const Segment = require('../../mongodb/models/segment');
 const Field = require('../../mongodb/models/field');
 
 module.exports = {
   create,
-  find: ({ query, fields }) => find(Cohort, { query, fields }),
-  findById: ({ id, fields }) => findById(Cohort, { id, fields }),
+  find: ({ query, fields }) => find(Segment, { query, fields }),
+  findById: ({ id, fields }) => findById(Segment, { id, fields }),
   fieldsByIds: ({ ids, fields }) => fieldsByIds(Field, { ids, fields }),
-  listForApp: params => listForApp(Cohort, params),
-  matchForApp: params => matchForApp(Cohort, params),
+  listForApp: params => listForApp(Segment, params),
+  matchForApp: params => matchForApp(Segment, params),
   updateOne,
 };
