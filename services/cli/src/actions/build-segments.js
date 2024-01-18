@@ -10,6 +10,6 @@ module.exports = async () => {
   });
   await eachSeries(segments, async (segment) => {
     log(`Generating segment membership for ${segment.applicationId}/${segment.name}.`);
-    await applicationService.request('segment.generateMembership', segment);
+    await applicationService.request('segment.generateMembership', { segmentId: segment._id });
   });
 };

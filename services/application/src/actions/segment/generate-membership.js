@@ -35,14 +35,16 @@ module.exports = async ({ segmentId } = {}) => {
       const conditions = Array.isArray(rule.conditions) ? [...rule.conditions] : [];
       return [
         ...arr,
-        ...conditions.map(({ field, answer }) => ({
-          customSelectFieldAnswers: {
-            $elemMatch: {
-              _id: new ObjectId(field),
-              values: new ObjectId(answer),
+        {
+          $and: conditions.map(({ field, answer }) => ({
+            customSelectFieldAnswers: {
+              $elemMatch: {
+                _id: new ObjectId(field),
+                values: new ObjectId(answer),
+              },
             },
-          },
-        })),
+          })),
+        },
       ];
     }, []);
     if ($or.length) {
@@ -52,7 +54,6 @@ module.exports = async ({ segmentId } = {}) => {
           update: { $addToSet: { segments: sid } },
         },
       }]);
-      console.log(modifiedCount);
       return {
         status: 'ok',
         updated: modifiedCount,
