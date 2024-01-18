@@ -208,6 +208,25 @@ schema.pre('save', async function updateComments() {
   }
 });
 
+schema.pre('save', async function setSegmentMembership() {
+  const segments = await connection.model('segment').find({ active: true, applicationId: this.applicationId });
+  // Regenerate segment memberships
+  this.segments = segments.reduce((arr, segment) => {
+    const rules = segment.rules || [];
+    rules.forEach((rule) => {
+      const conditions = rule.conditions || [];
+      if (conditions.every(({ field, answer }) => {
+        const f = this.customSelectFieldAnswers.find(a => `${a._id}` === `${field}`);
+        if (!f) return false;
+        return (f.values || []).includes(`${answer}`);
+      })) {
+        arr.push(segment._id);
+      }
+    });
+    return arr;
+  }, []);
+});
+
 schema.index({ applicationId: 1, email: 1 }, { unique: true });
 schema.index({ email: 1, _id: 1 }, { collation: { locale: 'en_US' } });
 schema.index({ updatedAt: 1, _id: 1 });
