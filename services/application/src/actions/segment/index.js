@@ -7,6 +7,7 @@ const {
 const create = require('./create');
 const fieldsByIds = require('./fields-by-ids');
 const updateOne = require('./update-one');
+const generateMembership = require('./generate-membership');
 const Segment = require('../../mongodb/models/segment');
 const Field = require('../../mongodb/models/field');
 
@@ -18,4 +19,5 @@ module.exports = {
   listForApp: params => listForApp(Segment, params),
   matchForApp: params => matchForApp(Segment, params),
   updateOne,
+  generateMembership,
 };

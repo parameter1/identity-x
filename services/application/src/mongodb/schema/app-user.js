@@ -184,6 +184,10 @@ const schema = new Schema({
     type: Object,
     default: () => ({}),
   },
+  segments: {
+    type: [Schema.Types.ObjectId],
+    default: () => [],
+  },
 }, { timestamps: true });
 
 schema.plugin(applicationPlugin, { collateWhen: ['email'] });
