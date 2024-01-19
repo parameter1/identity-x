@@ -37,7 +37,6 @@ const schema = new Schema({
     type: [ruleSchema],
     default: () => [],
   },
-  photoURL: String,
 }, { timestamps: true });
 
 schema.plugin(applicationPlugin, { collateWhen: ['name'] });

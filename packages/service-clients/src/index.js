@@ -12,6 +12,12 @@ const onCreateError = ({
   return createError(res.status, `${message}`);
 };
 
+/**
+ * @typedef ServiceClient
+ * @prop {Function<Promise>} request
+ *
+ * @returns {Object.<string, ServiceClient>}
+ */
 module.exports = services.reduce((o, { key, name }) => {
   const varName = createEnvVar(key);
   const url = env[varName];

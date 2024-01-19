@@ -25,9 +25,7 @@ type Segment {
   name: String! @projection
   description: String @projection
   active: Boolean @projection
-  # deprecated
   rules: [SegmentRule!]! @projection(localField: "rules")
-  photoURL: String @projection
   createdAt: Date @projection
   updatedAt: Date @projection
 }

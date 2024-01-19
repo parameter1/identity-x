@@ -209,9 +209,9 @@ type AppUserAuthToken {
 input AppUserSegmentQueryInput {
   "If present, limit the returned segments by id."
   segmentIds: [ObjectID!] = []
-  "If true, will only return active questions. This will also be filtered by the fieldIds and onlyAnswered inputs."
+  "If true, will only return active segments."
   onlyActive: Boolean = false
-  "Optionally sort by fields on the custom field."
+  "Optionally sort by fields"
   sort: SegmentSortInput = {}
 }
 
