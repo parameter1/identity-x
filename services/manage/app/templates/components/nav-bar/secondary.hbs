@@ -8,6 +8,16 @@
       {{/link-to}}
     </li>
     <li class="nav-item">
+      {{#link-to "manage.orgs.view.apps.view.comments" context.appId class="nav-link"}}
+        <NavBar::Item @icon="message">Comments</NavBar::Item>
+      {{/link-to}}
+    </li>
+    <li class="nav-item">
+      {{#link-to "manage.orgs.view.apps.view.fields" context.appId class="nav-link"}}
+        <NavBar::Item @icon="list">Custom Fields</NavBar::Item>
+      {{/link-to}}
+    </li>
+    <li class="nav-item">
       {{#link-to "manage.orgs.view.apps.view.teams" context.appId class="nav-link"}}
         <NavBar::Item @icon="slideshare">Teams</NavBar::Item>
       {{/link-to}}
@@ -17,16 +27,11 @@
         <NavBar::Item @icon="man">Users</NavBar::Item>
       {{/link-to}}
     </li>
-    <li class="nav-item">
-      {{#link-to "manage.orgs.view.apps.view.fields" context.appId class="nav-link"}}
-        <NavBar::Item @icon="list">Custom Fields</NavBar::Item>
+    {{!-- <li class="nav-item">
+      {{#link-to "manage.orgs.view.apps.view.segments" context.appId class="nav-link"}}
+        <NavBar::Item @icon="users">User Segments</NavBar::Item>
       {{/link-to}}
-    </li>
-    <li class="nav-item">
-      {{#link-to "manage.orgs.view.apps.view.comments" context.appId class="nav-link"}}
-        <NavBar::Item @icon="message">Comments</NavBar::Item>
-      {{/link-to}}
-    </li>
+    </li> --}}
   {{/if}}
 </ul>
 

@@ -184,6 +184,10 @@ const schema = new Schema({
     type: Object,
     default: () => ({}),
   },
+  segments: {
+    type: [Schema.Types.ObjectId],
+    default: () => [],
+  },
 }, { timestamps: true });
 
 schema.plugin(applicationPlugin, { collateWhen: ['email'] });
@@ -202,6 +206,25 @@ schema.pre('save', async function updateComments() {
   if (this.isModified('banned')) {
     await connection.model('comment').updateMany({ appUserId: this._id }, { $set: { banned: this.banned } });
   }
+});
+
+schema.pre('save', async function setSegmentMembership() {
+  const segments = await connection.model('segment').find({ active: true, applicationId: this.applicationId });
+  // Regenerate segment memberships
+  this.segments = segments.reduce((arr, segment) => {
+    const rules = segment.rules || [];
+    rules.forEach((rule) => {
+      const conditions = rule.conditions || [];
+      if (conditions.every(({ field, answer }) => {
+        const f = this.customSelectFieldAnswers.find(a => `${a._id}` === `${field}`);
+        if (!f) return false;
+        return (f.values || []).includes(`${answer}`);
+      })) {
+        arr.push(segment._id);
+      }
+    });
+    return arr;
+  }, []);
 });
 
 schema.index({ applicationId: 1, email: 1 }, { unique: true });

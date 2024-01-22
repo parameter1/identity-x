@@ -4,6 +4,11 @@ const newrelic = require('../../newrelic');
 const connectionProjection = require('../utils/connection-projection');
 const typeProjection = require('../utils/type-projection');
 
+/**
+ * @typedef {import("graphql").GraphQLResolveInfo} GraphQLResolveInfo
+ * @typedef {import("../context").GraphQLServerContext} GraphQLServerContext
+ */
+
 const { isArray } = Array;
 
 module.exports = {
@@ -41,6 +46,28 @@ module.exports = {
       const { regionalConsentPolicies } = app.org;
       const policyIds = regionalConsentPolicies.map(policy => policy._id);
       return regionalConsentAnswers.filter(answer => policyIds.includes(answer._id));
+    },
+
+
+    /**
+     * @param {object} root
+     * @param {object} variables
+     * @param {GraphQLServerContext} _
+     * @param {GraphQLResolveInfo} info
+     */
+    segments: (root, { input }, _, info) => {
+      const { segments } = root;
+      const { filterIds, pagination, sort } = input;
+      const filter = (isArray(filterIds)) ? filterIds : [];
+      const segmentIds = (segments || [])
+        .filter(id => (filter.length ? filter.includes(id) : true));
+      const fields = connectionProjection(info);
+      return applicationService.request('segment.find', {
+        query: { _id: { $in: segmentIds } },
+        fields,
+        sort,
+        pagination,
+      });
     },
 
     customAttributes: ({ customAttributes }) => customAttributes || {},

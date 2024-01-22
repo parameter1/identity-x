@@ -108,6 +108,8 @@ type AppUser {
   banned: Boolean @projection
   receiveEmail: Boolean @projection
   regionalConsentAnswers: [AppUserRegionalConsentAnswer!]! @projection
+  "Returns the user segments this app user belongs to"
+  segments(input: AppUserSegmentQueryInput = {}): [Segment]! @projection(localField: "segments")
   "Shows all answers to custom boolean questions. By default this will include all questions, even if the user has not answered."
   customBooleanFieldAnswers(input: AppUserCustomBooleanFieldAnswersInput = {}): [AppUserCustomBooleanFieldAnswer!]! @projection
   "Shows all answers to custom select questions. By default this will include all questions, even if the user has not answered."
@@ -202,6 +204,15 @@ type AppUserAuthentication {
 type AppUserAuthToken {
   id: String!
   value: String!
+}
+
+input AppUserSegmentQueryInput {
+  "If present, limit the returned segments by id."
+  segmentIds: [ObjectID!] = []
+  "If true, will only return active segments."
+  onlyActive: Boolean = false
+  "Optionally sort by fields"
+  sort: SegmentSortInput = {}
 }
 
 input AppUserCustomBooleanFieldAnswersInput {

@@ -48,6 +48,16 @@ services:
     ports:
       - "12000:27017"
 
+  cli:
+    <<: *node
+    working_dir: /identity-x/services/cli
+    entrypoint: ["node"]
+    command: ["."]
+    environment:
+      <<: *env
+    depends_on:
+      - application
+
   graphql:
     <<: *node
     working_dir: /identity-x/services/graphql
