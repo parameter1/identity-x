@@ -2,14 +2,15 @@ const { applicationService } = require('@identity-x/service-clients');
 const { eachSeries } = require('async');
 
 const { log } = console;
+const defaults = { appContextId: '644960610f24dbebcd6c59e7', rules: [] };
 
 module.exports = async () => {
   const ps = [
-    { name: 'Pet Ingredients', rules: [] },
-    { name: 'Pet Equipment Processing', rules: [] },
-    { name: 'Pet Equipment Packaging', rules: [] },
-    { name: 'Pet Materials Packaging', rules: [] },
-    { name: 'Pet Services and Testing', rules: [] },
+    { ...defaults, name: 'Pet Ingredients' },
+    { ...defaults, name: 'Pet Equipment Processing' },
+    { ...defaults, name: 'Pet Equipment Packaging' },
+    { ...defaults, name: 'Pet Materials Packaging' },
+    { ...defaults, name: 'Pet Services and Testing' },
   ];
   const questionIds = ['643401767694b72e949334d8', '6434009be5f1a5a77760fd37'];
   const personasToAssign = {
@@ -85,7 +86,7 @@ module.exports = async () => {
       applicationId: '6449537d36197792dcb5e367',
       payload: segment,
     });
-    console.log(segment, r);
+    log(segment, r);
   });
 
   log('All segments created!');

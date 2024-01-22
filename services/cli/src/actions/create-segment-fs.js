@@ -2,19 +2,20 @@ const { applicationService } = require('@identity-x/service-clients');
 const { eachSeries } = require('async');
 
 const { log } = console;
+const defaults = { appContextId: '644960504a7ef94021814608', rules: [] };
 
 module.exports = async () => {
   const ps = [
-    { name: 'FS - Feed Ingredients', rules: [] },
-    { name: 'FS - Animal Nutrition and Additive Products', rules: [] },
-    { name: 'FS - Formulation Software', rules: [] },
-    { name: 'FS - Batching and Automation Systems', rules: [] },
-    { name: 'FS - Testing and Analysis', rules: [] },
-    { name: 'FS - Operations', rules: [] },
-    { name: 'FS - Manufacturing Equipment', rules: [] },
-    { name: 'FS - Feed Transportation Equipment', rules: [] },
-    { name: 'FS - Facility Design & Construction', rules: [] },
-    { name: 'FS - Conveying & Material Handling', rules: [] },
+    { ...defaults, name: 'FS - Feed Ingredients' },
+    { ...defaults, name: 'FS - Animal Nutrition and Additive Products' },
+    { ...defaults, name: 'FS - Formulation Software' },
+    { ...defaults, name: 'FS - Batching and Automation Systems' },
+    { ...defaults, name: 'FS - Testing and Analysis' },
+    { ...defaults, name: 'FS - Operations' },
+    { ...defaults, name: 'FS - Manufacturing Equipment' },
+    { ...defaults, name: 'FS - Feed Transportation Equipment' },
+    { ...defaults, name: 'FS - Facility Design & Construction' },
+    { ...defaults, name: 'FS - Conveying & Material Handling' },
   ];
   const questionIds = ['64301b173e81776bd5dc7cd8', '642f689c5377824a6c1b851f'];
   const personasToAssign = {
@@ -270,7 +271,7 @@ module.exports = async () => {
       applicationId: '6449537d36197792dcb5e367',
       payload: segment,
     });
-    console.log(segment, r);
+    log(segment, r);
   });
 
   log('All segments created!');

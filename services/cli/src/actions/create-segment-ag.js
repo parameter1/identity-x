@@ -2,15 +2,16 @@ const { applicationService } = require('@identity-x/service-clients');
 const { eachSeries } = require('async');
 
 const { log } = console;
+const defaults = { appContextId: '64496069361977a149b5e3a2', rules: [] };
 
 module.exports = async () => {
   const ps = [
-    { name: 'Poultry Health Genetics', rules: [] },
-    { name: 'Poultry Equipment House', rules: [] },
-    { name: 'Poultry Equipment Processing', rules: [] },
-    { name: 'Poultry Biosecurity & Pest Control', rules: [] },
-    { name: 'Poultry Equipment Hatchery', rules: [] },
-    { name: 'Poultry Egg Production', rules: [] },
+    { ...defaults, name: 'Poultry Health Genetics' },
+    { ...defaults, name: 'Poultry Equipment House' },
+    { ...defaults, name: 'Poultry Equipment Processing' },
+    { ...defaults, name: 'Poultry Biosecurity & Pest Control' },
+    { ...defaults, name: 'Poultry Equipment Hatchery' },
+    { ...defaults, name: 'Poultry Egg Production' },
   ];
   const questionIds = ['64416bd1361977719ab5ded5', '6441672d72aad16b3b150eff'];
   const personasToAssign = {
@@ -190,7 +191,7 @@ module.exports = async () => {
       applicationId: '6449537d36197792dcb5e367',
       payload: segment,
     });
-    console.log(segment, r);
+    log(segment, r);
   });
 
   log('All segments created!');

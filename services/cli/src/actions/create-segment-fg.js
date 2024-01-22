@@ -2,14 +2,15 @@ const { applicationService } = require('@identity-x/service-clients');
 const { eachSeries } = require('async');
 
 const { log } = console;
+const defaults = { appContextId: '644960484a7ef9f2d2814607', rules: [] };
 
 module.exports = async () => {
   const ps = [
-    { name: 'FG - Operations - Convey Handling - Aeration Dry', rules: [] },
-    { name: 'FG - Mfg Equip - Batching CRM Automation Software', rules: [] },
-    { name: 'FG - Facility Design & Construction', rules: [] },
-    { name: 'FG - Testing and Analysis', rules: [] },
-    { name: 'FG - Feed Transportation Equipment', rules: [] },
+    { ...defaults, name: 'FG - Operations - Convey Handling - Aeration Dry' },
+    { ...defaults, name: 'FG - Mfg Equip - Batching CRM Automation Software' },
+    { ...defaults, name: 'FG - Facility Design & Construction' },
+    { ...defaults, name: 'FG - Testing and Analysis' },
+    { ...defaults, name: 'FG - Feed Transportation Equipment' },
   ];
   const questionIds = ['643404c587747e1f4434a8c8', '6430a9a27694b7652a933308'];
   const personasToAssign = {
@@ -76,7 +77,7 @@ module.exports = async () => {
       applicationId: '6449537d36197792dcb5e367',
       payload: segment,
     });
-    console.log(segment, r);
+    log(segment, r);
   });
 
   log('All segments created!');
