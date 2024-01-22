@@ -25,6 +25,11 @@ const schema = new Schema({
     required: true,
     trim: true,
   },
+  appContextId: {
+    type: Schema.Types.ObjectId,
+    index: true,
+    required: false,
+  },
   active: {
     type: Boolean,
     default: true,

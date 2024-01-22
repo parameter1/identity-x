@@ -7,6 +7,15 @@ const { isArray } = Array;
 module.exports = {
   Segment: {
     id: segment => segment._id,
+    /**
+     * @param {Object} segment
+     * @param {Object} variables
+     * @param {import('../context/index.js').GraphQLServerContext} context
+     */
+    context: ({ appContextId }, variables, { app }) => {
+      if (!appContextId) return null;
+      return app.get('contexts', []).find(ctx => ctx._id === appContextId);
+    },
     rules: ({ rules }) => {
       if (!isArray(rules) || !rules.length) return [];
       return rules;
@@ -41,10 +50,11 @@ module.exports = {
      */
     segments: (_, { input }, { app }, info) => {
       const id = app.getId();
-      const { sort, pagination } = input;
+      const { appContextId, sort, pagination } = input;
       const fields = connectionProjection(info);
       return applicationService.request('segment.listForApp', {
         id,
+        ...(appContextId && { query: { appContextId } }),
         sort,
         pagination,
         fields,

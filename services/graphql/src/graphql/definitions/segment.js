@@ -22,6 +22,7 @@ enum SegmentSortField {
 
 type Segment {
   id: String! @projection(localField: "_id")
+  context: ApplicationContext @projection(localField: "appContextId")
   name: String! @projection
   description: String @projection
   active: Boolean @projection
@@ -54,6 +55,7 @@ type SegmentEdge {
 
 input CreateSegmentMutationInput {
   name: String!
+  appContextId: ObjectID
   active: Boolean! = true
   description: String
   rules: [SegmentRuleMutationInput!]! = []
@@ -78,6 +80,8 @@ input SegmentQueryInput {
 }
 
 input SegmentsQueryInput {
+  "If specified, limit results to segments with a matching context id."
+  appContextId: ObjectID
   sort: SegmentSortInput = {}
   pagination: PaginationInput = {}
 }
@@ -89,6 +93,7 @@ input SegmentSortInput {
 
 input UpdateSegmentPayloadInput {
   name: String!
+  appContextId: ObjectID
   active: Boolean! = true
   description: String
   rules: [SegmentRuleMutationInput!]! = []
