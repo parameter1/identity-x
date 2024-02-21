@@ -48,6 +48,8 @@ extend type Mutation {
   "Verifies and logs in the app user using their new email address."
   changeAppUserEmail(input: ChangeAppUserEmailMutationInput!): AppUserAuthentication! @requiresApp # must be public
 
+  deleteAppUserForCurrentApplication(input: DeleteAppUserForCurrentApplicationInput!): Boolean! @requiresAppRole(roles: [Owner, Administrator])
+
   deleteAppUserForCurrentOrg(input: DeleteAppUserForCurrentOrgInput!): Boolean! @requiresOrgRole(roles: [Owner, Administrator])
 }
 
@@ -293,6 +295,11 @@ input CreateAppUserMutationInput {
   street: String
   addressExtra: String
   phoneNumber: String
+}
+
+input DeleteAppUserForCurrentApplicationInput {
+  email: String
+  userId: ObjectID
 }
 
 input DeleteAppUserForCurrentOrgInput {
