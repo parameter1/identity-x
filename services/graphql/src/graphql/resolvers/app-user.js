@@ -345,6 +345,22 @@ module.exports = {
       });
     },
 
+    deleteAppUserForCurrentApplication: (_, { input }, { app }) => {
+      const applicationId = app.getId();
+      const { email, userId } = input;
+      if (email && userId) {
+        throw new UserInputError('email XOR (exclusive or) userId is permitted!');
+      }
+      if (!email && !userId) {
+        throw new UserInputError('email XOR (exclusive or) userId is required!');
+      }
+      return applicationService.request('user.deleteForApp', {
+        applicationId,
+        email,
+        userId,
+      });
+    },
+
     deleteAppUserForCurrentOrg: (_, { input }, { org }) => {
       const organizationId = org.getId();
       const { email } = input;
