@@ -15,6 +15,7 @@ module.exports = async ({
   userId,
 } = {}) => {
   if (!applicationId) throw createRequiredParamError('applicationId');
+  if (!email && !userId) throw createdRequiredParamError('email XOR userId');
 
   const pipeline = [
     { $match: { _id: new ObjectId(applicationId) } },
