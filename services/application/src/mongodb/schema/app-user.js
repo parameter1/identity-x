@@ -158,6 +158,10 @@ const schema = new Schema({
     trim: true,
     set: stripLines,
   },
+  mobileNumber: {
+    type: String,
+    trim: true,
+  },
   phoneNumber: {
     type: String,
     trim: true,
