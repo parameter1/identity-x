@@ -323,6 +323,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
       } = input;
       const payload = {
@@ -336,6 +337,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
       };
       return applicationService.request('user.create', {
@@ -413,6 +415,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
       } = input;
       const payload = {
@@ -429,6 +432,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
       };
       return applicationService.request('user.manageCreate', {
@@ -585,6 +589,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
         regionalConsentAnswers,
       } = input;
@@ -600,6 +605,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
         regionalConsentAnswers,
       };
@@ -631,6 +637,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
         forceProfileReVerification,
         receiveEmail,
@@ -653,6 +660,7 @@ module.exports = {
           city,
           street,
           addressExtra,
+          mobileNumber,
           phoneNumber,
           forceProfileReVerification,
           receiveEmail,
@@ -760,6 +768,7 @@ module.exports = {
         city,
         street,
         addressExtra,
+        mobileNumber,
         phoneNumber,
         receiveEmail,
       } = input;
@@ -777,6 +786,7 @@ module.exports = {
           city,
           street,
           addressExtra,
+          mobileNumber,
           phoneNumber,
           receiveEmail,
           profileLastVerifiedAt: new Date(),
