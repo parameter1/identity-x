@@ -93,6 +93,7 @@ type AppUser {
   city: String @projection
   street: String @projection
   addressExtra: String @projection
+  mobileNumber: String @projection
   phoneNumber: String @projection
   country: LocaleCountry @projection(localField: "countryCode")
   countryCode: String @projection
@@ -294,6 +295,7 @@ input CreateAppUserMutationInput {
   city: String
   street: String
   addressExtra: String
+  mobileNumber: String
   phoneNumber: String
 }
 
@@ -334,6 +336,7 @@ input ManageCreateAppUserMutationInput {
   city: String
   street: String
   addressExtra: String
+  mobileNumber: String
   phoneNumber: String
   accessLevelIds: [String!] = []
   teamIds: [String!] = []
@@ -423,6 +426,7 @@ input SetAppUserUnverifiedDataMutationInput {
   city: String
   street: String
   addressExtra: String
+  mobileNumber: String
   phoneNumber: String
 
   regionalConsentAnswers: [SetAppUserRegionalConsentAnswerInput!] = []
@@ -440,6 +444,7 @@ input UpdateAppUserPayloadInput {
   city: String
   street: String
   addressExtra: String
+  mobileNumber: String
   phoneNumber: String
   accessLevelIds: [String!] = []
   teamIds: [String!] = []
@@ -522,6 +527,7 @@ input UpdateOwnAppUserMutationInput {
   city: String
   street: String
   addressExtra: String
+  mobileNumber: String
   phoneNumber: String
   receiveEmail: Boolean
 }

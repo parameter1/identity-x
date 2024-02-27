@@ -32,6 +32,7 @@ module.exports = async ({
     'street',
     'addressExtra',
     'city',
+    'mobileNumber',
     'phoneNumber',
     'createdAt',
     'updatedAt',
