@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose');
+const { getAsArray } = require('@base-cms/object-path');
 const { normalizeEmail } = require('@identity-x/utils');
 const { emailValidator, applicationPlugin, localePlugin } = require('@identity-x/mongoose-plugins');
 const { localeService } = require('@identity-x/service-clients');
@@ -220,7 +221,7 @@ schema.pre('save', async function setSegmentMembership() {
     rules.forEach((rule) => {
       const conditions = rule.conditions || [];
       if (conditions.every(({ field, answer }) => {
-        const f = this.customSelectFieldAnswers.find(a => `${a._id}` === `${field}`);
+        const f = getAsArray(this, 'customSelectFieldAnswers').find(a => `${a._id}` === `${field}`);
         if (!f) return false;
         return (f.values || []).includes(`${answer}`);
       })) {
