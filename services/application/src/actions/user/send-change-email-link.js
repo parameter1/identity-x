@@ -67,6 +67,8 @@ module.exports = async ({
 
   const supportEmailHtml = supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : '';
   const supportEmailText = supportEmail ? ` or contact our support staff at ${supportEmail}` : '';
+  const urlasURL = new URL(url);
+  urlasURL.protocol = 'https:';
 
   const html = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -79,7 +81,7 @@ module.exports = async ({
       </head>
       <body>
         <p>You recently requested to change your email address on <strong>${appName}</strong>. To complete this request, click on the link below. This link is good for one hour and will expire immediately after use.</p>
-        <p><a href="${url}">Change my email on ${appName}</a></p>
+        <p><a href="${urlasURL}">Change my email on ${appName}</a></p>
         <p>If you didn't request this link, simply ignore this email${supportEmailHtml}.</p>
         <hr>
         <small style="font-color: #ccc;">
@@ -95,7 +97,7 @@ module.exports = async ({
 You recently requested to change your email address on ${appName}. This link is good for one hour and will expire immediately after use.
 
 Change your email on ${appName} by visiting this link:
-${url}
+${urlasURL}
 
 If you didn't request this link, simply ignore this email${supportEmailText}.
 

@@ -14,6 +14,8 @@ module.exports = ({
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
+  const urlasURL = new URL(url);
+  urlasURL.protocol = 'https:';
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,7 +28,7 @@ module.exports = ({
       </head>
       <body>
         <p>${verbiage}</p>
-        <p><a href="${url}">Log in to ${appName}</a></p>
+        <p><a href="${urlasURL}">Log in to ${appName}</a></p>
         <p>If you didn't request this link, simply ignore this email${supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
@@ -41,7 +43,7 @@ module.exports = ({
 ${stripTags(verbiage, [])}
 
 Log in to ${appName} by visiting this link:
-${url}
+${urlasURL}
 
 If you didn't request this link, simply ignore this email or contact our support staff at ${supportEmail}.
 

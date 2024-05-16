@@ -14,6 +14,8 @@ module.exports = ({
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
   const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
+  const urlasURL = new URL(url);
+  urlasURL.protocol = 'https:';
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,7 +28,7 @@ module.exports = ({
       </head>
       <body>
         <p>${verbiage}</p>
-        <p><a href="${url}">Iniciar sesión en ${appName}</a></p>
+        <p><a href="${urlasURL}">Iniciar sesión en ${appName}</a></p>
         <p>Si no solicitó este enlace, simplemente ignore este correo electrónico${supportEmail ? ` o <a href="mailto:${supportEmail}">comuníquese con nuestro personal de soporte</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
@@ -41,7 +43,7 @@ module.exports = ({
 ${stripTags(verbiage)}
 
 Iniciar sesión en ${appName}:
-${url}
+${urlasURL}
 
 Si no solicitó este enlace, simplemente ignore este correo electrónico${supportEmail ? ` o comuníquese con nuestro personal de soporte a ${supportEmail}` : ''}
 
