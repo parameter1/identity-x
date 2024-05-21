@@ -1,0 +1,220 @@
+name: Deploy suite (Staging)
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  ECR_REGISTRY: 598984531759.dkr.ecr.us-east-2.amazonaws.com
+  IMG_PREFIX: identity-x
+  TARGET_NAMESPACE: identity-x-staging
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+    - id: tag_version
+      run: |
+        REF=$(echo $GITHUB_REF | cut -d / -f 3)
+        [[ "$GITHUB_REF" =~ ^refs/tags.*$ ]] && VERSION="$REF" || VERSION="${REF}-${GITHUB_SHA::7}"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+    outputs:
+      version: ${{ steps.tag_version.outputs.version }}
+
+  notify-start:
+    needs: [version]
+    uses: parameter1/actions/.github/workflows/notify-start.yml@main
+    secrets: inherit
+    with:
+      version: ${{ needs.version.outputs.version }}
+
+  post-deploy-failure:
+    if: failure()
+    needs:
+      - notify-start
+      - deploy-services-5
+    uses: parameter1/actions/.github/workflows/notify-fail.yml@main
+    secrets: inherit
+    with:
+      slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+  post-deploy-complete:
+    if: success()
+    needs:
+      - notify-start
+      - deploy-services-5
+    uses: parameter1/actions/.github/workflows/notify-complete.yml@main
+    secrets: inherit
+    with:
+      slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+  build-app:
+    needs:
+    - version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v1
+        name: Login to ECR
+        with:
+          registry: ${{ env.ECR_REGISTRY }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Build docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: services/manage/Dockerfile
+          push: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:manage-${{ needs.version.outputs.version }}
+
+  build:
+    needs:
+    - version
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - application
+          - cli
+          - export
+          - graphql
+          - import
+          - ip
+          - locale
+          - mailer
+          # - manage
+          - membership
+          - organization
+          - token
+          - user
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v1
+        name: Login to ECR
+        with:
+          registry: ${{ env.ECR_REGISTRY }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Build docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          build-args: |
+            SERVICE=${{ matrix.service }}
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+
+  deploy-services-1:
+    needs:
+    - version
+    - build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - ip
+          - locale
+          - mailer
+          - organization
+          - token
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          npx @parameter1/rancher2cli dl \
+            --wait --namespace ${{ env.TARGET_NAMESPACE }} \
+            basecms-service identity-x-${{ matrix.service }} \
+            ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+        env:
+          RANCHER_CLUSTERID: ${{ secrets.RANCHER_CLUSTERID_ADX }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
+
+  deploy-services-2:
+    needs:
+    - version
+    - build
+    - deploy-services-1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - application
+          - user
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          npx @parameter1/rancher2cli dl \
+            --wait --namespace ${{ env.TARGET_NAMESPACE }} \
+            basecms-service identity-x-${{ matrix.service }} \
+            ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+        env:
+          RANCHER_CLUSTERID: ${{ secrets.RANCHER_CLUSTERID_ADX }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
+
+  deploy-services-3:
+    needs:
+    - version
+    - build
+    - deploy-services-2
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - export
+          - membership
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          npx @parameter1/rancher2cli dl \
+            --wait --namespace ${{ env.TARGET_NAMESPACE }} \
+            basecms-service identity-x-${{ matrix.service }} \
+            ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+        env:
+          RANCHER_CLUSTERID: ${{ secrets.RANCHER_CLUSTERID_ADX }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
+
+  deploy-services-4:
+    needs:
+    - version
+    - build
+    - deploy-services-3
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - graphql
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          npx @parameter1/rancher2cli dl \
+            --wait --namespace ${{ env.TARGET_NAMESPACE }} \
+            basecms-service identity-x-${{ matrix.service }} \
+            ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+        env:
+          RANCHER_CLUSTERID: ${{ secrets.RANCHER_CLUSTERID_ADX }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
+
+  deploy-services-5:
+    needs:
+    - version
+    - build-app
+    - deploy-services-4
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - manage
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          npx @parameter1/rancher2cli dl \
+            --wait --namespace ${{ env.TARGET_NAMESPACE }} \
+            basecms-service identity-x-${{ matrix.service }} \
+            ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+        env:
+          RANCHER_CLUSTERID: ${{ secrets.RANCHER_CLUSTERID_ADX }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
