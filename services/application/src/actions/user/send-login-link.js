@@ -1,3 +1,4 @@
+const debug = require('debug')('mailer');
 const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
 const { tokenService, mailerService, organizationService } = require('@identity-x/service-clients');
@@ -29,6 +30,7 @@ module.exports = async ({
   source,
   email,
 } = {}) => {
+  debug(authUrl, 'INCOMING AUTH URL');
   if (!authUrl) throw createRequiredParamError('authUrl');
   if (!applicationId) throw createRequiredParamError('applicationId');
   if (!email) throw createRequiredParamError('email');
@@ -71,6 +73,7 @@ module.exports = async ({
     };
   }, {});
 
+  debug(url, 'SENT TO TEMPLATE URL');
   const { subject, html, text } = templates[language] ? templates[language]({
     sendingDomain,
     supportEmail,
