@@ -1,4 +1,5 @@
 const stripTags = require('striptags');
+const debug = require('debug')('mailer');
 
 module.exports = ({
   sendingDomain,
@@ -9,6 +10,7 @@ module.exports = ({
   loginLinkTemplate,
   user,
 } = {}) => {
+  debug(url, 'INCOMING TO TEMPLATE URL');
   const { verified } = user;
   const subject = loginLinkTemplate.subject || 'Your personal login link';
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;

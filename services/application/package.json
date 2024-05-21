@@ -23,6 +23,7 @@
     "@identity-x/utils": "^1.20.0",
     "burner-email-providers": "^1.0.13",
     "cheerio": "^1.0.0-rc.12",
+    "debug": "^4.1.0",
     "micro": "^9.3.4",
     "mongodb": "3.2.5",
     "mongoose": "^5.5.11",
