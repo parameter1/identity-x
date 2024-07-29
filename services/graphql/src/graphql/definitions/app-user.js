@@ -202,6 +202,7 @@ type AppUserAuthentication {
   user: AppUser!
   token: AppUserAuthToken!
   loginSource: String
+  additionalEventData: JSONObject
 }
 
 type AppUserAuthToken {
@@ -358,6 +359,8 @@ input SendAppUserLoginLinkMutationInput {
   redirectTo: String
   "If provided, will use the matched application context when sending the login email."
   appContextId: String
+  "If provided, will be used to append additional information to the login link token payload"
+  additionalEventData: JSONObject
   "Deprecated. While this field can still be sent, it is no longer used or handled."
   fields: JSON
 }
