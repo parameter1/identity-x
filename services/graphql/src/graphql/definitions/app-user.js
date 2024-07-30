@@ -199,10 +199,11 @@ type AppUserEdge {
 }
 
 type AppUserAuthentication {
-  user: AppUser!
-  token: AppUserAuthToken!
+  "The additional context information returned from the token generated when login sent"
+  additionalContext: JSONObject
   loginSource: String
-  additionalEventData: JSONObject
+  token: AppUserAuthToken!
+  user: AppUser!
 }
 
 type AppUserAuthToken {
@@ -353,16 +354,16 @@ input SendOwnAppUserChangeEmailLinkMutationInput {
 }
 
 input SendAppUserLoginLinkMutationInput {
-  email: String!
-  source: String
-  authUrl: String!
-  redirectTo: String
   "If provided, will use the matched application context when sending the login email."
   appContextId: String
-  "If provided, will be used to append additional information to the login link token payload"
-  additionalEventData: JSONObject
+  "Additional contextual data to include in the login link token"
+  additionalContext: JSONObject
+  authUrl: String!
+  email: String!
   "Deprecated. While this field can still be sent, it is no longer used or handled."
   fields: JSON
+  redirectTo: String
+  source: String
 }
 
 input SetAppUserBannedMutationInput {
