@@ -1,7 +1,6 @@
 const { get } = require('object-path');
 const { createError } = require('micro');
 const { createRequiredParamError } = require('@base-cms/micro').service;
-const { getAsObject } = require('@base-cms/object-path');
 const { tokenService } = require('@identity-x/service-clients');
 
 const { Application, AppUserLogin } = require('../../mongodb/models');
@@ -60,6 +59,6 @@ module.exports = async ({
     user: user.toObject(),
     token: { id: payload.jti, value: authToken },
     loginSource: get(data, 'source'),
-    additionalEventData: getAsObject(data, 'additionalEventData'),
+    additionalContext: data,
   };
 };
