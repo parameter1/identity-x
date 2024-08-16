@@ -1,28 +1,28 @@
 <form {{action "save" on="submit"}}>
   <fieldset disabled={{this.isActionRunning}}>
     <BsModal::Body>
-      <div class="row">
-        {{#each this.model.customTextFieldAnswers as |answer|}}
-          <div class="col-sm-6">
-            <div class="form-group">
-              <FormElements::Label>
-                <CustomField::Label @value={{answer.field.label}} />
-                <br>
-                <span class="small text-muted">({{answer.field.name}})</span>
-                {{#if (not answer.field.active)}}<span class="small text-warning">[inactive]</span>{{/if}}
-              </FormElements::Label>
-              <Input
-                @type="text"
-                @value={{answer.value}}
-                />
-            </div>
+      {{#each this.model.customTextFieldAnswers as |answer|}}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <FormElements::Label>
+              <CustomField::Label @value={{answer.field.label}} />
+              <br>
+              <span class="small text-muted">({{answer.field.name}})</span>
+              {{#if (not answer.field.active)}}<span class="small text-warning">[inactive]</span>{{/if}}
+            </FormElements::Label>
+            <Input
+              @type="text"
+              @value={{answer.value}}
+              />
           </div>
-        {{else}}
+        </div>
+      {{else}}
+        <div class="col">
           <div class="row">
-            <p class="text-muted">No custom fields have been created.</p>
+            <p class="text-muted">No custom inputs have been created.</p>
           </div>
-        {{/each}}
-      </div>
+        </div>
+      {{/each}}
     </BsModal::Body>
     <BsModal::Footer>
       <FormElements::SubmitButton @class="btn btn-success" @isSaving={{this.isActionRunning}} />

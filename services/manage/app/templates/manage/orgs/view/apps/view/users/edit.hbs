@@ -11,20 +11,19 @@
           Address
         {{/link-to}}
       </li>
-      <li class="nav-item">
-        {{#link-to "manage.orgs.view.apps.view.users.edit.custom-select-fields" class="nav-link"}}
-          Custom Selects
-        {{/link-to}}
-      </li>
-      <li class="nav-item">
-        {{#link-to "manage.orgs.view.apps.view.users.edit.custom-boolean-fields" class="nav-link"}}
-          Custom Checkboxes
-        {{/link-to}}
-      </li>
-      <li class="nav-item">
-        {{#link-to "manage.orgs.view.apps.view.users.edit.custom-text-fields" class="nav-link"}}
-          Custom Inputs
-        {{/link-to}}
+      <li class="nav-item dropdown">
+        <a class={{customDropdownClasses}} data-toggle="dropdown" href="#" role="button" aria-expanded="false">Custom Fields</a>
+        <div class="dropdown-menu">
+          {{#link-to "manage.orgs.view.apps.view.users.edit.custom-boolean-fields" class="dropdown-item"}}
+            Checkboxes
+          {{/link-to}}
+          {{#link-to "manage.orgs.view.apps.view.users.edit.custom-text-fields" class="dropdown-item"}}
+            Text fields
+          {{/link-to}}
+          {{#link-to "manage.orgs.view.apps.view.users.edit.custom-select-fields" class="dropdown-item"}}
+            Selects
+          {{/link-to}}
+        </div>
       </li>
       <li class="nav-item">
         {{#link-to "manage.orgs.view.apps.view.users.edit.external-ids" class="nav-link"}}
