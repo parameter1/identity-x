@@ -72,6 +72,20 @@ const customSelectFieldAnswerSchema = new Schema({
   },
 });
 
+/**
+ * The built-in `_id` field of this sub-document represents
+ * the custom text field id.
+ */
+const customTextFieldAnswerSchema = new Schema({
+  /**
+   * The custom text field answer.
+   */
+  value: {
+    type: Schema.Types.String,
+    trim: true,
+  },
+});
+
 const schema = new Schema({
   email: {
     type: String,
@@ -183,6 +197,10 @@ const schema = new Schema({
   },
   customSelectFieldAnswers: {
     type: [customSelectFieldAnswerSchema],
+    default: () => [],
+  },
+  customTextFieldAnswers: {
+    type: [customTextFieldAnswerSchema],
     default: () => [],
   },
   customAttributes: {

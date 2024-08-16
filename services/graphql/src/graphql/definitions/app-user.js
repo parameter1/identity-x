@@ -37,6 +37,8 @@ extend type Mutation {
   updateOwnAppUserCustomBooleanAnswers(input: UpdateOwnAppUserCustomBooleanAnswersMutationInput!): AppUser! @requiresAuth(type: AppUser)
   updateAppUserCustomSelectAnswers(input: UpdateAppUserCustomSelectAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
   updateOwnAppUserCustomSelectAnswers(input: UpdateOwnAppUserCustomSelectAnswersMutationInput!): AppUser! @requiresAuth(type: AppUser)
+  updateAppUserCustomTextAnswers(input: UpdateAppUserCustomTextAnswersMutationInput!): AppUser! @requiresAppRole(roles: [Owner, Administrator, Member])
+  updateOwnAppUserCustomTextAnswers(input: UpdateOwnAppUserCustomTextAnswersMutationInput!): AppUser! @requiresAuth(type: AppUser)
 
   "Sets field data to an unverified app user only. Is used for collecting user info before a login link is sent/used."
   setAppUserUnverifiedData(input: SetAppUserUnverifiedDataMutationInput!): AppUser! @requiresApp # must be public
@@ -119,6 +121,8 @@ type AppUser {
   customSelectFieldAnswers(input: AppUserCustomSelectFieldAnswersInput = {}): [AppUserCustomSelectFieldAnswer!]! @projection
   "Shows all custom attributes stored on the user."
   customAttributes: JSONObject! @projection
+  "Shows all answers to custom text questions. By default this will include all questions, even if the user has not answered."
+  customTextFieldAnswers(input: AppUserCustomTextFieldAnswersInput = {}): [AppUserCustomTextFieldAnswer!]! @projection
   "Lists all external IDs + namespaces associated with this user."
   externalIds: [AppUserExternalEntityId!]! @projection
   createdAt: Date @projection
@@ -187,6 +191,17 @@ type SelectFieldOptionAnswer {
   externalIdentifier: String
 }
 
+type AppUserCustomTextFieldAnswer {
+  "The user-to-answer identifier."
+  id: String!
+  "The custom select field that was answered."
+  field: TextField!
+  "Whether the user has answered the question."
+  hasAnswered: Boolean!
+  "The answered field value. A null value signifies a non answer. It's up to the implementing components to account for this."
+  value: String
+}
+
 type AppUserConnection @projectUsing(type: "AppUser") {
   totalCount: Int!
   edges: [AppUserEdge]!
@@ -230,6 +245,17 @@ input AppUserCustomBooleanFieldAnswersInput {
 }
 
 input AppUserCustomSelectFieldAnswersInput {
+  "Only return answers for the provided field IDs. An empty value will return all answers."
+  fieldIds: [String!] = []
+  "If true, will only return answers the user has set. Otherwise, all questions will be return, with empty answers where not set. This will also be filtered by the fieldIds input."
+  onlyAnswered: Boolean = false
+  "If true, will only return active questions. This will also be filtered by the fieldIds and onlyAnswered inputs."
+  onlyActive: Boolean = false
+  "Optionally sort by fields on the custom field."
+  sort: FieldInterfaceSortInput = {}
+}
+
+input AppUserCustomTextFieldAnswersInput {
   "Only return answers for the provided field IDs. An empty value will return all answers."
   fieldIds: [String!] = []
   "If true, will only return answers the user has set. Otherwise, all questions will be return, with empty answers where not set. This will also be filtered by the fieldIds input."
@@ -495,6 +521,18 @@ input UpdateOwnAppUserCustomSelectAnswersMutationInput {
   answers: [UpdateAppUserCustomSelectAnswer!]
 }
 
+input UpdateAppUserCustomTextAnswersMutationInput {
+  "The user id to update."
+  id: String!
+  "The answers to set/update. An empty array or null value will do nothing."
+  answers: [UpdateAppUserCustomTextAnswer!]
+}
+
+input UpdateOwnAppUserCustomTextAnswersMutationInput {
+  "The answers to set/update for the current user. An empty array or null value will do nothing."
+  answers: [UpdateAppUserCustomTextAnswer!]
+}
+
 input UpdateAppUserCustomBooleanAnswer {
   "The custom boolean field ID."
   fieldId: String!
@@ -513,6 +551,13 @@ input UpdateAppUserCustomSelectAnswer {
 
 input UpdateAppUserCustomSelectAnswerWriteInValue {
   optionId: String!
+  value: String
+}
+
+input UpdateAppUserCustomTextAnswer {
+  "The custom select field ID."
+  fieldId: String!
+  "The text value to store."
   value: String
 }
 

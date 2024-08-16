@@ -60,6 +60,7 @@ Router.map(function() {
                 this.route('address-fields');
                 this.route('custom-boolean-fields');
                 this.route('custom-select-fields');
+                this.route('custom-text-fields');
                 this.route('external-ids');
               });
             });
@@ -71,6 +72,7 @@ Router.map(function() {
               this.route('edit', function() {
                 this.route('boolean', { path: 'boolean/:field_id' });
                 this.route('select', { path: 'select/:field_id' });
+                this.route('text', { path: 'text/:field_id' });
               });
             });
           });

@@ -25,6 +25,7 @@ const setUnverifiedData = require('./set-unverified-data');
 const updateCustomAttributes = require('./update-custom-attributes');
 const updateCustomBooleanAnswers = require('./update-custom-boolean-answers');
 const updateCustomSelectAnswers = require('./update-custom-select-answers');
+const updateCustomTextAnswers = require('./update-custom-text-answers');
 const updateOne = require('./update-one');
 const verifyAuth = require('./verify-auth');
 
@@ -55,6 +56,7 @@ module.exports = {
   updateCustomAttributes,
   updateCustomBooleanAnswers,
   updateCustomSelectAnswers,
+  updateCustomTextAnswers,
   updateOne,
   verifyAuth,
   setLastSeen: async ({ id }) => {
