@@ -6,7 +6,7 @@ const { emailValidator } = require('@identity-x/mongoose-plugins');
 
 const stripHtml = (v) => {
   if (!v) return null;
-  return stripTags(v, ['b', 'strong', 'em', 'i', 'u']);
+  return stripTags(v, ['b', 'strong', 'em', 'i', 'u', 'p', 'br']);
 };
 
 const loginLinkTemplate = new Schema({
