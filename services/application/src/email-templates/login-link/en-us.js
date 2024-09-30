@@ -32,7 +32,9 @@ module.exports = ({
         <p>${verbiage}</p>
         <p>
           <a href="${url}" style="${btnStyle}">
-            ${btnText}
+            <strong>
+              ${btnText}
+            </strong>
           </a>
         </p>
         <p>If you didn't request this link, simply ignore this email${supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : ''}.</p>
