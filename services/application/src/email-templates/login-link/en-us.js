@@ -28,17 +28,7 @@ module.exports = ({
       </head>
       <body>
         <p>${verbiage}</p>
-        <p>
-          <a href="${url}">
-            <table border="0" cellspacing="0" cellpadding="0" style="background-color: #15c; color: #fff">
-              <tr>
-                <td style="padding: 8px;">
-                  <strong>Confirm + Log In</strong>
-                </td>
-              </tr>
-            </table>
-          </a>
-        </p>
+        <p><a href="${url}">Log in to ${appName}</a></p>
         <p>If you didn't request this link, simply ignore this email${supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
