@@ -32,7 +32,7 @@ module.exports = ({
           <a href="${url}">
             <table border="0" cellspacing="0" cellpadding="0" style="background-color: #15c; color: #fff">
               <tr>
-                <td style="padding: 8px;>
+                <td style="padding: 8px;">
                   Confirm + Log In
                 </td>
               </tr>
