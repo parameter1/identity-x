@@ -46,7 +46,7 @@ module.exports = ({
     text: `
 ${stripTags(verbiage, [])}
 
-Confrim & Log In:
+Confirm & Log In:
 ${url}
 
 If you didn't request this link, simply ignore this email or contact our support staff at ${supportEmail}.
