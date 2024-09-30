@@ -14,8 +14,8 @@ module.exports = ({
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
   const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
-  const btnStyle = loginLinkTemplate.btnStyle ? loginLinkTemplate.btnStyle : '';
-  const btnText = loginLinkTemplate.btnText ? loginLinkTemplate.btnText : `Iniciar sesión en ${appName}`;
+  const loginLinkStyle = loginLinkTemplate.loginLinkStyle ? loginLinkTemplate.loginLinkStyle : '';
+  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Iniciar sesión en ${appName}`;
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,9 +29,9 @@ module.exports = ({
       <body>
         <p>${verbiage}</p>
         <p>
-          <a href="${url}" style="${btnStyle}">
+          <a href="${url}" style="${loginLinkStyle}">
             <strong>
-              ${btnText}
+              ${loginLinkText}
             </strong>
           </a>
         </p>
@@ -48,7 +48,7 @@ module.exports = ({
     text: `
 ${stripTags(verbiage)}
 
-${btnText}:
+${loginLinkText}:
 ${url}
 
 Si no solicitó este enlace, simplemente ignore este correo electrónico${supportEmail ? ` o comuníquese con nuestro personal de soporte a ${supportEmail}` : ''}

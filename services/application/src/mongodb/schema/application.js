@@ -25,6 +25,16 @@ const loginLinkTemplate = new Schema({
     trim: true,
     set: stripHtml,
   },
+  loginLinkStyle: {
+    type: String,
+    trim: true,
+    set: stripHtml,
+  },
+  loginLinkText: {
+    type: String,
+    trim: true,
+    set: stripHtml,
+  },
 });
 
 const contextSchema = new Schema({

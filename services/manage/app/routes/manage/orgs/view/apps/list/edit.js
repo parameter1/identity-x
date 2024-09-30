@@ -13,6 +13,8 @@ const query = gql`
         subject
         unverifiedVerbiage
         verifiedVerbiage
+        loginLinkStyle
+        loginLinkText
       }
       language
       contexts {
@@ -24,6 +26,8 @@ const query = gql`
           subject
           unverifiedVerbiage
           verifiedVerbiage
+          loginLinkStyle
+          loginLinkText
         }
         language
       }

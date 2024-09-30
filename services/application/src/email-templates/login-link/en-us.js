@@ -16,8 +16,8 @@ module.exports = ({
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
-  const btnStyle = loginLinkTemplate.btnStyle ? loginLinkTemplate.btnStyle : '';
-  const btnText = loginLinkTemplate.btnText ? loginLinkTemplate.btnText : `Log in to ${appName}`;
+  const loginLinkStyle = loginLinkTemplate.loginLinkStyle ? loginLinkTemplate.loginLinkStyle : '';
+  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Log in to ${appName}`;
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -31,9 +31,9 @@ module.exports = ({
       <body>
         <p>${verbiage}</p>
         <p>
-          <a href="${url}" style="${btnStyle}">
+          <a href="${url}" style="${loginLinkStyle}">
             <strong>
-              ${btnText}
+              ${loginLinkText}
             </strong>
           </a>
         </p>
@@ -50,7 +50,7 @@ module.exports = ({
     text: `
 ${stripTags(verbiage, [])}
 
-${btnText}:
+${loginLinkText}:
 ${url}
 
 If you didn't request this link, simply ignore this email or contact our support staff at ${supportEmail}.

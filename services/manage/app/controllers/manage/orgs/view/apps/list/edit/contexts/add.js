@@ -17,6 +17,8 @@ const mutation = gql`
           subject
           unverifiedVerbiage
           verifiedVerbiage
+          loginLinkStyle
+          loginLinkText
         }
         language
       }
