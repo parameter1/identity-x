@@ -16,6 +16,8 @@ module.exports = ({
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `You recently requested to log in to <strong>${appName}</strong>. This link is good for one hour.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
+  const btnStyle = loginLinkTemplate.btnStyle ? loginLinkTemplate.btnStyle : '';
+  const btnText = loginLinkTemplate.btnText ? loginLinkTemplate.btnText : `Log in to ${appName}`;
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,14 +31,8 @@ module.exports = ({
       <body>
         <p>${verbiage}</p>
         <p>
-          <a href="${url}">
-            <table border="0" cellspacing="0" cellpadding="0" style="background-color: #15c; color: #fff">
-              <tr>
-                <td style="padding: 8px;">
-                  <strong>Confirm + Log In</strong>
-                </td>
-              </tr>
-            </table>
+          <a href="${url}" style="${btnStyle}">
+            ${btnText}
           </a>
         </p>
         <p>If you didn't request this link, simply ignore this email${supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : ''}.</p>
