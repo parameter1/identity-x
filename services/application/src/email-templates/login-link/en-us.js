@@ -28,7 +28,11 @@ module.exports = ({
       </head>
       <body>
         <p>${verbiage}</p>
-        <p><a href="${url}">Log in to ${appName}</a></p>
+        <p>
+          <a href="${url}" style="background-color: #333; color: #fff; padding: 8px; display: inline-block;">
+            <strong>Confirm + Log In</strong>
+          </a>
+        </p>
         <p>If you didn't request this link, simply ignore this email${supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
