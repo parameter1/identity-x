@@ -28,7 +28,17 @@ module.exports = ({
       </head>
       <body>
         <p>${verbiage}</p>
-        <p><a href="${url}">Log in to ${appName}</a></p>
+        <p>
+          <a href="${url}">
+            <table border="0" cellspacing="0" cellpadding="0" style="background-color: #15c; color: #fff">
+              <tr>
+                <td style="padding: 8px;>
+                  Confirm + Log In
+                </td>
+              </tr>
+            </table>
+          </a>
+        </p>
         <p>If you didn't request this link, simply ignore this email${supportEmail ? ` or <a href="mailto:${supportEmail}">contact our support staff</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
@@ -42,7 +52,7 @@ module.exports = ({
     text: `
 ${stripTags(verbiage, [])}
 
-Log in to ${appName} by visiting this link:
+Confrim & Log In:
 ${url}
 
 If you didn't request this link, simply ignore this email or contact our support staff at ${supportEmail}.
