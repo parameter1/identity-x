@@ -48,12 +48,16 @@ type LoginLinkTemplate {
   subject: String
   unverifiedVerbiage: String
   verifiedVerbiage: String
+  loginLinkStyle: String
+  loginLinkText: String
 }
 
 input LoginLinkTemplatePayloadInput {
   subject: String
   unverifiedVerbiage: String
   verifiedVerbiage: String
+  loginLinkStyle: String
+  loginLinkText: String
 }
 
 input AddApplicationContextMutationInput {

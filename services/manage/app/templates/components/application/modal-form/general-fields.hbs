@@ -22,7 +22,7 @@
     </div>
   </div>
 </div>
-<div class="row d-none">
+<div class="row">
   <div class="col">
     <div class="form-group">
       <FormElements::Label @for="app.loginLinkTemplate.subject">Login Email Subject</FormElements::Label>
@@ -43,6 +43,22 @@
     <div class="form-group">
       <FormElements::Label @for="app.loginLinkTemplate.verifiedVerbiage">Login Email Verified Verbiage</FormElements::Label>
       <Textarea @id="app.loginLinkTemplate.verifiedVerbiage" @class="form-control" @value={{model.loginLinkTemplate.verifiedVerbiage}} @rows={{3}} />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <FormElements::Label @for="app.loginLinkTemplate.loginLinkStyle">Login Email Link Style</FormElements::Label>
+      <Textarea @id="app.loginLinkTemplate.loginLinkStyle" @class="form-control" @value={{model.loginLinkTemplate.loginLinkStyle}} @rows={{1}} />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <FormElements::Label @for="app.loginLinkTemplate.loginLinkText">Login Email Link Text</FormElements::Label>
+      <Textarea @id="app.loginLinkTemplate.loginLinkText" @class="form-control" @value={{model.loginLinkTemplate.loginLinkText}} @rows={{1}} />
     </div>
   </div>
 </div>

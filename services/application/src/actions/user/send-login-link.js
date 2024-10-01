@@ -65,7 +65,13 @@ module.exports = async ({
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 
-  const loginLinkTemplate = ['subject', 'unverifiedVerbiage', 'verifiedVerbiage'].reduce((o, key) => {
+  const loginLinkTemplate = [
+    'subject',
+    'unverifiedVerbiage',
+    'verifiedVerbiage',
+    'loginLinkStyle',
+    'loginLinkText',
+  ].reduce((o, key) => {
     const contextValue = context.loginLinkTemplate ? context.loginLinkTemplate[key] : null;
     return {
       ...o,

@@ -12,6 +12,8 @@ const query = gql`
         subject
         unverifiedVerbiage
         verifiedVerbiage
+        loginLinkStyle
+        loginLinkText
       }
     }
   }

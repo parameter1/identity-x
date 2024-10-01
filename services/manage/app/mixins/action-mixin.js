@@ -26,11 +26,19 @@ export default Mixin.create(LoadingMixin, {
     this.hideLoading();
   },
 
-  formatLoginLinkTemplateInput({ subject, unverifiedVerbiage, verifiedVerbiage } = {}){
+  formatLoginLinkTemplateInput({
+    subject,
+    unverifiedVerbiage,
+    verifiedVerbiage,
+    loginLinkStyle,
+    loginLinkText,
+  } = {}){
     return {
       subject,
       unverifiedVerbiage,
       verifiedVerbiage,
+      loginLinkStyle,
+      loginLinkText,
     };
   },
 
