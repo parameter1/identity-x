@@ -20,6 +20,7 @@ const executor = async (args) => {
     fields,
     regionalConsentPolicies,
     customSelectFields,
+    customBooleanFields,
     stream,
   } = args;
   const pagination = getAsObject(params, 'pagination');
@@ -55,8 +56,21 @@ const executor = async (args) => {
         : [];
       return { ...o, [rowLabel]: customSelect.multiple ? answeredOptions.join('|') : (answeredOptions[0] || '') };
     }, {});
+    const customBooleanAnswers = customBooleanFields.reduce((o, customBoolean) => {
+      let rowLabel = `Custom: ${customBoolean.name}`;
+      if (!customBoolean.active) rowLabel = `${rowLabel} [inactive]`;
+      const userAnswers = getAsArray(node, 'customBooleanFieldAnswers');
+      const fieldAnswer = userAnswers.find(answer => `${answer._id}` === `${customBoolean._id}`);
+      const { value } = fieldAnswer || { value: '' };
+      return { ...o, [rowLabel]: value };
+    }, {});
 
-    return { ...row, ...customSelectAnswers, ...answers };
+    return {
+      ...row,
+      ...customSelectAnswers,
+      ...customBooleanAnswers,
+      ...answers,
+    };
   });
   stream.push(JSON.stringify(nodes));
   const { hasNextPage, endCursor } = getAsObject(data, 'pageInfo');
