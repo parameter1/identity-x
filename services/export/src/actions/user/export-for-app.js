@@ -59,7 +59,18 @@ module.exports = async ({
       pagination: { limit: 500, sort: { field: 'name', order: 1 } },
     }),
   ]);
-  const customSelectFields = customFieldConnection.edges.map(edge => edge.node);
+  const { customSelectFields, customBooleanFields } = customFieldConnection.edges.reduce(
+    (object, edge) => {
+      // eslint-disable-next-line no-underscore-dangle
+      if (edge.node && edge.node._type === 'select') {
+        object.customSelectFields.push(edge.node);
+        // eslint-disable-next-line no-underscore-dangle
+      } else if (edge.node && edge.node._type === 'boolean') {
+        object.customBooleanFields.push(edge.node);
+      }
+      return object;
+    }, { customSelectFields: [], customBooleanFields: [] },
+  );
 
   try {
     const contents = await new Promise((resolve, reject) => {
@@ -77,6 +88,7 @@ module.exports = async ({
         limit: 10000,
         regionalConsentPolicies: getAsArray(org, 'regionalConsentPolicies'),
         customSelectFields,
+        customBooleanFields,
         params: {
           id: applicationId,
           sort: { field: 'createdAt', order: 'desc' },
