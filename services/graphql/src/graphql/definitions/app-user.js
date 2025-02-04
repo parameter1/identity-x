@@ -217,6 +217,7 @@ type AppUserAuthentication {
   user: AppUser!
   token: AppUserAuthToken!
   loginSource: String
+  additionalEventData: JSON
 }
 
 type AppUserAuthToken {
@@ -387,7 +388,7 @@ input SendAppUserLoginLinkMutationInput {
   "Deprecated. While this field can still be sent, it is no longer used or handled."
   fields: JSON
   "Additional event data to persist through the token exchange"
-  additionalEventData: JSON
+  additionalEventData: JSON = {}
 }
 
 input SetAppUserBannedMutationInput {

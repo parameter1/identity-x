@@ -59,5 +59,6 @@ module.exports = async ({
     user: user.toObject(),
     token: { id: payload.jti, value: authToken },
     loginSource: get(data, 'source'),
+    additionalEventData: data || {},
   };
 };
