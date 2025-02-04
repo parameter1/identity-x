@@ -386,6 +386,8 @@ input SendAppUserLoginLinkMutationInput {
   appContextId: String
   "Deprecated. While this field can still be sent, it is no longer used or handled."
   fields: JSON
+  "Additional event data to persist through the token exchange"
+  additionalEventData: JSON
 }
 
 input SetAppUserBannedMutationInput {
