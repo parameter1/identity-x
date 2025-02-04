@@ -23,12 +23,13 @@ const createLoginToken = ({
 });
 
 module.exports = async ({
-  authUrl,
-  redirectTo,
-  applicationId,
+  additionalContext,
   appContextId,
-  source,
+  applicationId,
+  authUrl,
   email,
+  redirectTo,
+  source,
 } = {}) => {
   debug(authUrl, 'INCOMING AUTH URL');
   if (!authUrl) throw createRequiredParamError('authUrl');
@@ -61,7 +62,11 @@ module.exports = async ({
 
   if (supportEmail) addressValues.push(supportEmail);
 
-  const { token } = await createLoginToken({ applicationId, email: user.email, data: { source } });
+  const { token } = await createLoginToken({
+    applicationId,
+    email: user.email,
+    data: { ...additionalContext, source },
+  });
   let url = `${authUrl}?token=${token}`;
   if (redirectTo) url = `${url}&redirectTo=${encodeURIComponent(redirectTo)}`;
 

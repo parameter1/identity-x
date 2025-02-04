@@ -556,8 +556,10 @@ module.exports = {
         authUrl,
         redirectTo,
         appContextId,
+        additionalContext,
       } = input;
       return applicationService.request('user.sendLoginLink', {
+        additionalContext,
         applicationId,
         appContextId,
         authUrl,
