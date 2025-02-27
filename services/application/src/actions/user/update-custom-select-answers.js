@@ -28,8 +28,8 @@ module.exports = async ({
   }), {});
 
   const newAnswers = answers
-    // @todo: Check each existing/incoming value and ignore removals of inactive values
-    .filter(({ optionIds }) => optionIds.length) // ignore/unset fields without options
+    // Allow for optionIds to be empty if forceUnset is set to true
+    .filter(({ optionIds, forceUnset }) => optionIds.length || forceUnset)
     .map(item => ({ _id: item.fieldId, ...item }))
     .reduce((obj, { _id, optionIds, writeInValues }) => ({
       ...obj,

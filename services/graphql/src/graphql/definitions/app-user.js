@@ -551,6 +551,8 @@ input UpdateAppUserCustomSelectAnswer {
   optionIds: [String!]!
   "The write-in values for this field. This must always been an array, even if the question only supports one answer. An empty array will unset any existing write-ins."
   writeInValues: [UpdateAppUserCustomSelectAnswerWriteInValue!]
+  "Whether or not to forcibly unset the fieldId specified"
+  forceUnset: Boolean! = false
 }
 
 input UpdateAppUserCustomSelectAnswerWriteInValue {
