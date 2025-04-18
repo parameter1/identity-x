@@ -58,7 +58,7 @@ const contextSchema = new Schema({
   language: {
     type: String,
     default: 'en-us',
-    enum: ['en-us', 'es-mx'],
+    enum: ['en-us', 'es-mx', 'pt-br'],
   },
 });
 
@@ -83,7 +83,7 @@ const schema = new Schema({
   language: {
     type: String,
     default: 'en-us',
-    enum: ['en-us', 'es-mx'],
+    enum: ['en-us', 'es-mx', 'pt-br'],
   },
   contexts: {
     type: [contextSchema],
