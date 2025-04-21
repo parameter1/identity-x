@@ -10,21 +10,21 @@ module.exports = ({
   user,
 } = {}) => {
   const { verified } = user;
-  const subject = loginLinkTemplate.subject || 'Portuguese Subject: Su enlace de inicio de sesión personal';
-  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
-  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Recientemente solicitó iniciar sesión en <strong>${appName}</strong>. Este enlace esta habilitado por una hora y caducará inmediatamente después de su uso.`;
+  const subject = loginLinkTemplate.subject || 'Seu link de login pessoal';
+  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Recentemente você solicitou login no  <strong>${appName}</strong>. Este link é válido por uma hora..`;
+  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Recentemente você solicitou login no  <strong>${appName}</strong>. Este link é válido por uma hora..`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
   const loginLinkStyle = loginLinkTemplate.loginLinkStyle ? loginLinkTemplate.loginLinkStyle : '';
-  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Iniciar sesión en ${appName}`;
+  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Entrar ${appName}`;
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-    <html lang="es">
+    <html lang="en">
       <head>
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
-        <title>Su enlace de inicio de sesión personal</title>
+        <title>${subject}</title>
       </head>
       <body>
         <p>${verbiage}</p>
@@ -35,30 +35,32 @@ module.exports = ({
             </strong>
           </a>
         </p>
-        <p>Si no solicitó este enlace, simplemente ignore este correo electrónico${supportEmail ? ` o <a href="mailto:${supportEmail}">comuníquese con nuestro personal de soporte</a>` : ''}.</p>
+        <p>Se você não solicitou este link, simplesmente ignore este e-mail ${supportEmail ? ` ou <a href="mailto:${supportEmail}"> entre em contato com nossa equipe de suporte
+</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
-          <p>Agregue <em>${sendingDomain}</em> a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros correos electrónicos en el futuro</p>
-          <p>Está recibiendo este correo electrónico porque se realizó una solicitud de inicio de sesión en ${appName}.</p>
-          <p>Para obtener información adicional, comuníquese con ${appName} ${addressValues.join(', ')}.</p>
+          <p>Adicione <em>${sendingDomain}</em> à sua lista de endereços ou lista de remetentes seguros para garantir que você receba nossos e-mails no futuro.</p>
+          <p>Você está recebendo este e-mail porque uma solicitação de login foi feita em ${appName}.</p>
+          <p>Para obter mais informações, entre em contato ${appName} c/o ${addressValues.join(', ')}.</p>
         </small>
       </body>
     </html>
-  `,
+    `,
     text: `
-${stripTags(verbiage)}
+${stripTags(verbiage, [])}
 
 ${loginLinkText}:
 ${url}
 
-Si no solicitó este enlace, simplemente ignore este correo electrónico${supportEmail ? ` o comuníquese con nuestro personal de soporte a ${supportEmail}` : ''}
+
+Se você não solicitou este link, simplesmente ignore este e-mail ou entre em contato com nossa equipe de suporte em ${supportEmail}.
 
 -------------------------
 
-Agregue ${sendingDomain} a su libreta de direcciones o lista de remitentes seguros para asegurarse de recibir nuestros correos electrónicos en el futuro
-Usted esta recibiendo este correo porque una solicitud fue hecha a ${appName}.
-Para obtener información adicional, comuníquese con ${appName} ${addressValues.join(', ')}.
-  `,
+Adicione ${sendingDomain} à sua lista de endereços ou de remetentes seguros para garantir que você receba nossos e-mails no futuro.
+Você está recebendo este e-mail porque uma solicitação de login foi feita no ${appName}.
+Para obter mais informações, entre em contato ${appName} c/o ${addressValues.join(', ')}.
+    `,
     subject,
   });
 };
