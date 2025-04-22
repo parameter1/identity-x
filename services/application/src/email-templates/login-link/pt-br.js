@@ -10,12 +10,12 @@ module.exports = ({
   user,
 } = {}) => {
   const { verified } = user;
-  const subject = loginLinkTemplate.subject || 'Seu link de login pessoal';
-  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Recentemente você solicitou login no  <strong>${appName}</strong>. Este link é válido por uma hora..`;
-  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Recentemente você solicitou login no  <strong>${appName}</strong>. Este link é válido por uma hora..`;
+  const subject = loginLinkTemplate.subject || 'O seu link pessoal de acesso';
+  const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Você solicitou recentemente o login no <strong>${appName}</strong>. Este link é válido por uma hora.`;
+  const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Você solicitou recentemente o login no <strong>${appName}</strong>. Este link é válido por uma hora.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
   const loginLinkStyle = loginLinkTemplate.loginLinkStyle ? loginLinkTemplate.loginLinkStyle : '';
-  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Entrar ${appName}`;
+  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Acesse o ${appName}`;
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -35,13 +35,12 @@ module.exports = ({
             </strong>
           </a>
         </p>
-        <p>Se você não solicitou este link, simplesmente ignore este e-mail ${supportEmail ? ` ou <a href="mailto:${supportEmail}"> entre em contato com nossa equipe de suporte
-</a>` : ''}.</p>
+        <p>Se você não solicitou este link, basta ignorar este e-mail ${supportEmail ? ` ou <a href="mailto:${supportEmail}">entrar em contato com nossa equipe de suporte</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
-          <p>Adicione <em>${sendingDomain}</em> à sua lista de endereços ou lista de remetentes seguros para garantir que você receba nossos e-mails no futuro.</p>
-          <p>Você está recebendo este e-mail porque uma solicitação de login foi feita em ${appName}.</p>
-          <p>Para obter mais informações, entre em contato ${appName} c/o ${addressValues.join(', ')}.</p>
+          <p>Adicione <em>${sendingDomain}</em> à sua lista de contatos ou lista de remetentes confiáveis para garantir que você receba futuros e-mails nossos.</p>
+          <p>Você está recebendo este e-mail porque foi feita uma solicitação de login no ${appName}.</p>
+          <p>Para mais informações, entre em contato com o ${appName} c/o ${addressValues.join(', ')}.</p>
         </small>
       </body>
     </html>
