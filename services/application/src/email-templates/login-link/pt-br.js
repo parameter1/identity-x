@@ -10,12 +10,12 @@ module.exports = ({
   user,
 } = {}) => {
   const { verified } = user;
-  const subject = loginLinkTemplate.subject || 'O seu link pessoal de acesso';
+  const subject = loginLinkTemplate.subject || 'Seu link de login pessoal';
   const unverifiedVerbiage = loginLinkTemplate.unverifiedVerbiage || `Você solicitou recentemente o login no <strong>${appName}</strong>. Este link é válido por uma hora.`;
   const verifiedVerbiage = loginLinkTemplate.verifiedVerbiage || `Você solicitou recentemente o login no <strong>${appName}</strong>. Este link é válido por uma hora.`;
   const verbiage = verified ? verifiedVerbiage : unverifiedVerbiage;
   const loginLinkStyle = loginLinkTemplate.loginLinkStyle ? loginLinkTemplate.loginLinkStyle : '';
-  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Acesse o ${appName}`;
+  const loginLinkText = loginLinkTemplate.loginLinkText ? loginLinkTemplate.loginLinkText : `Faça login no ${appName}`;
   return ({
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -35,12 +35,12 @@ module.exports = ({
             </strong>
           </a>
         </p>
-        <p>Se você não solicitou este link, basta ignorar este e-mail ${supportEmail ? ` ou <a href="mailto:${supportEmail}">entrar em contato com nossa equipe de suporte</a>` : ''}.</p>
+        <p>Se você não solicitou este link, simplesmente ignore este e-mail ${supportEmail ? ` ou <a href="mailto:${supportEmail}">entre em contato com nossa equipe de suporte</a>` : ''}.</p>
         <hr>
         <small style="font-color: #ccc;">
-          <p>Adicione <em>${sendingDomain}</em> à sua lista de contatos ou lista de remetentes confiáveis para garantir que você receba futuros e-mails nossos.</p>
+          <p>Adicione <em>${sendingDomain}</em> à sua lista de contatos ou remetentes seguros para garantir o recebimento de futuros e-mails nossos.</p>
           <p>Você está recebendo este e-mail porque foi feita uma solicitação de login no ${appName}.</p>
-          <p>Para mais informações, entre em contato com o ${appName} c/o ${addressValues.join(', ')}.</p>
+          <p>Para mais informações, entre em contato com o ${appName}, aos cuidados de Watt Global Media, pelo e-mail ${addressValues.join(', ')}.</p>
         </small>
       </body>
     </html>
@@ -52,13 +52,13 @@ ${loginLinkText}:
 ${url}
 
 
-Se você não solicitou este link, simplesmente ignore este e-mail ou entre em contato com nossa equipe de suporte em ${supportEmail}.
+Se você não solicitou este link, simplesmente ignore este e-mail ou entre em contato com nossa equipe de suporte ${supportEmail}.
 
 -------------------------
 
-Adicione ${sendingDomain} à sua lista de endereços ou de remetentes seguros para garantir que você receba nossos e-mails no futuro.
-Você está recebendo este e-mail porque uma solicitação de login foi feita no ${appName}.
-Para obter mais informações, entre em contato ${appName} c/o ${addressValues.join(', ')}.
+Adicione ${sendingDomain} à sua lista de contatos ou remetentes seguros para garantir o recebimento de futuros e-mails nossos.
+Você está recebendo este e-mail porque foi feita uma solicitação de login no ${appName}.
+Para mais informações, entre em contato com o ${appName}, aos cuidados de Watt Global Media, pelo e-mail ${addressValues.join(', ')}.
     `,
     subject,
   });
