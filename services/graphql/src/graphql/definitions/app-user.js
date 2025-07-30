@@ -459,6 +459,9 @@ input SetAppUserUnverifiedDataMutationInput {
   mobileNumber: String
   phoneNumber: String
 
+  # customBooleanFieldAnswers: [UpdateAppUserCustomBooleanAnswer!] = []
+  customSelectFieldAnswers: [UpdateAppUserCustomSelectAnswer!] = []
+  # customTextFieldAnswers: [UpdateAppUserCustomTextAnswer!] = []
   regionalConsentAnswers: [SetAppUserRegionalConsentAnswerInput!] = []
 }
 

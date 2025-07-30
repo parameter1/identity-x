@@ -3,6 +3,7 @@ const { createRequiredParamError } = require('@base-cms/micro').service;
 const { handleError } = require('@identity-x/utils').mongoose;
 
 const { AppUser } = require('../../mongodb/models');
+const setCustomSelectAnswers = require('./utils/set-custom-select-answers');
 
 const { isArray } = Array;
 
@@ -21,34 +22,8 @@ module.exports = async ({
   // do not update user answers when passed answers are not an array
   if (!isArray(answers)) return user;
 
-  // get all current answers as object { id, value }
-  const userObj = user.customSelectFieldAnswers.reduce((obj, { _id, values, writeInValues }) => ({
-    ...obj,
-    [_id]: { values, writeInValues },
-  }), {});
+  setCustomSelectAnswers({ user, answers });
 
-  const newAnswers = answers
-    // Allow for optionIds to be empty if forceUnset is set to true
-    .filter(({ optionIds, forceUnset }) => optionIds.length || forceUnset)
-    .map(item => ({ _id: item.fieldId, ...item }))
-    .reduce((obj, { _id, optionIds, writeInValues }) => ({
-      ...obj,
-      [_id]: {
-        values: optionIds,
-        writeInValues: (writeInValues || []).map(v => ({ _id: v.optionId, value: v.value })),
-      },
-    }), {});
-
-  // merge new and old answers to account for old non active answers
-  const mergedAnswers = { ...userObj, ...newAnswers };
-
-  // convert merged answers into valid array of { _id, values } answers
-  const toSet = Object.keys(mergedAnswers).map((key) => {
-    const { values, writeInValues } = mergedAnswers[key];
-    return { _id: key, values, writeInValues };
-  });
-
-  user.set('customSelectFieldAnswers', toSet);
   if (profileLastVerifiedAt) {
     user.set('profileLastVerifiedAt', profileLastVerifiedAt);
     user.set('forceProfileReVerification', false);
