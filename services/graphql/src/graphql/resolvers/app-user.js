@@ -614,7 +614,7 @@ module.exports = {
         regionalConsentAnswers,
         // customBooleanFieldAnswers,
         customSelectFieldAnswers,
-        // customTextFieldAnswers,
+        customTextFieldAnswers,
       } = input;
 
       const payload = {
@@ -633,7 +633,7 @@ module.exports = {
         regionalConsentAnswers,
         // customBooleanFieldAnswers,
         customSelectFieldAnswers,
-        // customTextFieldAnswers,
+        customTextFieldAnswers,
       };
 
       return applicationService.request('user.setUnverifiedData', {

@@ -461,7 +461,7 @@ input SetAppUserUnverifiedDataMutationInput {
 
   # customBooleanFieldAnswers: [UpdateAppUserCustomBooleanAnswer!] = []
   customSelectFieldAnswers: [UpdateAppUserCustomSelectAnswer!] = []
-  # customTextFieldAnswers: [UpdateAppUserCustomTextAnswer!] = []
+  customTextFieldAnswers: [UpdateAppUserCustomTextAnswer!] = []
   regionalConsentAnswers: [SetAppUserRegionalConsentAnswerInput!] = []
 }
 

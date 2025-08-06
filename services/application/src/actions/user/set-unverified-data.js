@@ -3,6 +3,7 @@ const { createRequiredParamError } = require('@base-cms/micro').service;
 const { isObject, asArray } = require('@base-cms/utils');
 const setConsentAnswer = require('./utils/set-regional-consent-answer');
 const setCustomSelectAnswers = require('./utils/set-custom-select-answers');
+const setCustomTextAnswers = require('./utils/set-custom-text-answers');
 
 const { AppUser } = require('../../mongodb/models');
 
@@ -20,7 +21,7 @@ module.exports = async ({ applicationId, email, payload } = {}) => {
   const {
     // customBooleanFieldAnswers,
     customSelectFieldAnswers,
-    // customTextFieldAnswers,
+    customTextFieldAnswers,
     regionalConsentAnswers,
     ...fields
   } = payload;
@@ -33,9 +34,9 @@ module.exports = async ({ applicationId, email, payload } = {}) => {
     setCustomSelectAnswers({ user, answers: customSelectFieldAnswers });
   }
 
-  // if (asArray(customTextFieldAnswers).length) {
-  //   setCustomTextAnswers({ user, answers: customTextFieldAnswers });
-  // }
+  if (asArray(customTextFieldAnswers).length) {
+    setCustomTextAnswers({ user, answers: customTextFieldAnswers });
+  }
 
   // overwrite/set regional consent answers
   user.set('regionalConsentAnswers', []);
