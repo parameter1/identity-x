@@ -116,7 +116,6 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             optionIds: group.options.map(option => option.id),
           })),
         };
-        console.log(options);
         if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateSelectField');
