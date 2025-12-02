@@ -175,7 +175,7 @@ type SelectFieldOption implements SelectFieldOptionChoice {
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
   "Whether or not the option is allowed to be selected"
-  selectableAnswer: Boolean
+  canSelect: Boolean
   "The order of the option. When rendered, options and groups will be sorted using this value."
   index: Int!
 }
@@ -251,7 +251,7 @@ input CreateSelectFieldOptionInput {
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean = false
   "Whether or not the option is allowed to be selected"
-  selectableAnswer: Boolean = true
+  canSelect: Boolean = true
 }
 
 input CreateTextFieldMutationInput {
@@ -381,7 +381,7 @@ input UpdateSelectFieldOptionInput {
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
   "Whether or not the option is allowed to be selected"
-  selectableAnswer: Boolean
+  canSelect: Boolean
   "The order of the option. When rendered, options and groups will be sorted using this value."
   index: Int = 0
 }

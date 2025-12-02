@@ -38,7 +38,7 @@ const optionSchema = new Schema({
   /**
    * Whether or not the option is allowed to be selected
    */
-  selectableAnswer: {
+  canSelect: {
     type: Boolean,
     default: true,
   },

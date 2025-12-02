@@ -23,8 +23,8 @@ export default Component.extend({
     return this.get('selected.canWriteIn') || this.get('selected.option.canWriteIn') || false;
   }),
 
-  selectableAnswer: computed('selected.{options.selectableAnswer}', function() {
-    return this.get('selected.option.selectableAnswer') || true;
+  canSelect: computed('selected.{options.canSelect}', function() {
+    return this.get('selected.option.canSelect') || true;
   }),
 
   /**

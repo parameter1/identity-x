@@ -24,7 +24,7 @@ const query = gql`
         ... on SelectFieldOption {
           externalIdentifier
           canWriteIn
-          selectableAnswer
+          canSelect
         }
         ... on SelectFieldOptionGroup {
           options {
@@ -32,7 +32,7 @@ const query = gql`
             label
             index
             externalIdentifier
-            selectableAnswer
+            canSelect
             canWriteIn
           }
         }
@@ -41,7 +41,7 @@ const query = gql`
         id
         label
         externalIdentifier
-        selectableAnswer
+        canSelect
         canWriteIn
         index
       }
