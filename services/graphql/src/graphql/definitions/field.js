@@ -174,6 +174,8 @@ type SelectFieldOption implements SelectFieldOptionChoice {
   externalIdentifier: String
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
+  "Whether or not the option is allowed to be selected"
+  selectableAnswer: Boolean
   "The order of the option. When rendered, options and groups will be sorted using this value."
   index: Int!
 }
@@ -248,6 +250,8 @@ input CreateSelectFieldOptionInput {
   externalIdentifier: String
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean = false
+  "Whether or not the option is allowed to be selected"
+  selectableAnswer: Boolean = true
 }
 
 input CreateTextFieldMutationInput {
@@ -376,6 +380,8 @@ input UpdateSelectFieldOptionInput {
   externalIdentifier: String
   "Whether free-form, write-in values are supported."
   canWriteIn: Boolean
+  "Whether or not the option is allowed to be selected"
+  selectableAnswer: Boolean
   "The order of the option. When rendered, options and groups will be sorted using this value."
   index: Int = 0
 }

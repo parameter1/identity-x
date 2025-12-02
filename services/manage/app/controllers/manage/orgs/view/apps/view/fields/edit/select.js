@@ -25,6 +25,7 @@ const mutation = gql`
         ... on SelectFieldOption {
           externalIdentifier
           canWriteIn
+          selectableAnswer
         }
         ... on SelectFieldOptionGroup {
           options {
@@ -106,6 +107,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             label: option.label,
             externalIdentifier: option.externalIdentifier,
             canWriteIn: option.canWriteIn,
+            selectableAnswer: option.selectableAnswer,
           })),
           groups: groups.map((group) => ({
             id: group.id,
@@ -114,6 +116,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             optionIds: group.options.map(option => option.id),
           })),
         };
+        console.log(options);
         if (!Object.keys(input.externalId).length) delete input.externalId;
         const variables = { input };
         await this.mutate({ mutation, variables }, 'updateSelectField');

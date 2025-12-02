@@ -36,6 +36,7 @@ export default Component.extend({
       this.choices.pushObject({
         label: '',
         index: this.get('index'),
+        selectableAnswer: true,
         __typename: 'SelectFieldOption',
       });
     },
