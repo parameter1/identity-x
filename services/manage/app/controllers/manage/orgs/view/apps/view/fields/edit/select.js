@@ -25,6 +25,7 @@ const mutation = gql`
         ... on SelectFieldOption {
           externalIdentifier
           canWriteIn
+          canSelect
         }
         ... on SelectFieldOptionGroup {
           options {
@@ -106,6 +107,7 @@ export default Controller.extend(ActionMixin, AppQueryMixin, {
             label: option.label,
             externalIdentifier: option.externalIdentifier,
             canWriteIn: option.canWriteIn,
+            canSelect: option.canSelect,
           })),
           groups: groups.map((group) => ({
             id: group.id,

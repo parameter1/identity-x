@@ -20,6 +20,7 @@ const query = gql`
             label
             ... on SelectFieldOption {
               canWriteIn
+              canSelect
             }
             ... on SelectFieldOptionGroup {
               options {

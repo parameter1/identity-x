@@ -15,6 +15,7 @@ const mutation = gql`
           label
           option {
             canWriteIn
+            canSelect
           }
           writeInValue
         }

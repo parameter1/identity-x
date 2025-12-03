@@ -23,6 +23,10 @@ export default Component.extend({
     return this.get('selected.canWriteIn') || this.get('selected.option.canWriteIn') || false;
   }),
 
+  canSelect: computed('selected.{options.canSelect}', function() {
+    return this.get('selected.option.canSelect') || true;
+  }),
+
   /**
    * Use the selected answer as the option (when found) to ensure
    * selection highlighting is applied.

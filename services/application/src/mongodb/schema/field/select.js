@@ -34,6 +34,14 @@ const optionSchema = new Schema({
     type: Boolean,
     default: false,
   },
+
+  /**
+   * Whether or not the option is allowed to be selected
+   */
+  canSelect: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const groupSchema = new Schema({
