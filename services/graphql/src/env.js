@@ -10,6 +10,7 @@ const {
 const { nonemptystr } = validators;
 
 module.exports = cleanEnv(process.env, {
+  DISABLED_MINDFUL_TENANT_KEYS: str({ desc: 'Mindful tenant keys to disable the API for.', default: '' }),
   ENGINE_API_KEY: nonemptystr({ desc: 'The Apollo Engine API key', devDefault: '(unset)' }),
   EXTERNAL_PORT: port({ desc: 'The external port that the service is exposed on.', default: 80 }),
   INTERNAL_PORT: port({ desc: 'The internal port that the service will run on.', default: 80 }),
