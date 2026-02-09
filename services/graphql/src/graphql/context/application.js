@@ -21,6 +21,7 @@ const appIdsToMindfulKeys = new Map([
   ['66183c5e0635be32a6f07115', 'datia'],
   ['60b7b2bd1245f46d03e69e1d', 'cma'],
   ['66c4cfd71a5e8dd2b0608e5f', 'encore360'],
+  ['6978c952cfa8ef747e3ee748', 'encore360'],
   ['5f77a17b8eebee8cabee53fb', 'fusable'],
   ['5f77a19d8eebee8244ee53fc', 'fusable'],
   ['5f77a1ac0f883d18cbe63efe', 'fusable'],
