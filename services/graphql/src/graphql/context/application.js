@@ -57,6 +57,8 @@ const appIdsToMindfulKeys = new Map([
 
 const { log } = console;
 
+let nonMindfulAppIdRequests = 0;
+
 class AppContext {
   constructor(id) {
     this.id = id;
@@ -67,7 +69,6 @@ class AppContext {
 
     this.app = {};
     this.org = {};
-    this.nonMindfulAppIdRequests = 0;
   }
 
   async load() {
@@ -111,8 +112,8 @@ class AppContext {
     if (!this.exists()) throw new UserInputError('Unable to find an application for this request.');
     if (!this.key) {
       // log number of non-mindful appId requests since this container was started
-      this.nonMindfulAppIdRequests += 1;
-      log({ nonMindfulAppIdRequests: this.nonMindfulAppIdRequests });
+      nonMindfulAppIdRequests += 1;
+      log({ nonMindfulAppIdRequests });
     }
     return true;
   }
