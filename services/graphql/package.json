@@ -1,6 +1,6 @@
 {
   "name": "@identity-x/graphql-service",
-  "version": "1.26.3",
+  "version": "1.27.0",
   "description": "The IdentityX GraphQL API server.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@limit0.io>",
