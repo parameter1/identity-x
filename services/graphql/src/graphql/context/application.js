@@ -55,16 +55,19 @@ const appIdsToMindfulKeys = new Map([
   ['6449537d36197792dcb5e367', 'watt'],
 ]);
 
+const { log } = console;
+
 class AppContext {
   constructor(id) {
     this.id = id;
-    const key = appIdsToMindfulKeys.get(id);
-    if (key && disabledMinfulKeys.has(key)) {
+    this.key = appIdsToMindfulKeys.get(id);
+    if (this.key && disabledMinfulKeys.has(this.key)) {
       throw new Error(`The IdentityX application ID "${id}" is disabled and must migrated to use the new Mindful API. Please contact support for more information.`);
     }
 
     this.app = {};
     this.org = {};
+    this.nonMindfulAppIdRequests = 0;
   }
 
   async load() {
@@ -106,6 +109,11 @@ class AppContext {
   check() {
     if (this.errored()) throw this.error;
     if (!this.exists()) throw new UserInputError('Unable to find an application for this request.');
+    if (!this.key) {
+      // log number of non-mindful appId requests since this container was started
+      this.nonMindfulAppIdRequests += 1;
+      log({ nonMindfulAppIdRequests: this.nonMindfulAppIdRequests });
+    }
     return true;
   }
 }
