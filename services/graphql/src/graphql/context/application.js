@@ -1,4 +1,4 @@
-const { UserInputError } = require('apollo-server-express');
+const { ForbiddenError, UserInputError } = require('apollo-server-express');
 const { get } = require('object-path');
 const { applicationService, organizationService } = require('@identity-x/service-clients');
 const { DISABLED_MINDFUL_TENANT_KEYS } = require('../../env');
@@ -27,7 +27,7 @@ const appIdsToMindfulKeys = new Map([
   ['5f77a1ac0f883d18cbe63efe', 'fusable'],
   ['5f77a1b98eebeee1c3ee53fd', 'fusable'],
   ['5f77a1c80f883d979ae63eff', 'fusable'],
-  ['5f77a1e10f883d280fe63f00', 'randall-reilly'],
+  ['5f77a1fd0f883d221fe63f01', 'fusable'],
   ['650465135269f6714f6bcdf9', 'fusable'],
   ['5e28a3dd58e67b229e55ae43', 'im'],
   ['5e28a2c558e67b89b255ae3a', 'ironmarkets'],
@@ -47,6 +47,7 @@ const appIdsToMindfulKeys = new Map([
   ['5e28a4c858e67b86c955ae4d', 'pmmi'],
   ['649063f19a64332c8ec42eed', 'pmmi'],
   ['6499da19f70f36fef3aa008c', 'pmmi'],
+  ['5f77a1e10f883d280fe63f00', 'randall-reilly'],
   ['6176f26a1fa8d14997cc99f5', 'rmm'],
   ['629bac8439347cfce3861789', 'smg'],
   ['62a20ab439347c3abb862984', 'smg'],
@@ -57,7 +58,7 @@ const appIdsToMindfulKeys = new Map([
 
 const { log } = console;
 
-let nonMindfulAppIdRequests = 0;
+const blockedAppIdRequests = new Map();
 
 class AppContext {
   constructor(id) {
@@ -65,6 +66,12 @@ class AppContext {
     this.key = appIdsToMindfulKeys.get(id);
     if (this.key && disabledMinfulKeys.has(this.key)) {
       throw new Error(`The IdentityX application ID "${id}" is disabled and must migrated to use the new Mindful API. Please contact support for more information.`);
+    }
+    if (id && !this.key) {
+      const n = blockedAppIdRequests.get(id);
+      blockedAppIdRequests.set(id, (n || 0) + 1);
+      log(blockedAppIdRequests);
+      throw new ForbiddenError(`The application ID "${id}" is no longer allowed.`);
     }
 
     this.app = {};
@@ -110,11 +117,6 @@ class AppContext {
   check() {
     if (this.errored()) throw this.error;
     if (!this.exists()) throw new UserInputError('Unable to find an application for this request.');
-    if (!this.key) {
-      // log number of non-mindful appId requests since this container was started
-      nonMindfulAppIdRequests += 1;
-      log({ nonMindfulAppIdRequests });
-    }
     return true;
   }
 }
