@@ -1,4 +1,4 @@
-const { UserInputError } = require('apollo-server-express');
+const { ForbiddenError, UserInputError } = require('apollo-server-express');
 const { get } = require('object-path');
 const { applicationService, organizationService } = require('@identity-x/service-clients');
 const { DISABLED_MINDFUL_TENANT_KEYS } = require('../../env');
@@ -58,7 +58,7 @@ const appIdsToMindfulKeys = new Map([
 
 const { log } = console;
 
-let nonMindfulAppIdRequests = 0;
+const blockedAppIdRequests = new Map();
 
 class AppContext {
   constructor(id) {
@@ -66,6 +66,12 @@ class AppContext {
     this.key = appIdsToMindfulKeys.get(id);
     if (this.key && disabledMinfulKeys.has(this.key)) {
       throw new Error(`The IdentityX application ID "${id}" is disabled and must migrated to use the new Mindful API. Please contact support for more information.`);
+    }
+    if (id && !this.key) {
+      const n = blockedAppIdRequests.get(id);
+      blockedAppIdRequests.set(id, (n || 0) + 1);
+      log(blockedAppIdRequests);
+      throw new ForbiddenError(`The application ID "${id}" is no longer allowed.`);
     }
 
     this.app = {};
@@ -111,11 +117,6 @@ class AppContext {
   check() {
     if (this.errored()) throw this.error;
     if (!this.exists()) throw new UserInputError('Unable to find an application for this request.');
-    if (!this.key) {
-      // log number of non-mindful appId requests since this container was started
-      nonMindfulAppIdRequests += 1;
-      log({ nonMindfulAppIdRequests });
-    }
     return true;
   }
 }
